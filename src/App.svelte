@@ -1,10 +1,7 @@
 <script lang="ts">
-  import Component from './lib/Component.svelte'
+  import Interface from './lib/Interface.svelte'
 </script>
 
 <main>
-  <h1>Title</h1>
-  <div class="card">
-    <Component/>
-  </div>
+  <Interface/>
 </main>
