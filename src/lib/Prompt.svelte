@@ -19,6 +19,9 @@
 
 <div class="prompt">
   <span>
-    <span class="usr">{`${usr}@127.0.0.1`}</span>:<span class="pwd">{pwd === `/home/${usr}` ? '~/' : pwd + '/'}</span> $ <slot />
+    <span class="usr">{`${usr}@127.0.0.1`}</span>:<span class="pwd"
+      >{pwd === `/home/${usr}` ? '~/' : pwd + '/'}</span
+    >
+    $ <slot />
   </span>
 </div>

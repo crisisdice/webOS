@@ -1,57 +1,37 @@
-import { setFs, setEnv, parsePath, getEnv, readDir } from './fs'
+import { setEnv, getEnv, stat } from './fs'
 
 const EMPTY = ''
-
-export const init = () => {
-  setEnv('PWD', '/home/guest')
-  setEnv('HOME', '/home/guest')
-
-  setFs({
-    'home': {
-      'guest': {
-        '.bashrc': '#!/usr/sh',
-        '.history': ''
-      },
-      'root': {}
-    }
-  })
-  console.log('initalized')
-}
 
 const echo = (args: string) => {
   return args.replaceAll('"', '')
 }
 
 const ls = (arg: string) => {
-  return Object.keys(readDir(arg, 'ls')).join(' ')
+  const { exists, isDirectory, obj } = stat(arg)
+  if (!exists) return `ls: cannot access '${arg}': No such file or directory`
+  return isDirectory ? Object.keys(obj).join(' ') : arg.split('/').at(-1)
 }
 
-const cat = (arg: string) => {
-  const file = readDir('arg', 'cat')
-  return (typeof file === 'string') 
-    ? file
-    : `cat: ${arg}: Is a directory`
+const cat = (arg: string): string => {
+  const { exists, isDirectory, obj } = stat(arg)
+  if (!exists) return `cat: cannot access '${arg}': No such file or directory`
+  return isDirectory ? `cat: ${arg}: Is a directory` : (obj as string)
 }
-
 
 const cd = (args: string) => {
-  try {
-    const tokens = parsePath(args === EMPTY ? '~' : args)
-    readDir(args, 'cd')
-    setEnv('PWD', '/' + tokens.join('/'))
-  } catch {
-    return `cd: no such file or directory: ${args}`
-  }
+  const { exists, path } = stat(args)
+  if (!exists) return `cd: no such file or directory: ${args}`
+  setEnv('PWD', path)
 }
 
 export const evaluate = (input: string) => {
   if (input === EMPTY) return
 
-  const cmds = {
+  const cmds: Record<string, (...args: any[]) => string> = {
     echo,
     cd,
     ls,
-    pwd: 'dummy',
+    pwd: () => 'dummy',
     cat,
   }
 

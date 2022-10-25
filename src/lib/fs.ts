@@ -1,6 +1,22 @@
 const ENV = 'ENV'
 const FS = 'FS'
 
+export const init = () => {
+  setEnv('PWD', '/home/guest')
+  setEnv('HOME', '/home/guest')
+
+  setFs({
+    home: {
+      guest: {
+        '.bashrc': '#!/usr/sh',
+        '.history': '',
+      },
+      root: {},
+    },
+  })
+  console.log('initalized')
+}
+
 type ENV = {
   PWD: string
   HOME: string
@@ -14,7 +30,7 @@ function get<T>(lsKey: 'ENV' | 'FS'): T | null {
   return JSON.parse(ls) as T
 }
 
-export function setFs(fs: Directory): void {
+function setFs(fs: Directory): void {
   localStorage.setItem(FS, JSON.stringify(fs))
 }
 
@@ -23,24 +39,21 @@ export function getEnv(key: keyof ENV): string {
 }
 
 export function setEnv(key: string, value: string): void {
-  const env = (get<ENV>(ENV) ?? {})
+  const env = get<ENV>(ENV) ?? {}
   localStorage.setItem(ENV, JSON.stringify({ ...env, [key]: value }))
 }
 
-const absoluteTokens = (path: string) => path.split('/').filter(t => !!t)
+const absoluteTokens = (path: string) => path.split('/').filter((t) => !!t)
 
-export function parsePath(path: string): string[] {
+function parsePath(path: string): string[] {
   if (path === '') throw new Error('no path')
-
   if (path[0] === '/') return absoluteTokens(path)
 
-  const pwdTokens = absoluteTokens(
-    getEnv('PWD')
-  )
+  const pwdTokens = absoluteTokens(getEnv('PWD'))
 
-  const pathTokens = path.split('/').filter(t => !!t)
+  const pathTokens = path.split('/').filter((t) => !!t)
 
-  let stack = [ ...pwdTokens ]
+  let stack = [...pwdTokens]
 
   for (const token of pathTokens) {
     if (token === '.') {
@@ -48,9 +61,7 @@ export function parsePath(path: string): string[] {
     }
 
     if (token === '~') {
-      stack = absoluteTokens(
-        getEnv('HOME')
-      )
+      stack = absoluteTokens(getEnv('HOME'))
       continue
     }
 
@@ -67,7 +78,7 @@ export function parsePath(path: string): string[] {
   return stack
 }
 
-export function traverse(tokens: string[], fs: Directory) {
+function traverse(tokens: string[], fs: Directory) {
   let tmp = fs
 
   for (const token of tokens) {
@@ -91,17 +102,21 @@ export function write(path: string, name: string, obj: string | Directory | null
   setFs(fs)
 }
 
-export function readDir(path: string, caller: string): Directory | string {
-  try { 
+type Stat = {
+  exists: boolean
+  path: string
+  isDirectory: boolean
+  obj: Directory | string
+}
+
+export function stat(args: string): Stat {
+  try {
     const fs = get<Directory>(FS)
-    return traverse(
-      parsePath(path === ''
-        ? getEnv('PWD')
-        : path
-      ),
-      fs
-    )
+    const tokens = parsePath(args === '' ? getEnv('PWD') : args)
+    const path = '/' + tokens.join('/')
+    const obj = traverse(tokens, fs)
+    return { exists: true, path, isDirectory: typeof obj !== 'string', obj }
   } catch (e) {
-    return `${caller}: cannot access '${path}': No such file or directory`
+    return { exists: false, path: '-', isDirectory: false, obj: '-' }
   }
 }

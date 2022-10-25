@@ -31,8 +31,8 @@
 <script lang="ts">
   import { writable } from 'svelte/store'
   import Prompt from './Prompt.svelte'
-  import { evaluate, init } from './bin'
-  import { getEnv } from './fs'
+  import { evaluate } from './bin'
+  import { getEnv, init } from './fs'
 
   const pwd = writable('/home/guest')
 
@@ -59,12 +59,12 @@
     /* check for ctl codes */
     if (CONTROL_DOWN) {
       switch (key) {
-        case "l":
+        case 'l':
           oldCmds = []
           precaret = postcaret = EMPTY
           caret = DASH
           return
-        case "Control":
+        case 'Control':
           CONTROL_DOWN = false
           return
         default:
@@ -73,7 +73,7 @@
     }
 
     switch (key) {
-      case "Enter": {
+      case 'Enter': {
         const cmd = caret === DASH ? `${precaret}${postcaret}` : `${precaret}${caret}${postcaret}`
         const wd = getEnv('PWD')
         const stdout = evaluate(cmd)
@@ -84,7 +84,7 @@
         prevCmd = 0
         return
       }
-      case "ArrowLeft": {
+      case 'ArrowLeft': {
         if (precaret === EMPTY) return
         const lastIndex = precaret.length - 1
         const last = precaret[lastIndex]
@@ -94,7 +94,7 @@
         caretClass = 'caret-full'
         return
       }
-      case "ArrowUp": {
+      case 'ArrowUp': {
         postcaret = EMPTY
         caret = DASH
         const history = oldCmds.filter((c) => c.cmd !== EMPTY).reverse()
@@ -104,7 +104,7 @@
         }
         return
       }
-      case "ArrowDown": {
+      case 'ArrowDown': {
         postcaret = EMPTY
         caret = DASH
         const history = oldCmds.filter((c) => c.cmd !== EMPTY).reverse()
@@ -115,7 +115,7 @@
         if (prevCmd === -1) prevCmd = 0
         return
       }
-      case "ArrowRight": {
+      case 'ArrowRight': {
         if (postcaret === EMPTY) {
           if (caret !== DASH) {
             precaret = `${precaret}${caret}`
@@ -130,12 +130,12 @@
         postcaret = postcaret.slice(1, postcaret.length)
         return
       }
-      case "Backspace": {
+      case 'Backspace': {
         precaret = precaret.slice(0, precaret.length - 1)
         return
       }
-      case "Shift":
-      case "Tab":
+      case 'Shift':
+      case 'Tab':
         return
       default: {
         precaret += key
@@ -145,7 +145,7 @@
 
   const down = ({ key }: KeyboardEvent) => {
     switch (key) {
-      case "Control":
+      case 'Control':
         CONTROL_DOWN = true
         return
       default:
@@ -165,10 +165,5 @@
     {precaret}<span class={caretClass}>{caret}</span>{postcaret}
   </Prompt>
   <!-- svelte-ignore a11y-autofocus -->
-  <input
-    autofocus
-    on:keydown={down}
-    on:keyup={up}
-    on:blur={refocus}
-  />
+  <input autofocus on:keydown={down} on:keyup={up} on:blur={refocus} />
 </div>
