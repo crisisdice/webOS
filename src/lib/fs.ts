@@ -22,7 +22,9 @@ type ENV = {
   HOME: string
 }
 
-type Directory = Record<string, string | Object>
+type Directory = {
+  [key: string]: string | Directory
+}
 
 function get<T>(lsKey: 'ENV' | 'FS'): T | null {
   const ls = localStorage.getItem(lsKey)
@@ -83,13 +85,21 @@ function traverse(tokens: string[], fs: Directory) {
 
   for (const token of tokens) {
     tmp = tmp[token] as Directory
-    if (!tmp) throw new Error('dir does not exist')
+    if (tmp === undefined) throw new Error('dir does not exist')
   }
 
   return tmp
 }
 
-export function write(path: string, name: string, obj: string | Directory | null) {
+export function write({
+  path,
+  name,
+  obj,
+}: {
+  path: string
+  name: string
+  obj: string | Directory | null
+}) {
   const fs = get<Directory>(FS)
   const location = traverse(parsePath(path), fs)
 

@@ -13,14 +13,14 @@
 </style>
 
 <script lang="ts">
-  export let usr
-  export let pwd
+  export let usr: string
+  export let pwd: string
 </script>
 
 <div class="prompt">
   <span>
     <span class="usr">{`${usr}@127.0.0.1`}</span>:<span class="pwd"
-      >{pwd === `/home/${usr}` ? '~/' : pwd + '/'}</span
+      >{pwd === `/home/${usr}` ? '~/' : `${pwd}/`}</span
     >
     $ <slot />
   </span>
