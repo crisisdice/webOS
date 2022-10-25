@@ -30,6 +30,7 @@
 
 <script lang="ts">
   import Prompt from './Prompt.svelte'
+  import { setFs, setEnv, parsePath, getEnv, readDir } from './fs'
 
   const EMPTY = ''
   const DASH = '_'
@@ -42,9 +43,10 @@
   let CONTROL_DOWN = false
   let prevCmd = 0
 
-  let pwd = '/home/guest'
+  setEnv('PWD', '/home/guest')
+  setEnv('HOME', '/home/guest')
 
-  let structure = {
+  setFs({
     'home': {
       'guest': {
         '.bashrc': '#!/usr/sh',
@@ -52,67 +54,34 @@
       },
       'root': {}
     }
-  }
+  })
 
   let user = 'guest'
-  let pwdObj = structure['home'][user]
 
   const echo = (args: string) => {
     return args.replaceAll('"', '')
   }
 
-  const ls = () => {
-    return Object.keys(pwdObj).join(' ')
+  const ls = (arg: string) => {
+    return Object.keys(readDir(arg, 'ls')).join(' ')
   }
 
   const cat = (arg: string) => {
-    const stat = () => {
-      if (!Object.keys(pwdObj).find(k => k === arg)) return `cat : ${arg}: No such file or directory`
-      return pwdObj[arg]
-    }
-    const file = stat()
+    const file = readDir('arg', 'cat')
     return (typeof file === 'string') 
       ? file
       : `cat: ${arg}: Is a directory`
   }
 
-  const mkdir = (arg: string) => {
-    if (!!pwdObj[arg]) return `mkdir: ${arg}: File exists`
-    pwdObj[arg] = {}
-    return
-  }
 
   const cd = (args: string) => {
-    if (args === EMPTY || args === '~') {
-      pwdObj = structure['home'][user]
-      pwd = `/home/${user}`
-      return
+    try {
+      const tokens = parsePath(args === EMPTY ? '~' : args)
+      readDir(args, 'cd')
+      setEnv('PWD', '/' + tokens.join('/'))
+    } catch {
+      return `cd: no such file or directory: ${args}`
     }
-
-    if (args === '/') {
-      pwd = '/'
-      pwdObj = structure
-      return
-    }
-
-    let steps = args[0] === '/' ? args.split('/') : `${pwd === '/' ? '' : pwd }/${args}`.split('/')
-    let tmp = structure
-
-    if (args === '..') {
-      // TODO all relative
-      const pwdTmp = pwd.split('/')
-      steps = pwdTmp.slice(0, pwdTmp.length - 1)
-    }
-
-    for (const step of steps) {
-      if (step === "") continue
-      tmp = tmp[step]
-      if (!tmp) return `cd: no such file or directory: ${args}`
-    }
-
-    pwdObj = tmp
-    pwd = (steps.length === 1 && steps[0] === "") || steps.length === 0 ? '/' : steps.join('/')
-  }
 
   const evaluate = (input: string) => {
     if (input === EMPTY) return
@@ -123,7 +92,6 @@
       ls,
       pwd: 'dummy',
       cat,
-      mkdir
     }
 
     // TODO command parsing
@@ -134,7 +102,7 @@
 
     if (!cmds[cmd]) return `sh: command not found: ${cmd}`
 
-    if (cmd === 'pwd') return `${pwd}/`
+    if (cmd === 'pwd') return `${getEnv('PWD')}/`
 
     return cmds[cmd](args)
   }
@@ -161,7 +129,7 @@
     switch (key) {
       case "Enter": {
         const cmd = caret === DASH ? `${precaret}${postcaret}` : `${precaret}${caret}${postcaret}`
-        const wd = pwd
+        const wd = getEnv('PWD')
         oldCmds = [...oldCmds, { cmd, stdout: evaluate(cmd), wd }]
         precaret = postcaret = EMPTY
         caret = DASH
@@ -245,7 +213,7 @@
     <Prompt pwd={oldCmd.wd} usr={user}>{oldCmd.cmd}</Prompt>
     {#if oldCmd.stdout}<span>{oldCmd.stdout}</span>{/if}
   {/each}
-  <Prompt pwd={pwd} usr={user}>
+  <Prompt pwd={getEnv('PWD')} usr={user}>
     {precaret}<span class={caretClass}>{caret}</span>{postcaret}
   </Prompt>
   <!-- svelte-ignore a11y-autofocus -->

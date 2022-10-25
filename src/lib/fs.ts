@@ -1,10 +1,5 @@
-const DEBUG = false
 const ENV = 'ENV'
 const FS = 'FS'
-
-const debug = (...args: any[]) => {
-  if (DEBUG) console.log(args)
-}
 
 type ENV = {
   PWD: string
@@ -19,15 +14,17 @@ function get<T>(lsKey: 'ENV' | 'FS'): T {
   return JSON.parse(ls) as T
 }
 
+export function setFs(fs: Directory): void {
+  localStorage.setItem(FS, JSON.stringify(fs))
+}
+
 function _getEnv(key: keyof ENV): string {
-  debug(this.name, { key })
   return get<ENV>(ENV)[key] ?? ''
 }
 
 export const getEnv = _getEnv.bind(_getEnv)
 
 function _setEnv(key: string, value: string): void {
-  debug(this.name, { key, value })
   localStorage.setItem(ENV, JSON.stringify({ ...get<ENV>(ENV), [key]: value }))
 }
 
@@ -73,8 +70,41 @@ export function parsePath(path: string): string[] {
   return stack
 }
 
-export function traverse(tokens: string[]) {
+export function traverse(tokens: string[], fs: Directory) {
+  let tmp = fs
+
+  for (const token of tokens) {
+    tmp = tmp[token] as Directory
+    if (!tmp) throw new Error('dir does not exist')
+  }
+
+  return tmp
+}
+
+export function write(path: string, name: string, obj: string | Directory | null) {
   const fs = get<Directory>(FS)
+  const location = traverse(parsePath(path), fs)
 
+  if (obj === null) {
+    delete location[name]
+  } else {
+    location[name] = obj
+  }
 
+  setFs(fs)
+}
+
+export function readDir(path: string, caller: string): Directory | string {
+  try { 
+    const fs = get<Directory>(FS)
+    return traverse(
+      parsePath(path === ''
+        ? getEnv('PWD')
+        : path
+      ),
+      fs
+    )
+  } catch (e) {
+    return `${caller}: cannot access '${path}': No such file or directory`
+  }
 }
