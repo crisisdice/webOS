@@ -29,8 +29,17 @@
 </style>
 
 <script lang="ts">
+  import { writable } from 'svelte/store'
   import Prompt from './Prompt.svelte'
-  import { setFs, setEnv, parsePath, getEnv, readDir } from './fs'
+  import { evaluate, init } from './bin'
+  import { getEnv } from './fs'
+
+  const pwd = writable('/home/guest')
+
+  window.onload = () => {
+    console.log('initalizing')
+    init()
+  }
 
   const EMPTY = ''
   const DASH = '_'
@@ -42,70 +51,7 @@
   let caretClass = 'caret-empty'
   let CONTROL_DOWN = false
   let prevCmd = 0
-
-  setEnv('PWD', '/home/guest')
-  setEnv('HOME', '/home/guest')
-
-  setFs({
-    'home': {
-      'guest': {
-        '.bashrc': '#!/usr/sh',
-        '.history': ''
-      },
-      'root': {}
-    }
-  })
-
   let user = 'guest'
-
-  const echo = (args: string) => {
-    return args.replaceAll('"', '')
-  }
-
-  const ls = (arg: string) => {
-    return Object.keys(readDir(arg, 'ls')).join(' ')
-  }
-
-  const cat = (arg: string) => {
-    const file = readDir('arg', 'cat')
-    return (typeof file === 'string') 
-      ? file
-      : `cat: ${arg}: Is a directory`
-  }
-
-
-  const cd = (args: string) => {
-    try {
-      const tokens = parsePath(args === EMPTY ? '~' : args)
-      readDir(args, 'cd')
-      setEnv('PWD', '/' + tokens.join('/'))
-    } catch {
-      return `cd: no such file or directory: ${args}`
-    }
-
-  const evaluate = (input: string) => {
-    if (input === EMPTY) return
-
-    const cmds = {
-      echo,
-      cd,
-      ls,
-      pwd: 'dummy',
-      cat,
-    }
-
-    // TODO command parsing
-    const cmd = (input.split(' ')?.[0] ?? input).trim()
-
-    const argsI = input.indexOf(' ')
-    const args = argsI === -1 ? EMPTY : input.slice(argsI + 1)
-
-    if (!cmds[cmd]) return `sh: command not found: ${cmd}`
-
-    if (cmd === 'pwd') return `${getEnv('PWD')}/`
-
-    return cmds[cmd](args)
-  }
 
   const up = ({ key }: KeyboardEvent) => {
     console.log({ key })
@@ -130,7 +76,9 @@
       case "Enter": {
         const cmd = caret === DASH ? `${precaret}${postcaret}` : `${precaret}${caret}${postcaret}`
         const wd = getEnv('PWD')
-        oldCmds = [...oldCmds, { cmd, stdout: evaluate(cmd), wd }]
+        const stdout = evaluate(cmd)
+        pwd.update(() => getEnv('PWD'))
+        oldCmds = [...oldCmds, { cmd, stdout, wd }]
         precaret = postcaret = EMPTY
         caret = DASH
         prevCmd = 0
@@ -213,7 +161,7 @@
     <Prompt pwd={oldCmd.wd} usr={user}>{oldCmd.cmd}</Prompt>
     {#if oldCmd.stdout}<span>{oldCmd.stdout}</span>{/if}
   {/each}
-  <Prompt pwd={getEnv('PWD')} usr={user}>
+  <Prompt pwd={$pwd} usr={user}>
     {precaret}<span class={caretClass}>{caret}</span>{postcaret}
   </Prompt>
   <!-- svelte-ignore a11y-autofocus -->

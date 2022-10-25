@@ -8,9 +8,9 @@ type ENV = {
 
 type Directory = Record<string, string | Object>
 
-function get<T>(lsKey: 'ENV' | 'FS'): T {
+function get<T>(lsKey: 'ENV' | 'FS'): T | null {
   const ls = localStorage.getItem(lsKey)
-  if (!ls) throw new Error('ENV not set')
+  if (!ls) return null
   return JSON.parse(ls) as T
 }
 
@@ -18,17 +18,14 @@ export function setFs(fs: Directory): void {
   localStorage.setItem(FS, JSON.stringify(fs))
 }
 
-function _getEnv(key: keyof ENV): string {
+export function getEnv(key: keyof ENV): string {
   return get<ENV>(ENV)[key] ?? ''
 }
 
-export const getEnv = _getEnv.bind(_getEnv)
-
-function _setEnv(key: string, value: string): void {
-  localStorage.setItem(ENV, JSON.stringify({ ...get<ENV>(ENV), [key]: value }))
+export function setEnv(key: string, value: string): void {
+  const env = (get<ENV>(ENV) ?? {})
+  localStorage.setItem(ENV, JSON.stringify({ ...env, [key]: value }))
 }
-
-export const setEnv = _setEnv.bind(_setEnv)
 
 const absoluteTokens = (path: string) => path.split('/').filter(t => !!t)
 
