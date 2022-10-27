@@ -3,29 +3,6 @@
     left: -1000px;
     position: absolute;
   }
-
-  .caret-empty {
-    animation: empty 1s step-end infinite;
-    color: transparent;
-  }
-
-  .caret-full {
-    animation: full 1s step-end infinite;
-    color: #fff;
-  }
-
-  @keyframes empty {
-    50% {
-      background-color: #fff;
-    }
-  }
-
-  @keyframes full {
-    50% {
-      background-color: #fff;
-      color: #000;
-    }
-  }
 </style>
 
 <script lang="ts">
@@ -33,6 +10,7 @@
 
   import Prompt from './Prompt.svelte'
   import History from './History.svelte'
+  import Caret from './Caret.svelte'
 
   import { evaluate, init } from '../lib/sh'
   import { getEnv } from '../lib/fs'
@@ -57,7 +35,7 @@
   let precaret = ''
   let caret = DASH
   let postcaret = ''
-  let caretClass = 'caret-empty'
+  let caretActive = false
 
   /* state */
   let CONTROL_DOWN = false
@@ -136,7 +114,7 @@
         precaret = precaret.slice(0, lastIndex)
         postcaret = caret === DASH ? EMPTY : `${caret}${postcaret}`
         caret = last
-        caretClass = 'caret-full'
+        caretActive = true
         return
       }
       case 'ArrowUp': {
@@ -166,7 +144,7 @@
             precaret = `${precaret}${caret}`
           }
           caret = DASH
-          caretClass = 'caret-empty'
+          caretActive = false
           return
         }
         const first = postcaret[0]
@@ -203,7 +181,7 @@
     precaret = postcaret = EMPTY
     caret = DASH
     prevCmd = 0
-    caretClass = 'caret-empty'
+    caretActive = false
   }
 
   const refocus = (e: Event) => window.setTimeout(() => (e.target as HTMLInputElement).focus(), 0)
@@ -218,7 +196,7 @@
   {#if !FULL_SCREEN}
     <History {oldCmds} />
     <Prompt pwd={$pwd} usr={user}>
-      {precaret}<span class={caretClass}>{caret}</span>{postcaret}
+      <Caret {precaret} {caret} {postcaret} {caretActive} />
     </Prompt>
   {:else}
     <FullScreen appName={APP_NAME} appState={APP_STATE} />
