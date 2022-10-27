@@ -69,6 +69,7 @@
   // TODO whoami and login
   let user = 'guest'
 
+  // TODO import key mappings, i.e. (state) => mapping() => { state }
   /* key mappings */
   const viUp = ({ key }: KeyboardEvent) => {
     console.log({ key, APP_NAME, mapping: 'vi' })
@@ -109,6 +110,8 @@
       case 'Enter': {
         const cmd = caret === DASH ? `${precaret}${postcaret}` : `${precaret}${caret}${postcaret}`
         const wd = getEnv('PWD')
+
+        // TODO tokenize command here
 
         /* full screen apps */
         if (['vi'].includes(cmd)) {
