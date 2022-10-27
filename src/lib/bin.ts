@@ -6,16 +6,16 @@ const echo = (args: string) => {
   return args.replaceAll('"', '')
 }
 
-const ls = (arg: string) => {
-  const { exists, isDirectory, obj } = stat(arg)
-  if (!exists) return `ls: cannot access '${arg}': No such file or directory`
-  return isDirectory ? Object.keys(obj).join(' ') : arg.split('/').at(-1)
+const ls = (args: string) => {
+  const { exists, isDirectory, obj } = stat(args)
+  if (!exists) return `ls: cannot access '${args}': No such file or directory`
+  return isDirectory ? Object.keys(obj).join(' ') : args.split('/').at(-1)
 }
 
-const cat = (arg: string): string => {
-  const { exists, isDirectory, obj } = stat(arg)
-  if (!exists) return `cat: cannot access '${arg}': No such file or directory`
-  return isDirectory ? `cat: ${arg}: Is a directory` : (obj as string)
+const cat = (args: string): string => {
+  const { exists, isDirectory, obj } = stat(args)
+  if (!exists) return `cat: cannot access '${args}': No such file or directory`
+  return isDirectory ? `cat: ${args}: Is a directory` : (obj as string)
 }
 
 const cd = (args: string) => {
@@ -43,6 +43,33 @@ const separate = (args: string): { name: string; path: string } => {
   return { name: tokens.at(-1), path }
 }
 
+const node = (args: string) => {
+  const { exists, obj, isDirectory } = stat(args)
+  if (isDirectory) return `node: ${args}: is a directory`
+
+  try {
+    let stdout = ''
+
+    const tmp = window.console
+
+    // TODO parse \n as a new span
+    window.console = {
+      log: (args: string) => {
+        stdout += `${args}\n`
+      },
+    } as Console
+
+    eval(exists ? (obj as string) : args)
+
+    window.console = tmp
+    console.log('done')
+
+    return stdout
+  } catch (e) {
+    return (e as Error).message
+  }
+}
+
 export const evaluate = (input: string) => {
   if (input === EMPTY) return
 
@@ -54,6 +81,7 @@ export const evaluate = (input: string) => {
     cat,
     rm,
     touch,
+    node,
   }
 
   // TODO command parsing, .i.e. flags, different args, shell expansions, pipes, quotes
