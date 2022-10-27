@@ -1,206 +1,88 @@
-<style>
-  input {
-    left: -1000px;
-    position: absolute;
-  }
-</style>
-
 <script lang="ts">
-  import { writable } from 'svelte/store'
-
   import Prompt from './components/Prompt.svelte'
   import History from './components/History.svelte'
   import Caret from './components/Caret.svelte'
   import FullScreen from './components/FullScreen.svelte'
 
-  import { evaluate, init } from './lib/sh'
-  import { getEnv } from './lib/fs'
-  import { EMPTY, DASH } from './lib/constants'
+  import { init } from './lib/sh'
+  import { DASH } from './lib/constants'
+  import { refocus } from './lib/utils'
+  import { standardUp, standardDown } from './mappings'
 
-  import type { AppState, Commands, KeyMapping } from 'src/lib/types'
-
-  // TODO figure out a better way to rerender this
-  const pwd = writable('/home/guest')
-
-  window.onload = () => {
-    console.log('initalizing')
-    init()
-  }
-
-  /* history */
-  let prevCmd = 0
-  let oldCmds: Commands = []
-
-  /* line state */
-  let precaret = ''
-  let caret = DASH
-  let postcaret = ''
-  let caretActive = false
+  import type { AppState, Commands } from 'src/lib/types'
 
   /* state */
   let CONTROL_DOWN = false
+  let OLD_COMMANDS: Commands = []
   let FULL_SCREEN = false
   let APP_NAME: string | null = null
   let APP_STATE: AppState = {}
-  let UP_MAPPING: KeyMapping
-  let DOWN_MAPPING: KeyMapping
+  let UP_MAPPING = standardUp
+  let DOWN_MAPPING = standardDown
+  let PRECARET = ''
+  let CARET = DASH
+  let POSTCARET = ''
+  let CARET_ACTIVE = false
+  let USER = 'guest'
+  let PWD = '/home/guest'
+
+  /* below this point is messy */
+  // TODO let init handle user and pwd
   // TODO whoami and login
-  let user = 'guest'
-
-  // TODO import key mappings, i.e. (state) => mapping() => { state }
-  /* key mappings */
-  const viUp = ({ key }: KeyboardEvent) => {
-    console.log({ key, APP_NAME, mapping: 'vi' })
-
-    switch (key) {
-      case 'q': {
-        FULL_SCREEN = false
-        APP_NAME = null
-        UP_MAPPING = standardUp
-        return
+  // TODO make state into an object and do { ...state }
+  const handleUp = (e: KeyboardEvent) => {
+    const {
+      controlDown,
+      oldCommands,
+      precaret,
+      caret,
+      postcaret,
+      caretActive,
+      pwd,
+    } = UP_MAPPING({ e, s: {
+        controlDown: CONTROL_DOWN,
+        oldCommands: OLD_COMMANDS,
+        fullScreen: FULL_SCREEN,
+        appName: APP_NAME,
+        appState: APP_STATE,
+        precaret: PRECARET,
+        caret: CARET,
+        postcaret: POSTCARET,
+        caretActive: CARET_ACTIVE,
+        pwd: PWD,
       }
-      default: {
-        console.log('default')
-        return
-      }
-    }
+    })
+    CONTROL_DOWN = controlDown
+    OLD_COMMANDS = oldCommands
+    PRECARET = precaret
+    CARET = caret
+    POSTCARET = postcaret
+    CARET_ACTIVE = caretActive
+    PWD = pwd
   }
 
-  const standardUp = ({ key }: KeyboardEvent) => {
-    console.log({ key, APP_NAME, mapping: 'standard' })
-
-    /* check for ctl codes */
-    if (CONTROL_DOWN) {
-      switch (key) {
-        case 'l':
-          oldCmds = []
-          clearLine()
-          return
-        case 'Control':
-          CONTROL_DOWN = false
-          return
-        default:
-          return
-      }
-    }
-
-    switch (key) {
-      case 'Enter': {
-        const cmd = caret === DASH ? `${precaret}${postcaret}` : `${precaret}${caret}${postcaret}`
-        const wd = getEnv('PWD')
-
-        // TODO tokenize command here
-
-        /* full screen apps */
-        if (['vi'].includes(cmd)) {
-          FULL_SCREEN = true
-          APP_NAME = cmd
-          oldCmds = [...oldCmds, { cmd, stdout: null, wd, usr: user }]
-          UP_MAPPING = viUp
-          clearLine()
-          return
-        }
-
-        const stdout = evaluate(cmd)
-        pwd.update(() => getEnv('PWD'))
-        oldCmds = [...oldCmds, { cmd, stdout, wd, usr: user }]
-        clearLine()
-        return
-      }
-      case 'ArrowLeft': {
-        if (precaret === EMPTY) return
-        const lastIndex = precaret.length - 1
-        const last = precaret[lastIndex]
-        precaret = precaret.slice(0, lastIndex)
-        postcaret = caret === DASH ? EMPTY : `${caret}${postcaret}`
-        caret = last
-        caretActive = true
-        return
-      }
-      case 'ArrowUp': {
-        postcaret = EMPTY
-        caret = DASH
-        const history = oldCmds.filter((c) => c.cmd !== EMPTY).reverse()
-        if (prevCmd < history.length) {
-          precaret = history[prevCmd].cmd
-          prevCmd += 1
-        }
-        return
-      }
-      case 'ArrowDown': {
-        postcaret = EMPTY
-        caret = DASH
-        const history = oldCmds.filter((c) => c.cmd !== EMPTY).reverse()
-        if (prevCmd > -1) {
-          prevCmd -= 1
-        }
-        precaret = prevCmd === -1 ? EMPTY : history[prevCmd].cmd
-        if (prevCmd === -1) prevCmd = 0
-        return
-      }
-      case 'ArrowRight': {
-        if (postcaret === EMPTY) {
-          if (caret !== DASH) {
-            precaret = `${precaret}${caret}`
-          }
-          caret = DASH
-          caretActive = false
-          return
-        }
-        const first = postcaret[0]
-        precaret = `${precaret}${caret}`
-        caret = first
-        postcaret = postcaret.slice(1, postcaret.length)
-        return
-      }
-      case 'Backspace': {
-        precaret = precaret.slice(0, precaret.length - 1)
-        return
-      }
-      case 'Shift':
-      case 'Tab':
-        return
-      default: {
-        precaret += key
-      }
-    }
+  const handleDown = (e: KeyboardEvent) => {
+    const { controlDown } = DOWN_MAPPING({ e, s: { controlDown: CONTROL_DOWN } })
+    CONTROL_DOWN = controlDown
   }
 
-  const standardDown = ({ key }: KeyboardEvent) => {
-    switch (key) {
-      case 'Control':
-        CONTROL_DOWN = true
-        return
-      default:
-        return
-    }
+  window.onload = () => {
+    // TODO better logging
+    console.log('initalizing')
+    init()
   }
-
-  /* utils */
-  const clearLine = () => {
-    precaret = postcaret = EMPTY
-    caret = DASH
-    prevCmd = 0
-    caretActive = false
-  }
-
-  const refocus = (e: Event) => window.setTimeout(() => (e.target as HTMLInputElement).focus(), 0)
-
-  UP_MAPPING = standardUp
-  DOWN_MAPPING = standardDown
-
-  // TODO multiline stdout
 </script>
 
 <div>
+  <!-- TODO standardize prop names -->
   {#if !FULL_SCREEN}
-    <History {oldCmds} />
-    <Prompt pwd={$pwd} usr={user}>
-      <Caret {precaret} {caret} {postcaret} {caretActive} />
+    <History oldCmds={OLD_COMMANDS} />
+    <Prompt pwd={PWD} usr={USER}>
+      <Caret precaret={PRECARET} caret={CARET} postcaret={POSTCARET} caretActive={CARET_ACTIVE} />
     </Prompt>
   {:else}
     <FullScreen appName={APP_NAME} appState={APP_STATE} />
   {/if}
   <!-- svelte-ignore a11y-autofocus -->
-  <input autofocus on:keydown={DOWN_MAPPING} on:keyup={UP_MAPPING} on:blur={refocus} />
+  <input autofocus on:keydown={handleDown} on:keyup={handleUp} on:blur={refocus} />
 </div>

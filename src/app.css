@@ -19,6 +19,11 @@ body {
   margin: 0;
 }
 
+input {
+  left: -1000px;
+  position: absolute;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

@@ -4,3 +4,6 @@ export const separate = (args: string): { name: string; path: string } => {
   const path = tokens.slice(0, tokens.length - 1).join('/')
   return { name: tokens.at(-1), path }
 }
+
+export const refocus = (e: Event) =>
+  window.setTimeout(() => (e.target as HTMLInputElement).focus(), 0)

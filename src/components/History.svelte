@@ -11,6 +11,7 @@
 <div>
   {#each oldCmds as oldCmd}
     <Prompt pwd={oldCmd.wd} usr={oldCmd.usr}>{oldCmd.cmd}</Prompt>
+    <!-- TODO multiline stdout -->
     {#if oldCmd.stdout}<span>{oldCmd.stdout}</span>{/if}
   {/each}
 </div>

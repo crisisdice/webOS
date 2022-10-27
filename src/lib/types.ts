@@ -28,3 +28,18 @@ export type VimAppState = AppState & {
   footerCaret: string
   footerPostCaret: string
 }
+
+export type APPSTATE = {
+  controlDown: boolean
+  oldCommands: Commands
+  fullScreen: boolean
+  appName: string | null
+  appState: AppState
+  upMapping: KeyMapping
+  downMapping: KeyMapping
+  precaret: string
+  caret: string
+  postcaret: string
+  caretActive: boolean
+  pwd: string
+}
