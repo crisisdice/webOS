@@ -21,3 +21,10 @@ export type KeyMapping = ({ key }: KeyboardEvent) => void
 export type AppState = {
   [key: string]: string
 }
+
+export type VimAppState = AppState & {
+  // TODO abstract caret logic
+  footerPreCaret: string
+  footerCaret: string
+  footerPostCaret: string
+}
