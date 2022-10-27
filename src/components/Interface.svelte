@@ -38,7 +38,7 @@
   import { getEnv } from '../lib/fs'
   import { EMPTY, DASH } from '../lib/constants'
 
-  import type { Commands, KeyMapping } from 'src/lib/types'
+  import type { AppState, Commands, KeyMapping } from 'src/lib/types'
   import FullScreen from './FullScreen.svelte'
 
   // TODO figure out a better way to rerender this
@@ -63,6 +63,7 @@
   let CONTROL_DOWN = false
   let FULL_SCREEN = false
   let APP_NAME: string | null = null
+  let APP_STATE: AppState = {}
   let UP_MAPPING: KeyMapping
   let DOWN_MAPPING: KeyMapping
   // TODO whoami and login
@@ -73,7 +74,7 @@
     console.log({ key, APP_NAME, mapping: 'vi' })
 
     switch (key) {
-      case "q": {
+      case 'q': {
         FULL_SCREEN = false
         APP_NAME = null
         UP_MAPPING = standardUp
@@ -108,7 +109,7 @@
       case 'Enter': {
         const cmd = caret === DASH ? `${precaret}${postcaret}` : `${precaret}${caret}${postcaret}`
         const wd = getEnv('PWD')
-        
+
         /* full screen apps */
         if (['vi'].includes(cmd)) {
           FULL_SCREEN = true
@@ -217,7 +218,7 @@
       {precaret}<span class={caretClass}>{caret}</span>{postcaret}
     </Prompt>
   {:else}
-    <FullScreen appName={APP_NAME} />
+    <FullScreen appName={APP_NAME} appState={APP_STATE} />
   {/if}
   <!-- svelte-ignore a11y-autofocus -->
   <input autofocus on:keydown={DOWN_MAPPING} on:keyup={UP_MAPPING} on:blur={refocus} />

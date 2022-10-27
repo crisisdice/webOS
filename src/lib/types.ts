@@ -17,3 +17,7 @@ export type Stat = {
 export type Commands = { cmd: string; wd: string; stdout: string; usr: string }[]
 
 export type KeyMapping = ({ key }: KeyboardEvent) => void
+
+export type AppState = {
+  [key: string]: string
+}
