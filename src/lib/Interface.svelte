@@ -29,55 +29,62 @@
 </style>
 
 <script lang="ts">
+  import { writable } from 'svelte/store'
   import Prompt from './Prompt.svelte'
+  import { evaluate } from './bin'
+  import { getEnv, init } from './fs'
+
+  const pwd = writable('/home/guest')
+
+  window.onload = () => {
+    console.log('initalizing')
+    init()
+  }
 
   const EMPTY = ''
   const DASH = '_'
 
-  let oldCmds: { cmd: string; output: string } = []
+  let oldCmds: { cmd: string; wd: string; stdout: string }[] = []
   let precaret = ''
   let caret = DASH
   let postcaret = ''
   let caretClass = 'caret-empty'
-  let shifted = false
-  let controlled = false
+  let CONTROL_DOWN = false
   let prevCmd = 0
+  let user = 'guest'
 
-  const echo = (args: string) => {
-    return args.replaceAll('"', '')
-  }
+  const up = ({ key }: KeyboardEvent) => {
+    console.log({ key })
 
-  const evaluate = (input: string) => {
-    if (input === EMPTY) return
-
-    const cmds = {
-      echo: echo,
+    /* check for ctl codes */
+    if (CONTROL_DOWN) {
+      switch (key) {
+        case 'l':
+          oldCmds = []
+          precaret = postcaret = EMPTY
+          caret = DASH
+          return
+        case 'Control':
+          CONTROL_DOWN = false
+          return
+        default:
+          return
+      }
     }
 
-    // TODO command parsing
-    const cmd = input.split(' ')?.[0] ?? input
-
-    const args = input.slice(input.indexOf(' '))
-
-    if (!cmds[cmd]) return `sh: command not found: ${cmd}`
-
-    return cmds[cmd](args)
-  }
-
-  const up = ({ keyCode }: KeyboardEvent) => {
-    console.log({ keyCode })
-    switch (keyCode) {
-      /* enter */
-      case 13: {
+    switch (key) {
+      case 'Enter': {
         const cmd = caret === DASH ? `${precaret}${postcaret}` : `${precaret}${caret}${postcaret}`
-        oldCmds = [...oldCmds, { cmd, output: evaluate(cmd) }]
+        const wd = getEnv('PWD')
+        const stdout = evaluate(cmd)
+        pwd.update(() => getEnv('PWD'))
+        oldCmds = [...oldCmds, { cmd, stdout, wd }]
         precaret = postcaret = EMPTY
         caret = DASH
         prevCmd = 0
         return
       }
-      /* left */
-      case 37: {
+      case 'ArrowLeft': {
         if (precaret === EMPTY) return
         const lastIndex = precaret.length - 1
         const last = precaret[lastIndex]
@@ -87,8 +94,7 @@
         caretClass = 'caret-full'
         return
       }
-      /* up */
-      case 38: {
+      case 'ArrowUp': {
         postcaret = EMPTY
         caret = DASH
         const history = oldCmds.filter((c) => c.cmd !== EMPTY).reverse()
@@ -98,8 +104,7 @@
         }
         return
       }
-      /* down */
-      case 40: {
+      case 'ArrowDown': {
         postcaret = EMPTY
         caret = DASH
         const history = oldCmds.filter((c) => c.cmd !== EMPTY).reverse()
@@ -110,8 +115,7 @@
         if (prevCmd === -1) prevCmd = 0
         return
       }
-      /* right */
-      case 39: {
+      case 'ArrowRight': {
         if (postcaret === EMPTY) {
           if (caret !== DASH) {
             precaret = `${precaret}${caret}`
@@ -126,71 +130,40 @@
         postcaret = postcaret.slice(1, postcaret.length)
         return
       }
-      /* delete */
-      case 8: {
+      case 'Backspace': {
         precaret = precaret.slice(0, precaret.length - 1)
         return
       }
+      case 'Shift':
+      case 'Tab':
+        return
       default: {
-        if (controlled) {
-          if (keyCode === 76) {
-            oldCmds = []
-            precaret = postcaret = EMPTY
-            caret = DASH
-            return
-          }
-        }
-
-        if (keyCode === 17) {
-          controlled = false
-        }
-
-        // TODO improve keyboard parsing
-        if (keyCode > 31) {
-          precaret +=
-            keyCode === 222
-              ? shifted
-                ? '"'
-                : "'"
-              : keyCode > 64 && keyCode <= 90
-              ? String.fromCharCode(shifted ? keyCode : keyCode + 32)
-              : String.fromCharCode(keyCode)
-        }
-
-        if (keyCode === 16) {
-          shifted = false
-        }
+        precaret += key
       }
     }
   }
 
-  const down = ({ keyCode }: KeyboardEvent) => {
-    switch (keyCode) {
-      /* shift */
-      case 16:
-        shifted = true
-        return
-      case 17:
-        controlled = true
+  const down = ({ key }: KeyboardEvent) => {
+    switch (key) {
+      case 'Control':
+        CONTROL_DOWN = true
         return
       default:
         return
     }
   }
+
+  const refocus = (e: Event) => window.setTimeout(() => (e.target as HTMLInputElement).focus(), 0)
 </script>
 
 <div>
   {#each oldCmds as oldCmd}
-    <Prompt>{oldCmd.cmd}</Prompt>
-    {#if oldCmd.output}<span>{oldCmd.output}</span>{/if}
+    <Prompt pwd={oldCmd.wd} usr={user}>{oldCmd.cmd}</Prompt>
+    {#if oldCmd.stdout}<span>{oldCmd.stdout}</span>{/if}
   {/each}
-  <Prompt>
+  <Prompt pwd={$pwd} usr={user}>
     {precaret}<span class={caretClass}>{caret}</span>{postcaret}
   </Prompt>
-  <input
-    autofocus
-    on:keydown={down}
-    on:keyup={up}
-    on:blur={(e) => window.setTimeout(() => e.target.focus(), 0)}
-  />
+  <!-- svelte-ignore a11y-autofocus -->
+  <input autofocus on:keydown={down} on:keyup={up} on:blur={refocus} />
 </div>
