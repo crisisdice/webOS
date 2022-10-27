@@ -30,10 +30,15 @@
 
 <script lang="ts">
   import { writable } from 'svelte/store'
+
   import Prompt from './Prompt.svelte'
-  import { EMPTY, DASH } from '../lib/constants'
+  import History from './History.svelte'
+
   import { evaluate, init } from '../lib/sh'
   import { getEnv } from '../lib/fs'
+  import { EMPTY, DASH } from '../lib/constants'
+
+  import type { Commands } from 'src/lib/types'
 
   // TODO figure out a better way to rerender this
   const pwd = writable('/home/guest')
@@ -45,7 +50,7 @@
 
   /* history */
   let prevCmd = 0
-  let oldCmds: { cmd: string; wd: string; stdout: string }[] = []
+  let oldCmds: Commands = []
 
   /* line state */
   let precaret = ''
@@ -57,6 +62,7 @@
   let CONTROL_DOWN = false
   // TODO whoami and login
   let user = 'guest'
+  let FULL_SCREEN = false
 
   const clearLine = () => {
     precaret = postcaret = EMPTY
@@ -89,7 +95,7 @@
         const wd = getEnv('PWD')
         const stdout = evaluate(cmd)
         pwd.update(() => getEnv('PWD'))
-        oldCmds = [...oldCmds, { cmd, stdout, wd }]
+        oldCmds = [...oldCmds, { cmd, stdout, wd, usr: user }]
         clearLine()
         return
       }
@@ -170,13 +176,14 @@
 </script>
 
 <div>
-  {#each oldCmds as oldCmd}
-    <Prompt pwd={oldCmd.wd} usr={user}>{oldCmd.cmd}</Prompt>
-    {#if oldCmd.stdout}<span>{oldCmd.stdout}</span>{/if}
-  {/each}
-  <Prompt pwd={$pwd} usr={user}>
-    {precaret}<span class={caretClass}>{caret}</span>{postcaret}
-  </Prompt>
-  <!-- svelte-ignore a11y-autofocus -->
-  <input autofocus on:keydown={down} on:keyup={up} on:blur={refocus} />
+  {#if !FULL_SCREEN}
+    <History {oldCmds} />
+    <Prompt pwd={$pwd} usr={user}>
+      {precaret}<span class={caretClass}>{caret}</span>{postcaret}
+    </Prompt>
+    <!-- svelte-ignore a11y-autofocus -->
+    <input autofocus on:keydown={down} on:keyup={up} on:blur={refocus} />
+  {:else}
+    <div>Full Screen</div>
+  {/if}
 </div>

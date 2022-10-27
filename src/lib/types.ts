@@ -13,3 +13,5 @@ export type Stat = {
   isDirectory: boolean
   obj: Directory | string
 }
+
+export type Commands = { cmd: string; wd: string; stdout: string; usr: string }[]
