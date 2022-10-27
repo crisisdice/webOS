@@ -38,7 +38,8 @@
   import { getEnv } from '../lib/fs'
   import { EMPTY, DASH } from '../lib/constants'
 
-  import type { Commands } from 'src/lib/types'
+  import type { Commands, KeyMapping } from 'src/lib/types'
+  import FullScreen from './FullScreen.svelte'
 
   // TODO figure out a better way to rerender this
   const pwd = writable('/home/guest')
@@ -60,19 +61,33 @@
 
   /* state */
   let CONTROL_DOWN = false
+  let FULL_SCREEN = false
+  let APP_NAME: string | null = null
+  let UP_MAPPING: KeyMapping
+  let DOWN_MAPPING: KeyMapping
   // TODO whoami and login
   let user = 'guest'
-  let FULL_SCREEN = false
 
-  const clearLine = () => {
-    precaret = postcaret = EMPTY
-    caret = DASH
-    prevCmd = 0
-    caretClass = 'caret-empty'
+  /* key mappings */
+  const viUp = ({ key }: KeyboardEvent) => {
+    console.log({ key, APP_NAME, mapping: 'vi' })
+
+    switch (key) {
+      case "q": {
+        FULL_SCREEN = false
+        APP_NAME = null
+        UP_MAPPING = standardUp
+        return
+      }
+      default: {
+        console.log('default')
+        return
+      }
+    }
   }
 
-  const up = ({ key }: KeyboardEvent) => {
-    console.log({ key })
+  const standardUp = ({ key }: KeyboardEvent) => {
+    console.log({ key, APP_NAME, mapping: 'standard' })
 
     /* check for ctl codes */
     if (CONTROL_DOWN) {
@@ -93,6 +108,17 @@
       case 'Enter': {
         const cmd = caret === DASH ? `${precaret}${postcaret}` : `${precaret}${caret}${postcaret}`
         const wd = getEnv('PWD')
+        
+        /* full screen apps */
+        if (['vi'].includes(cmd)) {
+          FULL_SCREEN = true
+          APP_NAME = cmd
+          oldCmds = [...oldCmds, { cmd, stdout: null, wd, usr: user }]
+          UP_MAPPING = viUp
+          clearLine()
+          return
+        }
+
         const stdout = evaluate(cmd)
         pwd.update(() => getEnv('PWD'))
         oldCmds = [...oldCmds, { cmd, stdout, wd, usr: user }]
@@ -158,7 +184,7 @@
     }
   }
 
-  const down = ({ key }: KeyboardEvent) => {
+  const standardDown = ({ key }: KeyboardEvent) => {
     switch (key) {
       case 'Control':
         CONTROL_DOWN = true
@@ -168,11 +194,20 @@
     }
   }
 
+  /* utils */
+  const clearLine = () => {
+    precaret = postcaret = EMPTY
+    caret = DASH
+    prevCmd = 0
+    caretClass = 'caret-empty'
+  }
+
   const refocus = (e: Event) => window.setTimeout(() => (e.target as HTMLInputElement).focus(), 0)
 
+  UP_MAPPING = standardUp
+  DOWN_MAPPING = standardDown
+
   // TODO multiline stdout
-  // TODO history component
-  // TODO full pane apps
 </script>
 
 <div>
@@ -181,9 +216,9 @@
     <Prompt pwd={$pwd} usr={user}>
       {precaret}<span class={caretClass}>{caret}</span>{postcaret}
     </Prompt>
-    <!-- svelte-ignore a11y-autofocus -->
-    <input autofocus on:keydown={down} on:keyup={up} on:blur={refocus} />
   {:else}
-    <div>Full Screen</div>
+    <FullScreen appName={APP_NAME} />
   {/if}
+  <!-- svelte-ignore a11y-autofocus -->
+  <input autofocus on:keydown={DOWN_MAPPING} on:keyup={UP_MAPPING} on:blur={refocus} />
 </div>
