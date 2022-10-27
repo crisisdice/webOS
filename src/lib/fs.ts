@@ -1,48 +1,10 @@
-const ENV = 'ENV'
-const FS = 'FS'
-
-export const init = () => {
-  setEnv('PWD', '/home/guest')
-  setEnv('HOME', '/home/guest')
-
-  setFs({
-    home: {
-      guest: {
-        '.bashrc': '#!/usr/sh',
-        '.history': '',
-      },
-      root: {},
-    },
-  })
-  console.log('initalized')
-}
-
-type ENV = {
-  PWD: string
-  HOME: string
-}
-
-type Directory = {
-  [key: string]: string | Directory
-}
+import { FS, ENV } from './constants'
+import type { ENV as IENV, Directory, Stat } from './types'
 
 function get<T>(lsKey: 'ENV' | 'FS'): T | null {
   const ls = localStorage.getItem(lsKey)
   if (!ls) return null
   return JSON.parse(ls) as T
-}
-
-function setFs(fs: Directory): void {
-  localStorage.setItem(FS, JSON.stringify(fs))
-}
-
-export function getEnv(key: keyof ENV): string {
-  return get<ENV>(ENV)[key] ?? ''
-}
-
-export function setEnv(key: string, value: string): void {
-  const env = get<ENV>(ENV) ?? {}
-  localStorage.setItem(ENV, JSON.stringify({ ...env, [key]: value }))
 }
 
 const absoluteTokens = (path: string) => path.split('/').filter((t) => !!t)
@@ -91,6 +53,19 @@ function traverse(tokens: string[], fs: Directory) {
   return tmp
 }
 
+export function setFs(fs: Directory): void {
+  localStorage.setItem(FS, JSON.stringify(fs))
+}
+
+export function getEnv(key: keyof IENV): string {
+  return get<IENV>(ENV)[key] ?? ''
+}
+
+export function setEnv(key: string, value: string): void {
+  const env = get<IENV>(ENV) ?? {}
+  localStorage.setItem(ENV, JSON.stringify({ ...env, [key]: value }))
+}
+
 export function write({
   path,
   name,
@@ -110,13 +85,6 @@ export function write({
   }
 
   setFs(fs)
-}
-
-type Stat = {
-  exists: boolean
-  path: string
-  isDirectory: boolean
-  obj: Directory | string
 }
 
 export function stat(args: string): Stat {

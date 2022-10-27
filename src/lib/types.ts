@@ -1,0 +1,15 @@
+export type ENV = {
+  PWD: string
+  HOME: string
+}
+
+export type Directory = {
+  [key: string]: string | Directory
+}
+
+export type Stat = {
+  exists: boolean
+  path: string
+  isDirectory: boolean
+  obj: Directory | string
+}

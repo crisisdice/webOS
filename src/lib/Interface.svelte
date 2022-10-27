@@ -31,9 +31,11 @@
 <script lang="ts">
   import { writable } from 'svelte/store'
   import Prompt from './Prompt.svelte'
-  import { evaluate } from './bin'
-  import { getEnv, init } from './fs'
+  import { EMPTY, DASH } from './constants'
+  import { evaluate, init } from './sh'
+  import { getEnv } from './fs'
 
+  // TODO figure out a better way to rerender this
   const pwd = writable('/home/guest')
 
   window.onload = () => {
@@ -41,17 +43,27 @@
     init()
   }
 
-  const EMPTY = ''
-  const DASH = '_'
-
+  /* history */
+  let prevCmd = 0
   let oldCmds: { cmd: string; wd: string; stdout: string }[] = []
+
+  /* line state */
   let precaret = ''
   let caret = DASH
   let postcaret = ''
   let caretClass = 'caret-empty'
+
+  /* state */
   let CONTROL_DOWN = false
-  let prevCmd = 0
+  // TODO whoami and login
   let user = 'guest'
+
+  const clearLine = () => {
+    precaret = postcaret = EMPTY
+    caret = DASH
+    prevCmd = 0
+    caretClass = 'caret-empty'
+  }
 
   const up = ({ key }: KeyboardEvent) => {
     console.log({ key })
@@ -61,8 +73,7 @@
       switch (key) {
         case 'l':
           oldCmds = []
-          precaret = postcaret = EMPTY
-          caret = DASH
+          clearLine()
           return
         case 'Control':
           CONTROL_DOWN = false
@@ -79,9 +90,7 @@
         const stdout = evaluate(cmd)
         pwd.update(() => getEnv('PWD'))
         oldCmds = [...oldCmds, { cmd, stdout, wd }]
-        precaret = postcaret = EMPTY
-        caret = DASH
-        prevCmd = 0
+        clearLine()
         return
       }
       case 'ArrowLeft': {
@@ -154,6 +163,10 @@
   }
 
   const refocus = (e: Event) => window.setTimeout(() => (e.target as HTMLInputElement).focus(), 0)
+
+  // TODO multiline stdout
+  // TODO history component
+  // TODO full pane apps
 </script>
 
 <div>
