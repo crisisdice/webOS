@@ -31,9 +31,9 @@
 <script lang="ts">
   import { writable } from 'svelte/store'
   import Prompt from './Prompt.svelte'
-  import { EMPTY, DASH } from './constants'
-  import { evaluate, init } from './sh'
-  import { getEnv } from './fs'
+  import { EMPTY, DASH } from '../lib/constants'
+  import { evaluate, init } from '../lib/sh'
+  import { getEnv } from '../lib/fs'
 
   // TODO figure out a better way to rerender this
   const pwd = writable('/home/guest')

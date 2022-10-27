@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Interface from './lib/Interface.svelte'
+  import Interface from './components/Interface.svelte'
 </script>
 
 <main>
