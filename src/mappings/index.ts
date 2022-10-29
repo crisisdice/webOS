@@ -1,94 +1,115 @@
-// /* key mappings */
-// export const viUp = ({ key }: KeyboardEvent) => {
-//   console.log({ key, APP_NAME, mapping: 'vi' })
-//
-//   switch (key) {
-//     case 'q': {
-//       FULL_SCREEN = false
-//       APP_NAME = null
-//       UP_MAPPING = standardUp
-//       return
-//     }
-//     default: {
-//       console.log('default')
-//       return
-//     }
-//   }
-// }
+/* key mappings */
+export const viUp = ({
+  e: { key },
+  STATE,
+  STATE: { FULL_SCREEN, APP_NAME, UP_MAPPING },
+}: {
+  e: KeyboardEvent
+  STATE: State
+}): State => {
+  console.log({ key, mapping: 'vi', STATE })
 
-import type { APPSTATE } from '../lib/types'
-import { EMPTY, DASH, PWD } from '../lib/constants'
+  switch (key) {
+    case 'q': {
+      FULL_SCREEN = false
+      APP_NAME = null
+      UP_MAPPING = standardUp
+      break
+    }
+    default: {
+      console.log('default')
+    }
+  }
+
+  return { ...STATE, FULL_SCREEN, APP_NAME, UP_MAPPING }
+}
+
+import { EMPTY, DASH } from '../lib/constants'
 import { getEnv } from '../lib/fs'
 import { evaluate } from '../lib/sh'
+import type { State } from '../lib/types'
 
 export const standardUp = ({
   e: { key },
-  s: { controlDown, oldCommands, precaret, caret, postcaret, caretActive, pwd },
+  STATE,
+  STATE: {
+    FULL_SCREEN,
+    APP_NAME,
+    CONTROL_DOWN,
+    OLD_COMMANDS,
+    UP_MAPPING,
+    USER,
+    PRECARET,
+    CARET,
+    POSTCARET,
+    CARET_ACTIVE,
+    PWD,
+  },
 }: {
   e: KeyboardEvent
-  s: Omit<APPSTATE, 'upMapping' | 'downMapping'>
-}) => {
-  console.log({ key, mapping: 'standard' })
+  STATE: State
+}): State => {
+  console.log({ key, mapping: 'sh', STATE })
 
   const clearLine = () => {
-    precaret = postcaret = EMPTY
-    caret = DASH
+    PRECARET = POSTCARET = EMPTY
+    CARET = DASH
     // TODO fix history
     // prevCmd = 0
-    caretActive = false
+    CARET_ACTIVE = false
   }
 
   /* check for ctl codes */
-  if (controlDown) {
+  if (CONTROL_DOWN) {
     switch (key) {
       case 'l':
-        oldCommands = []
+        OLD_COMMANDS = []
         clearLine()
         break
       case 'Control':
-        controlDown = false
+        CONTROL_DOWN = false
         break
       default:
         break
     }
 
-    return { controlDown, oldCommands, precaret, caret, postcaret, caretActive, pwd }
+    return { ...STATE, CONTROL_DOWN, OLD_COMMANDS, PRECARET, CARET, POSTCARET, CARET_ACTIVE, PWD }
   }
 
   switch (key) {
     case 'Enter': {
-      const cmd = caret === DASH ? `${precaret}${postcaret}` : `${precaret}${caret}${postcaret}`
-      const wd = getEnv(PWD)
+      const cmd = CARET === DASH ? `${PRECARET}${POSTCARET}` : `${PRECARET}${CARET}${POSTCARET}`
+      const wd = getEnv('PWD')
 
       // TODO tokenize command here
 
       /* full screen apps */
-      // if (['vi'].includes(cmd)) {
-      //   FULL_SCREEN = true
-      //   APP_NAME = cmd
-      //   oldCmds = [...oldCmds, { cmd, stdout: null, wd, usr: user }]
-      //   UP_MAPPING = viUp
-      //   clearLine()
-      //   break
-      // }
+      if (['vi'].includes(cmd)) {
+        FULL_SCREEN = true
+        APP_NAME = cmd
+        OLD_COMMANDS = [...OLD_COMMANDS, { cmd, stdout: null, wd, usr: USER }]
+        UP_MAPPING = viUp
+        clearLine()
+        break
+      }
 
       const stdout = evaluate(cmd)
       // TODO user
-      oldCommands = [...oldCommands, { cmd, stdout, wd, usr: 'guest' }]
+      OLD_COMMANDS = [...OLD_COMMANDS, { cmd, stdout, wd, usr: 'guest' }]
 
-      pwd = getEnv(PWD)
+      PWD = getEnv('PWD')
 
       clearLine()
       break
     }
     case 'ArrowLeft': {
-      if (precaret === EMPTY) break
-      const lastIndex = precaret.length - 1
-      const last = precaret[lastIndex]
-      precaret = precaret.slice(0, lastIndex)
-      postcaret = caret === DASH ? EMPTY : `${caret}${postcaret}`
-      caret = last
-      caretActive = true
+      if (PRECARET === EMPTY) break
+      const lastIndex = PRECARET.length - 1
+      const last = PRECARET[lastIndex]
+      PRECARET = PRECARET.slice(0, lastIndex)
+      POSTCARET = CARET === DASH ? EMPTY : `${CARET}${POSTCARET}`
+      CARET = last
+      CARET_ACTIVE = true
       break
     }
     // TODO
@@ -114,49 +135,62 @@ export const standardUp = ({
     //   break
     // }
     case 'ArrowRight': {
-      if (postcaret === EMPTY) {
-        if (caret !== DASH) {
-          precaret = `${precaret}${caret}`
+      if (POSTCARET === EMPTY) {
+        if (CARET !== DASH) {
+          PRECARET = `${PRECARET}${CARET}`
         }
-        caret = DASH
-        caretActive = false
+        CARET = DASH
+        CARET_ACTIVE = false
         break
       }
-      const first = postcaret[0]
-      precaret = `${precaret}${caret}`
-      caret = first
-      postcaret = postcaret.slice(1, postcaret.length)
+      const first = POSTCARET[0]
+      PRECARET = `${PRECARET}${CARET}`
+      CARET = first
+      POSTCARET = POSTCARET.slice(1, POSTCARET.length)
       break
     }
     case 'Backspace': {
-      precaret = precaret.slice(0, precaret.length - 1)
+      PRECARET = PRECARET.slice(0, PRECARET.length - 1)
       break
     }
     case 'Shift':
     case 'Tab':
       break
     default: {
-      precaret += key
+      PRECARET += key
     }
   }
 
-  return { controlDown, oldCommands, precaret, caret, postcaret, caretActive, pwd }
+  return {
+    ...STATE,
+    FULL_SCREEN,
+    APP_NAME,
+    CONTROL_DOWN,
+    OLD_COMMANDS,
+    UP_MAPPING,
+    PRECARET,
+    CARET,
+    POSTCARET,
+    CARET_ACTIVE,
+    PWD,
+  }
 }
 
 export const standardDown = ({
   e: { key },
-  s: { controlDown },
+  STATE,
+  STATE: { CONTROL_DOWN },
 }: {
   e: KeyboardEvent
-  s: { controlDown: boolean }
-}) => {
+  STATE: State
+}): State => {
   switch (key) {
     case 'Control':
-      controlDown = true
+      CONTROL_DOWN = true
       break
     default:
       break
   }
 
-  return { controlDown }
+  return { ...STATE, CONTROL_DOWN }
 }

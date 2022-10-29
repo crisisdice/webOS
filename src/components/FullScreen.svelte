@@ -6,13 +6,13 @@
 
   import Vi from './Vi.svelte'
 
-  export let appName: string
-  export let appState: AppState | VimAppState
+  export let APP_NAME: string
+  export let APP_STATE: AppState | VimAppState
 </script>
 
 <div>
-  {#if appName === 'vi'}
-    <Vi {appState} />
+  {#if APP_NAME === 'vi'}
+    <Vi {APP_STATE} />
   {:else}
     <div>App not recognized</div>
   {/if}

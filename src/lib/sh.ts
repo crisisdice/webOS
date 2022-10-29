@@ -3,6 +3,8 @@ import { separate } from './utils'
 import { EMPTY, PWD, HOME } from './constants'
 import { echo, cd, ls, cat, rm, touch } from './bin'
 
+// TODO let init handle user and pwd
+// TODO whoami and login
 export const init = () => {
   setEnv(PWD, '/home/guest')
   setEnv(HOME, '/home/guest')

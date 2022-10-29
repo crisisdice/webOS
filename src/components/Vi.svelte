@@ -13,7 +13,7 @@
   import Caret from './Caret.svelte'
 
   // TODO create rendering interface
-  export let appState: VimAppState
+  export let APP_STATE: VimAppState
   //{#if appState.footerVisible}
 </script>
 
@@ -22,10 +22,10 @@
   {#if true}
     <div class="footer">
       : <Caret
-        precaret={appState.footerPreCaret ?? ''}
-        caret={appState.footerCaret ?? ''}
-        postcaret={appState.footerPreCaret ?? ''}
-        caretActive={false}
+        PRECARET={APP_STATE.footerPreCaret ?? ''}
+        CARET={APP_STATE.footerCaret ?? ''}
+        POSTCARET={APP_STATE.footerPostCaret ?? ''}
+        CARET_ACTIVE={false}
       />
     </div>
   {/if}

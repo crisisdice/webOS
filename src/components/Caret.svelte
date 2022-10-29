@@ -24,13 +24,13 @@
 </style>
 
 <script lang="ts">
-  export let precaret: string
-  export let caret: string
-  export let caretActive: boolean
-  export let postcaret: string
+  export let PRECARET: string
+  export let CARET: string
+  export let CARET_ACTIVE: boolean
+  export let POSTCARET: string
 </script>
 
 <span
-  >{precaret}<span class={caretActive ? 'caret-full' : 'caret-empty'}>{caret}</span
-  >{postcaret}</span
+  >{PRECARET}<span class={CARET_ACTIVE ? 'caret-full' : 'caret-empty'}>{CARET}</span
+  >{POSTCARET}</span
 >
