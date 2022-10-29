@@ -3,6 +3,7 @@ import { EMPTY, DASH } from '../lib/constants'
 import { getEnv } from '../lib/fs'
 import { evaluate } from '../lib/sh'
 import type { State } from '../lib/types'
+import { VI_MODE } from '../lib/vi/state'
 
 export const standardUp = ({
   e: { key },
@@ -10,6 +11,7 @@ export const standardUp = ({
   STATE: {
     FULL_SCREEN,
     APP_NAME,
+    APP_STATE,
     CONTROL_DOWN,
     OLD_COMMANDS,
     UP_MAPPING,
@@ -53,10 +55,9 @@ export const standardUp = ({
 
   switch (key) {
     case 'Enter': {
+      // TODO tokenize command here
       const cmd = CARET === DASH ? `${PRECARET}${POSTCARET}` : `${PRECARET}${CARET}${POSTCARET}`
       const wd = getEnv('PWD')
-
-      // TODO tokenize command here
 
       /* full screen apps */
       if (['vi'].includes(cmd)) {
@@ -64,27 +65,32 @@ export const standardUp = ({
         APP_NAME = cmd
         OLD_COMMANDS = [...OLD_COMMANDS, { cmd, stdout: null, wd, usr: USER }]
         UP_MAPPING = viUp
+        APP_STATE = {
+          MODE: VI_MODE.VISUAL,
+          COMMAND_LINE: {
+            PRECARET: '',
+            CARET: DASH,
+            POSTCARET: '',
+            CARET_ACTIVE: false,
+          },
+          LINE: {
+            PRECARET: '',
+            CARET: DASH,
+            POSTCARET: '',
+            CARET_ACTIVE: false,
+          },
+          BUFFER: [],
+          BUFFER_PRE: [],
+          BUFFER_POST: [],
+          COORDS: { x: 0, y: 0 },
+        }
         clearLine()
         break
       }
 
-      const stdout = evaluate(cmd)
-      // TODO user
-      OLD_COMMANDS = [...OLD_COMMANDS, { cmd, stdout, wd, usr: 'guest' }]
-
+      OLD_COMMANDS = [...OLD_COMMANDS, { cmd, stdout: evaluate(cmd), wd, usr: USER }]
       PWD = getEnv('PWD')
-
       clearLine()
-      break
-    }
-    case 'ArrowLeft': {
-      if (PRECARET === EMPTY) break
-      const lastIndex = PRECARET.length - 1
-      const last = PRECARET[lastIndex]
-      PRECARET = PRECARET.slice(0, lastIndex)
-      POSTCARET = CARET === DASH ? EMPTY : `${CARET}${POSTCARET}`
-      CARET = last
-      CARET_ACTIVE = true
       break
     }
     // TODO
@@ -109,19 +115,20 @@ export const standardUp = ({
     //   if (prevCmd === -1) prevCmd = 0
     //   break
     // }
+    case 'ArrowLeft': {
+      if (PRECARET === EMPTY) break
+      POSTCARET = CARET === DASH ? EMPTY : `${CARET}${POSTCARET}`
+      CARET = PRECARET.at(-1)
+      PRECARET = PRECARET.slice(0, PRECARET.length - 1)
+      CARET_ACTIVE = true
+      break
+    }
     case 'ArrowRight': {
-      if (POSTCARET === EMPTY) {
-        if (CARET !== DASH) {
-          PRECARET = `${PRECARET}${CARET}`
-        }
-        CARET = DASH
-        CARET_ACTIVE = false
-        break
-      }
-      const first = POSTCARET[0]
+      if (CARET === DASH) break
       PRECARET = `${PRECARET}${CARET}`
-      CARET = first
+      CARET = POSTCARET === EMPTY ? DASH : POSTCARET[0]
       POSTCARET = POSTCARET.slice(1, POSTCARET.length)
+      CARET_ACTIVE = !(POSTCARET === EMPTY && CARET === DASH)
       break
     }
     case 'Backspace': {
@@ -140,6 +147,7 @@ export const standardUp = ({
     ...STATE,
     FULL_SCREEN,
     APP_NAME,
+    APP_STATE,
     CONTROL_DOWN,
     OLD_COMMANDS,
     UP_MAPPING,

@@ -1,5 +1,6 @@
 
-export enum VI_STATE {
-  EDIT,
-  INSERT
+export enum VI_MODE {
+  VISUAL,
+  INSERT,
+  COMMAND,
 }

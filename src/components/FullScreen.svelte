@@ -2,12 +2,12 @@
 </style>
 
 <script lang="ts">
-  import type { AppState, VimAppState } from 'src/lib/types'
+  import type { VimAppState } from 'src/lib/types'
 
   import Vi from './Vi.svelte'
 
   export let APP_NAME: string
-  export let APP_STATE: AppState | VimAppState
+  export let APP_STATE: VimAppState
 </script>
 
 <div>
