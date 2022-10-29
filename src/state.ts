@@ -1,6 +1,6 @@
 import { standardUp, standardDown } from './mappings'
 import { DASH, EMPTY } from './lib/constants'
-import type { AppState, State } from './lib/types'
+import type { ShellState } from './lib/types'
 
 export const EMPTY_LINE = Object.freeze({
   PRECARET: EMPTY,
@@ -9,18 +9,14 @@ export const EMPTY_LINE = Object.freeze({
   CARET_ACTIVE: false,
 })
 
-export const INITAL_APP_STATE: AppState = {
-    CONTROL_DOWN: false,
-    FULL_SCREEN: false,
-    NAME: 'sh',
-    UP_MAPPING : standardUp,
-    DOWN_MAPPING : standardDown,
-}
-
-export const INITAL_STATE: State = {
+export const INITAL_STATE: Readonly<ShellState> = Object.freeze({
   OLD_COMMANDS: [],
-  APP_STATE: INITAL_APP_STATE,
-  COMMAND_LINE: EMPTY_LINE,
+  COMMAND_LINE: { ...EMPTY_LINE },
   USER : 'guest',
   PWD : '/home/guest',
-}
+  CONTROL_DOWN: false,
+  FULL_SCREEN: false,
+  NAME: 'sh',
+  UP_MAPPING : standardUp,
+  DOWN_MAPPING : standardDown,
+})

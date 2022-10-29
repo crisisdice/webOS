@@ -1,150 +1,194 @@
-import type { State, VimAppState } from '../lib/types'
+import type { KeyMapping, VimAppState } from '../lib/types'
 import { VI_MODE } from '../lib/vi/state'
-import { EMPTY, DASH } from '../lib/constants'
+import { DASH } from '../lib/constants'
 import { shiftLeft, shiftRight } from './shift'
-import { EMPTY_LINE, INITAL_APP_STATE } from '../state'
+import { EMPTY_LINE, INITAL_STATE } from '../state'
 
-export const viUp = ({
-  e: { key },
-  STATE,
-  STATE: { APP_STATE },
-}: {
-  e: KeyboardEvent
-  STATE: State
-}): State => {
-  console.log({ key, mapping: 'vi', ...APP_STATE })
+const shiftUp = ({ BUFFER_PRE, BUFFER_POST, LINE }: VimAppState['BUFFER']) => {
+  // TODO
+  return { BUFFER_PRE, BUFFER_POST, LINE }
+}
 
-  let { MODE, COMMAND_LINE } = APP_STATE as VimAppState
+const shiftDown = ({ BUFFER_PRE, BUFFER_POST, LINE }: VimAppState['BUFFER']) => {
+  // TODO
+  return { BUFFER_PRE, BUFFER_POST, LINE }
+}
+
+const del = (str: string) => str.slice(0, str.length - 1)
+
+const getLengths = ({ BUFFER }: VimAppState) => {
+  const { BUFFER_PRE, LINE, BUFFER_POST } = BUFFER
+  const { PRECARET, CARET, POSTCARET } = LINE
+
+  const LINE_LENGTH = PRECARET.length + POSTCARET.length + (CARET === DASH ? 0 : 1)
+  const BUFFER_LENGTH = BUFFER_PRE.length + BUFFER_POST.length + 1
+
+  return { LINE_LENGTH, BUFFER_LENGTH }
+}
+
+export const viUp: KeyMapping = ({ e: { key }, STATE }) => {
+  console.log({ key, ...STATE })
+
+  const { MODE } = STATE as VimAppState
+  let { COMMAND_LINE } = STATE as VimAppState
 
   if (MODE === VI_MODE.COMMAND) {
-    const { PRECARET, CARET } = COMMAND_LINE
+    let { PRECARET } = COMMAND_LINE
 
     switch (key) {
       case '`': {
-        COMMAND_LINE = { ...EMPTY_LINE }
-        MODE = VI_MODE.VISUAL
         console.log({ MODE: 'VISUAL' })
-        break
+        return { ...STATE, COMMAND_LINE: { ...EMPTY_LINE }, MODE: VI_MODE.VISUAL }
       }
       case 'q': {
-        return { ...STATE, APP_STATE: INITAL_APP_STATE }
+        // TODO process as command
+        // TODO figure out process numbers
+        return { ...INITAL_STATE }
       }
       case 'ArrowLeft': {
-        if (PRECARET === EMPTY) break
-        COMMAND_LINE = shiftLeft(COMMAND_LINE)
-        break
+        COMMAND_LINE = shiftLeft({ LINE: COMMAND_LINE })
+        return { ...STATE, COMMAND_LINE }
       }
       case 'ArrowRight': {
-        if (CARET === DASH) break
-        COMMAND_LINE = shiftRight(COMMAND_LINE)
-        break
+        COMMAND_LINE = shiftRight({ LINE: COMMAND_LINE })
+        return { ...STATE, COMMAND_LINE }
       }
-      case 'Backspace': {
-        COMMAND_LINE.PRECARET = COMMAND_LINE.PRECARET.slice(0, COMMAND_LINE.PRECARET.length - 1)
-        break
-      }
+      case 'ArrowUp':
+      case 'ArrowDown':
+      case 'Alt':
       case 'Shift':
       case 'Tab':
         break
+      case 'Backspace': {
+        PRECARET = del(PRECARET)
+        break
+      }
       default: {
-        COMMAND_LINE.PRECARET += key
+        PRECARET += key
       }
     }
 
     return {
       ...STATE,
-      APP_STATE: { ...APP_STATE, MODE, COMMAND_LINE },
+      MODE,
+      COMMAND_LINE: {
+        ...COMMAND_LINE,
+        PRECARET,
+      },
     }
   }
 
   let {
-    BUFFER_PRE,
-    BUFFER_POST,
-    LINE,
+    BUFFER,
     COORDS: { x, y },
-  } = APP_STATE as VimAppState
+  } = STATE as VimAppState
+  let { LINE } = BUFFER
+  let { PRECARET } = LINE
 
-  const { PRECARET, CARET, POSTCARET } = LINE
-  const linelength = PRECARET.length + POSTCARET.length + (CARET === DASH ? 0 : 1)
+  const { LINE_LENGTH, BUFFER_LENGTH } = getLengths(STATE as VimAppState)
 
   if (MODE === VI_MODE.VISUAL) {
     switch (key) {
       case ':': {
-        MODE = VI_MODE.COMMAND
-        console.log({ MODE: 'VISUAL' })
-        break
+        console.log({ MODE: 'COMMAND' })
+        return { ...STATE, MODE: VI_MODE.COMMAND }
       }
       case 'i': {
-        MODE = VI_MODE.INSERT
         console.log({ MODE: 'INSERT' })
-        break
+        return { ...STATE, MODE: VI_MODE.INSERT }
       }
-      case 'ArrowLeft':
-      case 'h': {
-        if (PRECARET === EMPTY) break
-        LINE = shiftLeft(LINE)
-        // TODO this check should not be needed because it should break above
-        x = x !== 0 ? x - 1 : x
-        break
+      case 'k':
+      case 'ArrowUp': {
+        if (y !== 0) {
+          y -= 1
+        }
+        BUFFER = shiftUp(BUFFER)
+        return { ...STATE, BUFFER, COORDS: { x, y } }
       }
-      case 'ArrowRight':
-      case 'l': {
-        if (CARET === DASH) break
-        LINE = shiftRight(LINE)
-        x = x !== linelength ? x + 1 : x
-        break
+      case 'j':
+      case 'ArrowDown': {
+        if (y !== BUFFER_LENGTH) {
+          y += 1
+        }
+        BUFFER = shiftDown(BUFFER)
+        return { ...STATE, BUFFER, COORDS: { x, y } }
       }
+      case 'h':
+      case 'ArrowLeft': {
+        if (x !== 0) {
+          x -= 1
+        }
+        LINE = shiftLeft({ LINE })
+        return { ...STATE, BUFFER: { ...BUFFER, LINE }, COORDS: { x, y } }
+      }
+      case 'l':
+      case 'ArrowRight': {
+        if (x !== LINE_LENGTH) {
+          x += 1
+        }
+        return { ...STATE, BUFFER: { ...BUFFER, LINE }, COORDS: { x, y } }
+      }
+      default:
+        return STATE
     }
-
-    return { ...STATE, APP_STATE: { ...APP_STATE, MODE, LINE, COORDS: { x, y } } }
   }
 
   switch (key) {
     case '`': {
-      MODE = VI_MODE.VISUAL
       console.log({ MODE: 'VISUAL' })
-      break
+      return { ...STATE, MODE: VI_MODE.VISUAL }
     }
-    case 'Backspace': {
-      x = x !== 0 ? x - 1 : x
-      LINE.PRECARET = LINE.PRECARET.slice(0, LINE.PRECARET.length - 1)
-      break
+    case 'ArrowUp': {
+      if (y !== 0) {
+        y -= 1
+      }
+      BUFFER = shiftUp(BUFFER)
+      return { ...STATE, BUFFER, COORDS: { x, y } }
+    }
+    case 'ArrowDown': {
+      if (y !== BUFFER_LENGTH) {
+        y += 1
+      }
+      BUFFER = shiftDown(BUFFER)
+      return { ...STATE, BUFFER, COORDS: { x, y } }
     }
     case 'ArrowLeft': {
-      if (PRECARET === EMPTY) break
-      LINE = shiftLeft(LINE)
-      x = x !== 0 ? x - 1 : x
-      break
+      if (x !== 0) {
+        x -= 1
+      }
+      LINE = shiftLeft({ LINE })
+      return { ...STATE, BUFFER: { ...BUFFER, LINE }, COORDS: { x, y } }
     }
     case 'ArrowRight': {
-      if (CARET === DASH) break
-      LINE = shiftRight(LINE)
-      x = x !== linelength ? x + 1 : x
-      break
+      if (x !== LINE_LENGTH) {
+        x += 1
+      }
+      return { ...STATE, BUFFER: { ...BUFFER, LINE }, COORDS: { x, y } }
     }
     case 'Shift':
     case 'Tab':
       break
+    case 'Backspace': {
+      x = x !== 0 ? x - 1 : x
+      PRECARET = del(PRECARET)
+      break
+    }
     default: {
       x += 1
-      LINE.PRECARET += key
+      PRECARET += key
     }
   }
 
   return {
     ...STATE,
-    APP_STATE: {
-      ...APP_STATE,
-      LINE,
-      MODE,
-      BUFFER_PRE,
-      BUFFER_POST,
-      BUFFER: [
-        ...BUFFER_PRE,
-        `${PRECARET}${CARET !== DASH ? CARET : ''}${POSTCARET}`,
-        ...BUFFER_POST,
-      ],
-      COORDS: { x, y },
+    MODE,
+    BUFFER: {
+      ...BUFFER,
+      LINE: {
+        ...LINE,
+        PRECARET,
+      },
     },
+    COORDS: { x, y },
   }
 }

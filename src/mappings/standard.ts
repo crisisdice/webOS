@@ -1,29 +1,18 @@
 import { viUp } from './index'
-import { EMPTY, DASH } from '../lib/constants'
+import { DASH } from '../lib/constants'
 import { getEnv } from '../lib/fs'
 import { evaluate } from '../lib/sh'
-import type { State } from '../lib/types'
+import type { KeyMapping, ShellState, VimAppState } from '../lib/types'
 import { VI_MODE } from '../lib/vi/state'
 import { shiftLeft, shiftRight } from './shift'
 import { EMPTY_LINE } from '../state'
 
-export const standardUp = ({
-  e: { key },
-  STATE,
-  STATE: {
-    APP_STATE,
-    APP_STATE: { CONTROL_DOWN },
-    OLD_COMMANDS,
-    USER,
-    COMMAND_LINE,
-    COMMAND_LINE: { PRECARET, CARET, POSTCARET },
-    PWD,
-  },
-}: {
-  e: KeyboardEvent
-  STATE: State
-}): State => {
+export const standardUp: KeyMapping = ({ e: { key }, STATE }) => {
   console.log({ key, mapping: 'sh', STATE })
+
+  const { USER } = STATE as ShellState
+
+  let { CONTROL_DOWN, OLD_COMMANDS, COMMAND_LINE, PWD } = STATE as ShellState
 
   /* check for ctl codes */
   if (CONTROL_DOWN) {
@@ -39,39 +28,41 @@ export const standardUp = ({
         break
     }
 
-    return { ...STATE, APP_STATE: { ...APP_STATE, CONTROL_DOWN }, OLD_COMMANDS, COMMAND_LINE, PWD }
+    return { ...STATE, CONTROL_DOWN, OLD_COMMANDS, COMMAND_LINE }
   }
+
+  let { PRECARET } = COMMAND_LINE
 
   switch (key) {
     case 'Enter': {
       // TODO tokenize command here
+      const { CARET, POSTCARET } = COMMAND_LINE
       const cmd = CARET === DASH ? `${PRECARET}${POSTCARET}` : `${PRECARET}${CARET}${POSTCARET}`
       const wd = getEnv('PWD')
 
       /* full screen apps */
       if (['vi'].includes(cmd)) {
         OLD_COMMANDS = [...OLD_COMMANDS, { cmd, stdout: null, wd, usr: USER }]
-        APP_STATE = {
-          ...APP_STATE,
+        return {
+          ...STATE,
           FULL_SCREEN: true,
           NAME: 'vi',
           UP_MAPPING: viUp,
           MODE: VI_MODE.VISUAL,
           COMMAND_LINE: { ...EMPTY_LINE },
-          LINE: { ...EMPTY_LINE },
-          BUFFER: [],
-          BUFFER_PRE: [],
-          BUFFER_POST: [],
+          BUFFER: {
+            LINE: { ...EMPTY_LINE },
+            BUFFER_PRE: [],
+            BUFFER_POST: [],
+          },
           COORDS: { x: 0, y: 0 },
-        }
-        COMMAND_LINE = { ...EMPTY_LINE }
-        return { ...STATE, APP_STATE, OLD_COMMANDS, COMMAND_LINE }
+        } as VimAppState
       }
 
       OLD_COMMANDS = [...OLD_COMMANDS, { cmd, stdout: evaluate(cmd), wd, usr: USER }]
       PWD = getEnv('PWD')
       COMMAND_LINE = EMPTY_LINE
-      return { ...STATE, APP_STATE, OLD_COMMANDS, COMMAND_LINE, PWD }
+      return { ...STATE, OLD_COMMANDS, COMMAND_LINE, PWD }
     }
     // TODO
     // case 'ArrowUp': {
@@ -96,13 +87,11 @@ export const standardUp = ({
     //   break
     // }
     case 'ArrowLeft': {
-      if (PRECARET === EMPTY) break
-      COMMAND_LINE = shiftLeft(COMMAND_LINE)
+      COMMAND_LINE = shiftLeft({ LINE: COMMAND_LINE })
       break
     }
     case 'ArrowRight': {
-      if (CARET === DASH) break
-      COMMAND_LINE = shiftRight(COMMAND_LINE)
+      COMMAND_LINE = shiftRight({ LINE: COMMAND_LINE })
       break
     }
     case 'Backspace': {
@@ -119,7 +108,6 @@ export const standardUp = ({
 
   return {
     ...STATE,
-    APP_STATE,
     OLD_COMMANDS,
     COMMAND_LINE: {
       ...COMMAND_LINE,
@@ -129,17 +117,8 @@ export const standardUp = ({
   }
 }
 
-export const standardDown = ({
-  e: { key },
-  STATE,
-  STATE: {
-    APP_STATE,
-    APP_STATE: { CONTROL_DOWN },
-  },
-}: {
-  e: KeyboardEvent
-  STATE: State
-}): State => {
+export const standardDown: KeyMapping = ({ e: { key }, STATE }) => {
+  let { CONTROL_DOWN } = STATE
   switch (key) {
     case 'Control':
       CONTROL_DOWN = true
@@ -148,5 +127,5 @@ export const standardDown = ({
       break
   }
 
-  return { ...STATE, APP_STATE: { ...APP_STATE, CONTROL_DOWN } }
+  return { ...STATE, CONTROL_DOWN }
 }

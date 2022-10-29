@@ -1,63 +1,38 @@
 <script lang="ts">
-  import Prompt from './components/Prompt.svelte'
-  import History from './components/History.svelte'
-  import Caret from './components/Caret.svelte'
-  import FullScreen from './components/FullScreen.svelte'
+
+  import Sh from './components/Sh.svelte'
+  import Vi from './components/Vi.svelte'
 
   import { init } from './lib/sh'
   import { refocus } from './lib/utils'
+  import type { State } from './lib/types'
+
   import { INITAL_STATE } from './state'
 
-  /* state */
-  let {
-    OLD_COMMANDS,
-    APP_STATE,
-    COMMAND_LINE,
-    USER,
-    PWD,
-  } = INITAL_STATE
-
-  /* main event handler */
-  export const handle = (up: boolean) => {
-    return (e: KeyboardEvent) => {
-      ({
-        OLD_COMMANDS,
-        APP_STATE,
-        COMMAND_LINE,
-        USER,
-        PWD,
-      } = { ...(up ? APP_STATE.UP_MAPPING : APP_STATE.DOWN_MAPPING)(
-        {
-          e,
-          STATE: {
-            OLD_COMMANDS,
-            APP_STATE,
-            COMMAND_LINE,
-            USER,
-            PWD,
-          }
-        })
-      })
-    }
-  }
-
-  /* load fs into local storage */
   window.onload = () => {
-    // TODO better logging
-    console.log('initalizing')
     init()
   }
+
+  let STATE: State = { ...INITAL_STATE }
+
+  const up = (e: KeyboardEvent) => {
+    STATE = STATE.UP_MAPPING({ e, STATE })
+  }
+
+  const down = (e: KeyboardEvent) => {
+    STATE = STATE.DOWN_MAPPING({ e, STATE })
+  }
+
 </script>
 
 <div>
-  {#if !APP_STATE.FULL_SCREEN}
-    <History {OLD_COMMANDS} />
-    <Prompt {PWD} {USER}>
-      <Caret {COMMAND_LINE} />
-    </Prompt>
+  {#if STATE.NAME === 'sh'}
+    <Sh {STATE} />
+  {:else if STATE.NAME === 'vi'}
+    <Vi {STATE} />
   {:else}
-    <FullScreen {APP_STATE} />
+    <div>App not recognized</div>
   {/if}
   <!-- svelte-ignore a11y-autofocus -->
-  <input autofocus on:keydown={handle(false)} on:keyup={handle(true)} on:blur={refocus} />
+  <input autofocus on:keydown={down} on:keyup={up} on:blur={refocus} />
 </div>
