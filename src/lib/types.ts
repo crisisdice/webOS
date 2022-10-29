@@ -20,11 +20,7 @@ export type Commands = { cmd: string; wd: string; stdout: string; usr: string }[
 
 export type KeyMapping = ({ e, STATE }: { e: KeyboardEvent; STATE: State }) => State
 
-export type AppState = {
-  [key: string]: string
-}
-
-export type VimAppState = {
+export type VimAppState = AppState & {
   MODE: VI_MODE
   BUFFER: string[]
   BUFFER_PRE: string[]
@@ -34,18 +30,20 @@ export type VimAppState = {
   COORDS: { x: number; y: number }
 }
 
-export type State = {
+export type AppState = {
   CONTROL_DOWN: boolean
-  OLD_COMMANDS: Commands
   FULL_SCREEN: boolean
-  APP_NAME: string | null
-  APP_STATE: VimAppState | null
+  NAME: string
   UP_MAPPING: KeyMapping
   DOWN_MAPPING: KeyMapping
-  PRECARET: string
-  CARET: string
-  POSTCARET: string
-  CARET_ACTIVE: boolean
+}
+
+// TODO sh as App state?
+
+export type State = {
+  OLD_COMMANDS: Commands
+  APP_STATE: VimAppState | AppState
+  COMMAND_LINE: Line
   USER: string
   PWD: string
 }

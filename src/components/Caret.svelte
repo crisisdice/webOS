@@ -24,13 +24,12 @@
 </style>
 
 <script lang="ts">
-  export let PRECARET: string
-  export let CARET: string
-  export let CARET_ACTIVE: boolean
-  export let POSTCARET: string
+  import type { Line } from '../lib/types'
+  export let COMMAND_LINE: Line
 </script>
 
 <span
-  >{PRECARET}<span class={CARET_ACTIVE ? 'caret-full' : 'caret-empty'}>{CARET}</span
-  >{POSTCARET}</span
+  >{COMMAND_LINE.PRECARET}<span class={COMMAND_LINE.CARET_ACTIVE ? 'caret-full' : 'caret-empty'}
+    >{COMMAND_LINE.CARET}</span
+  >{COMMAND_LINE.POSTCARET}</span
 >

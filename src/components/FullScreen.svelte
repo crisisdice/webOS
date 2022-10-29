@@ -2,16 +2,15 @@
 </style>
 
 <script lang="ts">
-  import type { VimAppState } from 'src/lib/types'
+  import type { AppState, VimAppState } from 'src/lib/types'
 
   import Vi from './Vi.svelte'
 
-  export let APP_NAME: string
-  export let APP_STATE: VimAppState
+  export let APP_STATE: VimAppState | AppState
 </script>
 
 <div>
-  {#if APP_NAME === 'vi'}
+  {#if APP_STATE.NAME === 'vi'}
     <Vi {APP_STATE} />
   {:else}
     <div>App not recognized</div>

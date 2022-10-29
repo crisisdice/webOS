@@ -4,22 +4,19 @@ import { getEnv } from '../lib/fs'
 import { evaluate } from '../lib/sh'
 import type { State } from '../lib/types'
 import { VI_MODE } from '../lib/vi/state'
+import { shiftLeft, shiftRight } from './shift'
+import { EMPTY_LINE } from '../state'
 
 export const standardUp = ({
   e: { key },
   STATE,
   STATE: {
-    FULL_SCREEN,
-    APP_NAME,
     APP_STATE,
-    CONTROL_DOWN,
+    APP_STATE: { CONTROL_DOWN },
     OLD_COMMANDS,
-    UP_MAPPING,
     USER,
-    PRECARET,
-    CARET,
-    POSTCARET,
-    CARET_ACTIVE,
+    COMMAND_LINE,
+    COMMAND_LINE: { PRECARET, CARET, POSTCARET },
     PWD,
   },
 }: {
@@ -28,20 +25,12 @@ export const standardUp = ({
 }): State => {
   console.log({ key, mapping: 'sh', STATE })
 
-  const clearLine = () => {
-    PRECARET = POSTCARET = EMPTY
-    CARET = DASH
-    // TODO fix history
-    // prevCmd = 0
-    CARET_ACTIVE = false
-  }
-
   /* check for ctl codes */
   if (CONTROL_DOWN) {
     switch (key) {
       case 'l':
         OLD_COMMANDS = []
-        clearLine()
+        COMMAND_LINE = { ...EMPTY_LINE }
         break
       case 'Control':
         CONTROL_DOWN = false
@@ -50,7 +39,7 @@ export const standardUp = ({
         break
     }
 
-    return { ...STATE, CONTROL_DOWN, OLD_COMMANDS, PRECARET, CARET, POSTCARET, CARET_ACTIVE, PWD }
+    return { ...STATE, APP_STATE: { ...APP_STATE, CONTROL_DOWN }, OLD_COMMANDS, COMMAND_LINE, PWD }
   }
 
   switch (key) {
@@ -61,37 +50,28 @@ export const standardUp = ({
 
       /* full screen apps */
       if (['vi'].includes(cmd)) {
-        FULL_SCREEN = true
-        APP_NAME = cmd
         OLD_COMMANDS = [...OLD_COMMANDS, { cmd, stdout: null, wd, usr: USER }]
-        UP_MAPPING = viUp
         APP_STATE = {
+          ...APP_STATE,
+          FULL_SCREEN: true,
+          NAME: 'vi',
+          UP_MAPPING: viUp,
           MODE: VI_MODE.VISUAL,
-          COMMAND_LINE: {
-            PRECARET: '',
-            CARET: DASH,
-            POSTCARET: '',
-            CARET_ACTIVE: false,
-          },
-          LINE: {
-            PRECARET: '',
-            CARET: DASH,
-            POSTCARET: '',
-            CARET_ACTIVE: false,
-          },
+          COMMAND_LINE: { ...EMPTY_LINE },
+          LINE: { ...EMPTY_LINE },
           BUFFER: [],
           BUFFER_PRE: [],
           BUFFER_POST: [],
           COORDS: { x: 0, y: 0 },
         }
-        clearLine()
-        break
+        COMMAND_LINE = { ...EMPTY_LINE }
+        return { ...STATE, APP_STATE, OLD_COMMANDS, COMMAND_LINE }
       }
 
       OLD_COMMANDS = [...OLD_COMMANDS, { cmd, stdout: evaluate(cmd), wd, usr: USER }]
       PWD = getEnv('PWD')
-      clearLine()
-      break
+      COMMAND_LINE = EMPTY_LINE
+      return { ...STATE, APP_STATE, OLD_COMMANDS, COMMAND_LINE, PWD }
     }
     // TODO
     // case 'ArrowUp': {
@@ -117,18 +97,12 @@ export const standardUp = ({
     // }
     case 'ArrowLeft': {
       if (PRECARET === EMPTY) break
-      POSTCARET = CARET === DASH ? EMPTY : `${CARET}${POSTCARET}`
-      CARET = PRECARET.at(-1)
-      PRECARET = PRECARET.slice(0, PRECARET.length - 1)
-      CARET_ACTIVE = true
+      COMMAND_LINE = shiftLeft(COMMAND_LINE)
       break
     }
     case 'ArrowRight': {
       if (CARET === DASH) break
-      PRECARET = `${PRECARET}${CARET}`
-      CARET = POSTCARET === EMPTY ? DASH : POSTCARET[0]
-      POSTCARET = POSTCARET.slice(1, POSTCARET.length)
-      CARET_ACTIVE = !(POSTCARET === EMPTY && CARET === DASH)
+      COMMAND_LINE = shiftRight(COMMAND_LINE)
       break
     }
     case 'Backspace': {
@@ -145,16 +119,12 @@ export const standardUp = ({
 
   return {
     ...STATE,
-    FULL_SCREEN,
-    APP_NAME,
     APP_STATE,
-    CONTROL_DOWN,
     OLD_COMMANDS,
-    UP_MAPPING,
-    PRECARET,
-    CARET,
-    POSTCARET,
-    CARET_ACTIVE,
+    COMMAND_LINE: {
+      ...COMMAND_LINE,
+      PRECARET,
+    },
     PWD,
   }
 }
@@ -162,7 +132,10 @@ export const standardUp = ({
 export const standardDown = ({
   e: { key },
   STATE,
-  STATE: { CONTROL_DOWN },
+  STATE: {
+    APP_STATE,
+    APP_STATE: { CONTROL_DOWN },
+  },
 }: {
   e: KeyboardEvent
   STATE: State
@@ -175,5 +148,5 @@ export const standardDown = ({
       break
   }
 
-  return { ...STATE, CONTROL_DOWN }
+  return { ...STATE, APP_STATE: { ...APP_STATE, CONTROL_DOWN } }
 }

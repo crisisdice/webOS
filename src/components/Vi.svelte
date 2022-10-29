@@ -8,7 +8,6 @@
   .full-width {
     display: block;
   }
-
   .coords {
     float: right;
     padding-right: 50px;
@@ -31,12 +30,7 @@
       {/each}
       <div>
         {APP_STATE.BUFFER_PRE.length + 1}
-        <Caret
-          PRECARET={APP_STATE.LINE.PRECARET}
-          CARET={APP_STATE.LINE.CARET}
-          POSTCARET={APP_STATE.LINE.POSTCARET}
-          CARET_ACTIVE={APP_STATE.LINE.CARET_ACTIVE}
-        />
+        <Caret COMMAND_LINE={APP_STATE.LINE} />
       </div>
       {#each APP_STATE.BUFFER_POST as line, index}
         <span> {APP_STATE.BUFFER_PRE.length + 1 + index} {line}</span>
@@ -49,12 +43,7 @@
   </div>
   <div class="footer">
     {#if APP_STATE.MODE === VI_MODE.COMMAND}
-      : <Caret
-        PRECARET={APP_STATE.COMMAND_LINE.PRECARET}
-        CARET={APP_STATE.COMMAND_LINE.CARET}
-        POSTCARET={APP_STATE.COMMAND_LINE.POSTCARET}
-        CARET_ACTIVE={APP_STATE.COMMAND_LINE.CARET_ACTIVE}
-      />
+      : <Caret COMMAND_LINE={APP_STATE.COMMAND_LINE} />
     {/if}
     <span class="coords">{`${APP_STATE.COORDS.y + 1},${APP_STATE.COORDS.x + 1}`}</span>
   </div>

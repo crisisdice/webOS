@@ -10,17 +10,9 @@
 
   /* state */
   let {
-    CONTROL_DOWN,
     OLD_COMMANDS,
-    FULL_SCREEN,
-    APP_NAME,
     APP_STATE,
-    UP_MAPPING,
-    DOWN_MAPPING,
-    PRECARET,
-    CARET,
-    POSTCARET,
-    CARET_ACTIVE,
+    COMMAND_LINE,
     USER,
     PWD,
   } = INITAL_STATE
@@ -29,34 +21,18 @@
   export const handle = (up: boolean) => {
     return (e: KeyboardEvent) => {
       ({
-        CONTROL_DOWN,
         OLD_COMMANDS,
-        FULL_SCREEN,
-        APP_NAME,
         APP_STATE,
-        UP_MAPPING,
-        DOWN_MAPPING,
-        PRECARET,
-        CARET,
-        POSTCARET,
-        CARET_ACTIVE,
+        COMMAND_LINE,
         USER,
         PWD,
-      } = { ...(up ? UP_MAPPING : DOWN_MAPPING)(
+      } = { ...(up ? APP_STATE.UP_MAPPING : APP_STATE.DOWN_MAPPING)(
         {
           e,
           STATE: {
-            CONTROL_DOWN,
             OLD_COMMANDS,
-            FULL_SCREEN,
-            APP_NAME,
             APP_STATE,
-            UP_MAPPING,
-            DOWN_MAPPING,
-            PRECARET,
-            CARET,
-            POSTCARET,
-            CARET_ACTIVE,
+            COMMAND_LINE,
             USER,
             PWD,
           }
@@ -74,13 +50,13 @@
 </script>
 
 <div>
-  {#if !FULL_SCREEN}
+  {#if !APP_STATE.FULL_SCREEN}
     <History {OLD_COMMANDS} />
     <Prompt {PWD} {USER}>
-      <Caret {PRECARET} {CARET} {POSTCARET} {CARET_ACTIVE} />
+      <Caret {COMMAND_LINE} />
     </Prompt>
   {:else}
-    <FullScreen {APP_NAME} {APP_STATE} />
+    <FullScreen {APP_STATE} />
   {/if}
   <!-- svelte-ignore a11y-autofocus -->
   <input autofocus on:keydown={handle(false)} on:keyup={handle(true)} on:blur={refocus} />
