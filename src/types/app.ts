@@ -30,6 +30,7 @@ export type VimAppState = AppState & {
     BUFFER_POST: string[]
   }
   COORDS: { x: number; y: number }
+  FILE_NAME: string | null
 }
 
 export type AppState = {

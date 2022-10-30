@@ -1,13 +1,19 @@
-import type { ShellState, Line } from '../types'
+import type { ShellState, Line, VimAppState } from '../types'
 import { standardUp, standardDown } from '../mappings'
 import { DASH, EMPTY, PWD, HOME } from './constants'
-import { setEnv, setFs } from '../lib'
+import { getEnv, setEnv, setFs, stat } from '../lib'
 
 export const EMPTY_LINE = Object.freeze({
   PRECARET: EMPTY,
   CARET: DASH,
   POSTCARET: EMPTY,
   CARET_ACTIVE: false,
+})
+
+export const EMPTY_BUFFER = Object.freeze({
+  LINE: { ...EMPTY_LINE },
+  BUFFER_PRE: [],
+  BUFFER_POST: [],
 })
 
 export const INITAL_STATE: Readonly<ShellState> = Object.freeze({
@@ -55,4 +61,31 @@ export const stringToLine = (line: string, x: number): Line => {
     POSTCARET,
     CARET_ACTIVE,
   }
+}
+
+export function parseCmd(cmd: Line): string[] {
+  // TODO escapes and quoting
+  return lineToString(cmd).split(' ')
+}
+
+export function fileToBuffer(fileName: string | null): {
+  BUFFER: VimAppState['BUFFER']
+  FILE_NAME: string | null
+} {
+  const { exists, obj, path, isDirectory } = stat('', fileName)
+
+  if (!exists || isDirectory) {
+    return { BUFFER: EMPTY_BUFFER, FILE_NAME: fileName ? `${getEnv(PWD)}/${fileName}` : null }
+  }
+  if (obj === EMPTY) {
+    return { BUFFER: EMPTY_BUFFER, FILE_NAME: path }
+  }
+
+  const file = (obj as string).split('\n')
+
+  const BUFFER_PRE = []
+  const LINE = stringToLine(file[0], 0)
+  const BUFFER_POST = file.slice(1)
+
+  return { BUFFER: { BUFFER_PRE, BUFFER_POST, LINE }, FILE_NAME: path }
 }

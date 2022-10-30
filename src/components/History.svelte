@@ -11,7 +11,6 @@
 <div>
   {#each OLD_COMMANDS as oldCmd}
     <Prompt PWD={oldCmd.wd} USER={oldCmd.usr}>{oldCmd.cmd}</Prompt>
-    <!-- TODO multiline stdout -->
-    {#if oldCmd.stdout}<span>{oldCmd.stdout}</span>{/if}
+    {#each oldCmd.stdout?.split('\n') as stdout}<div>{stdout}</div>{/each}
   {/each}
 </div>

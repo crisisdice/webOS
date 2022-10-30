@@ -86,10 +86,11 @@ export function write({
   setFs(fs)
 }
 
-export function stat(args: string): Stat {
+export function stat(pathString: string, name?: string): Stat {
   try {
     const fs = get<Directory>(FS)
-    const tokens = parsePath(args === '' ? getEnv('PWD') : args)
+    const tokens = [...parsePath(pathString === '' ? getEnv('PWD') : pathString)]
+    if (name) tokens.push(name)
     const path = '/' + tokens.join('/')
     const obj = traverse(tokens, fs)
     return { exists: true, path, isDirectory: typeof obj !== 'string', obj }

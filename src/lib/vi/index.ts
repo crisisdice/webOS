@@ -4,3 +4,8 @@ export enum VI_MODE {
   INSERT,
   COMMAND,
 }
+
+export enum VI_COMMAND {
+  QUIT,
+  WRITE,
+}

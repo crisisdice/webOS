@@ -1,6 +1,6 @@
 import type { KeyMapping, ShellState, VimAppState } from '../types'
 import { viUp } from './index'
-import { DASH, EMPTY_LINE } from '../utils'
+import { EMPTY_LINE, lineToString, parseCmd, fileToBuffer } from '../utils'
 import { getEnv, evaluate, VI_MODE } from '../lib'
 import { shiftLeft, shiftRight } from './shift'
 
@@ -30,31 +30,31 @@ export const standardUp: KeyMapping = ({ e: { key }, STATE }) => {
 
   switch (key) {
     case 'Enter': {
-      // TODO tokenize command here
-      const { CARET, POSTCARET } = COMMAND_LINE
-      const cmd = CARET === DASH ? `${PRECARET}${POSTCARET}` : `${PRECARET}${CARET}${POSTCARET}`
-      const wd = getEnv('PWD')
+      const commandTokens = parseCmd(COMMAND_LINE)
+      const cmd = commandTokens?.[0] ?? ''
+      const args = commandTokens.slice(1)
 
       /* full screen apps */
       if (['vi'].includes(cmd)) {
-        OLD_COMMANDS = [...OLD_COMMANDS, { cmd, stdout: null, wd, usr: USER }]
+        //OLD_COMMANDS = [...OLD_COMMANDS, { cmd, stdout: null, wd, usr: USER }]
+
         return {
           ...STATE,
+          ...fileToBuffer(args?.[0]),
           FULL_SCREEN: true,
           NAME: 'vi',
           UP_MAPPING: viUp,
           MODE: VI_MODE.VISUAL,
           COMMAND_LINE: { ...EMPTY_LINE },
-          BUFFER: {
-            LINE: { ...EMPTY_LINE },
-            BUFFER_PRE: [],
-            BUFFER_POST: [],
-          },
           COORDS: { x: 0, y: 0 },
         } as VimAppState
       }
 
-      OLD_COMMANDS = [...OLD_COMMANDS, { cmd, stdout: evaluate(cmd), wd, usr: USER }]
+      const wd = getEnv('PWD')
+      OLD_COMMANDS = [
+        ...OLD_COMMANDS,
+        { cmd: lineToString(COMMAND_LINE), stdout: evaluate(cmd, args), wd, usr: USER },
+      ]
       PWD = getEnv('PWD')
       COMMAND_LINE = EMPTY_LINE
       return { ...STATE, OLD_COMMANDS, COMMAND_LINE, PWD }
