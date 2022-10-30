@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LEFT 3><RIGHT 3> 1`] = `
+{
+  "COMMAND_LINE": {
+    "CARET": "_",
+    "CARET_ACTIVE": false,
+    "POSTCARET": "",
+    "PRECARET": "",
+  },
+  "CONTROL_DOWN": false,
+  "DOWN_MAPPING": [Function],
+  "FULL_SCREEN": false,
+  "NAME": "sh",
+  "OLD_COMMANDS": [],
+  "PWD": "/home/guest",
+  "UP_MAPPING": [Function],
+  "USER": "guest",
+}
+`;
+
+exports[`<LEFT 3><RIGHT 3> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":""},"root":{}}}"`;
+
+exports[`<LEFT 3><RIGHT 3> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
+
+exports[`g<LEFT 1> 1`] = `
+{
+  "COMMAND_LINE": {
+    "CARET": "g",
+    "CARET_ACTIVE": true,
+    "POSTCARET": "",
+    "PRECARET": "g",
+  },
+  "CONTROL_DOWN": false,
+  "DOWN_MAPPING": [Function],
+  "FULL_SCREEN": false,
+  "NAME": "sh",
+  "OLD_COMMANDS": [],
+  "PWD": "/home/guest",
+  "UP_MAPPING": [Function],
+  "USER": "guest",
+}
+`;
+
+exports[`g<LEFT 1> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":""},"root":{}}}"`;
+
+exports[`g<LEFT 1> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
+
+exports[`hello<LEFT 5><RIGHT 6> 1`] = `
+{
+  "COMMAND_LINE": {
+    "CARET": "_",
+    "CARET_ACTIVE": false,
+    "POSTCARET": "",
+    "PRECARET": "hello",
+  },
+  "CONTROL_DOWN": false,
+  "DOWN_MAPPING": [Function],
+  "FULL_SCREEN": false,
+  "NAME": "sh",
+  "OLD_COMMANDS": [],
+  "PWD": "/home/guest",
+  "UP_MAPPING": [Function],
+  "USER": "guest",
+}
+`;
+
+exports[`hello<LEFT 5><RIGHT 6> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":""},"root":{}}}"`;
+
+exports[`hello<LEFT 5><RIGHT 6> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
