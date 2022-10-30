@@ -1,12 +1,9 @@
-import type { KeyMapping, Line, VimAppState } from '../lib/types'
+import type { KeyMapping, VimAppState } from '../lib/types'
 import { VI_MODE } from '../lib/vi/state'
 import { DASH, ARROW_KEYS, EMPTY } from '../lib/constants'
 import { shiftLeft, shiftRight } from './shift'
 import { EMPTY_LINE, INITAL_STATE } from '../state'
-
-const lineToString = ({ PRECARET, CARET, POSTCARET }: Line) => {
-  return `${PRECARET}${CARET === DASH ? '' : CARET}${POSTCARET}`
-}
+import { lineToString } from '../lib/utils'
 
 // TODO unit tests
 // TODO fix up/down shift bugs
