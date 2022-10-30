@@ -35,16 +35,15 @@ export type VimAppState = AppState & {
 
 export type AppState = {
   CONTROL_DOWN: boolean
-  FULL_SCREEN: boolean
   NAME: string
   UP_MAPPING: KeyMapping
   DOWN_MAPPING: KeyMapping
   COMMAND_LINE: Line
+  OLD_COMMANDS: Command[]
 }
 
 export type ShellState = AppState & {
   HISTORY_INDEX: number
-  OLD_COMMANDS: Command[]
   USER: string
   PWD: string
 }

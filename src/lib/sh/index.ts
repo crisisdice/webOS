@@ -1,10 +1,17 @@
+import type {ShellState, State} from '../../types'
 import { getEnv, write } from '../fs'
 import { separate } from '../path'
 import { echo, cd, ls, cat, rm, touch } from '../bin'
-import { EMPTY } from '../../utils'
+import { EMPTY, EMPTY_LINE, lineToString, parseCmd } from '../../utils'
+import {startVi} from '../vi'
 
-export const evaluate = (cmd: string, args: string[]) => {
-  if (cmd === EMPTY) return
+export const evaluate = (STATE: State) => {
+  const { COMMAND_LINE, OLD_COMMANDS, USER } = STATE as ShellState
+    
+  const { cmd, args } = parseCmd(COMMAND_LINE)
+  const wd = getEnv('PWD')
+
+  if (cmd === 'vi') return startVi({ STATE, args, wd })
 
   const cmds: Record<string, (args: string) => string> = {
     echo,
@@ -15,8 +22,9 @@ export const evaluate = (cmd: string, args: string[]) => {
     rm,
     touch,
   }
-
-  // TODO command parsing, .i.e. flags, different args, shell expansions, pipes, quotes
+  
+  const run = () => {
+  if (cmd === EMPTY) return
 
   if (!cmds[cmd]) return `sh: command not found: ${cmd}`
   if (cmd === 'pwd') return `${getEnv('PWD')}/`
@@ -32,3 +40,19 @@ export const evaluate = (cmd: string, args: string[]) => {
   // TODO and then pass args as string[]
   return cmds[cmd](args.join(' '))
 }
+
+  const stdout = run()
+
+  return {
+    ...STATE,
+    COMMAND_LINE: EMPTY_LINE,
+    PWD: getEnv('PWD'),
+    OLD_COMMANDS: [
+      ...OLD_COMMANDS,
+      { cmd: lineToString(COMMAND_LINE), stdout, wd, usr: USER },
+    ],
+  }
+}
+
+
+

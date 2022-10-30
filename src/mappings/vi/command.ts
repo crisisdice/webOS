@@ -9,10 +9,9 @@ function bufferToFile({ BUFFER_PRE, LINE, BUFFER_POST }: VimAppState['BUFFER']):
 
 function vimCommands(STATE: VimAppState): State {
   const { COMMAND_LINE } = STATE
-  const tokens = parseCmd(COMMAND_LINE)
-  const args = tokens.slice(1)
+  const { cmd, args }= parseCmd(COMMAND_LINE)
   
-  switch (tokens?.[0] ?? '') {
+  switch (cmd ?? '') {
     case 'q':
       // TODO figure out process numbers to return pre vi state
       return { ...INITAL_STATE }

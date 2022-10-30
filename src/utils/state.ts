@@ -22,7 +22,6 @@ export const INITAL_STATE: Readonly<ShellState> = Object.freeze({
   USER: 'guest',
   PWD: '/home/guest',
   CONTROL_DOWN: false,
-  FULL_SCREEN: false,
   NAME: 'sh',
   UP_MAPPING: standardUp,
   DOWN_MAPPING: standardDown,
@@ -64,9 +63,14 @@ export const stringToLine = (line: string, x: number): Line => {
   }
 }
 
-export function parseCmd(cmd: Line): string[] {
+export function parseCmd(input: Line) {
+  // TODO command parsing, .i.e. flags, different args, shell expansions, pipes, quotes
   // TODO escapes and quoting
-  return lineToString(cmd).split(' ')
+  const commandTokens = lineToString(input).split(' ')
+  const cmd = commandTokens?.[0] ?? ''
+  const args = commandTokens.slice(1)
+
+  return { cmd, args }
 }
 
 export function fileToBuffer(fileName: string | null): {
