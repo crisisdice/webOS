@@ -29,7 +29,7 @@ exports[`g<LEFT 1> 1`] = `
     "CARET": "g",
     "CARET_ACTIVE": true,
     "POSTCARET": "",
-    "PRECARET": "g",
+    "PRECARET": "",
   },
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],

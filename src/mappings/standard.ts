@@ -88,11 +88,11 @@ export const standardUp: KeyMapping = ({ e: { key }, STATE }) => {
     // }
     case 'ArrowLeft': {
       COMMAND_LINE = shiftLeft({ LINE: COMMAND_LINE })
-      break
+      return { ...STATE, COMMAND_LINE }
     }
     case 'ArrowRight': {
       COMMAND_LINE = shiftRight({ LINE: COMMAND_LINE })
-      break
+      return { ...STATE, COMMAND_LINE }
     }
     case 'Backspace': {
       PRECARET = PRECARET.slice(0, PRECARET.length - 1)
