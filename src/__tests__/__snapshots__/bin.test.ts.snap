@@ -11,6 +11,7 @@ exports[`cat "hello" > hello.txt<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "FULL_SCREEN": false,
+  "HISTORY_INDEX": -1,
   "NAME": "sh",
   "OLD_COMMANDS": [
     {
@@ -41,6 +42,7 @@ exports[`cd ../root<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "FULL_SCREEN": false,
+  "HISTORY_INDEX": -1,
   "NAME": "sh",
   "OLD_COMMANDS": [
     {
@@ -71,6 +73,7 @@ exports[`cd /<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "FULL_SCREEN": false,
+  "HISTORY_INDEX": -1,
   "NAME": "sh",
   "OLD_COMMANDS": [
     {
@@ -101,6 +104,7 @@ exports[`cd ~<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "FULL_SCREEN": false,
+  "HISTORY_INDEX": -1,
   "NAME": "sh",
   "OLD_COMMANDS": [
     {
@@ -131,6 +135,7 @@ exports[`echo "hello" > ../hello.txt<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "FULL_SCREEN": false,
+  "HISTORY_INDEX": -1,
   "NAME": "sh",
   "OLD_COMMANDS": [
     {
@@ -161,6 +166,7 @@ exports[`echo "hello" > hello.txt<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "FULL_SCREEN": false,
+  "HISTORY_INDEX": -1,
   "NAME": "sh",
   "OLD_COMMANDS": [
     {
@@ -191,6 +197,7 @@ exports[`echo hello<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "FULL_SCREEN": false,
+  "HISTORY_INDEX": -1,
   "NAME": "sh",
   "OLD_COMMANDS": [
     {
@@ -221,6 +228,7 @@ exports[`ls /<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "FULL_SCREEN": false,
+  "HISTORY_INDEX": -1,
   "NAME": "sh",
   "OLD_COMMANDS": [
     {
@@ -251,6 +259,7 @@ exports[`ls<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "FULL_SCREEN": false,
+  "HISTORY_INDEX": -1,
   "NAME": "sh",
   "OLD_COMMANDS": [
     {
@@ -281,6 +290,7 @@ exports[`rm ../root<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "FULL_SCREEN": false,
+  "HISTORY_INDEX": -1,
   "NAME": "sh",
   "OLD_COMMANDS": [
     {
@@ -311,6 +321,7 @@ exports[`rm .bashrc<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "FULL_SCREEN": false,
+  "HISTORY_INDEX": -1,
   "NAME": "sh",
   "OLD_COMMANDS": [
     {
@@ -341,6 +352,7 @@ exports[`touch hello.txt<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "FULL_SCREEN": false,
+  "HISTORY_INDEX": -1,
   "NAME": "sh",
   "OLD_COMMANDS": [
     {

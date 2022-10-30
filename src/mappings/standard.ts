@@ -1,13 +1,13 @@
 import type { KeyMapping, ShellState, VimAppState } from '../types'
 import { viUp } from './index'
-import { EMPTY_LINE, lineToString, parseCmd, fileToBuffer } from '../utils'
+import { EMPTY_LINE, lineToString, parseCmd, fileToBuffer, EMPTY, stringToLine } from '../utils'
 import { getEnv, evaluate, VI_MODE } from '../lib'
 import { shiftLeft, shiftRight } from './shift'
 
 export const standardUp: KeyMapping = ({ e: { key }, STATE }) => {
   const { USER } = STATE as ShellState
 
-  let { CONTROL_DOWN, OLD_COMMANDS, COMMAND_LINE, PWD } = STATE as ShellState
+  let { CONTROL_DOWN, OLD_COMMANDS, COMMAND_LINE, HISTORY_INDEX } = STATE as ShellState
 
   /* check for ctl codes */
   if (CONTROL_DOWN) {
@@ -55,39 +55,36 @@ export const standardUp: KeyMapping = ({ e: { key }, STATE }) => {
         ...OLD_COMMANDS,
         { cmd: lineToString(COMMAND_LINE), stdout: evaluate(cmd, args), wd, usr: USER },
       ]
-      PWD = getEnv('PWD')
-      COMMAND_LINE = EMPTY_LINE
-      return { ...STATE, OLD_COMMANDS, COMMAND_LINE, PWD }
+      return { ...STATE, OLD_COMMANDS, COMMAND_LINE: EMPTY_LINE, PWD: getEnv('PWD') }
     }
-    // TODO history mode
-    // case 'ArrowUp': {
-    //   postcaret = EMPTY
-    //   caret = DASH
-    //   const history = oldCmds.filter((c) => c.cmd !== EMPTY).reverse()
-    //   if (prevCmd < history.length) {
-    //     precaret = history[prevCmd].cmd
-    //     prevCmd += 1
-    //   }
-    //   break
-    // }
-    // case 'ArrowDown': {
-    //   postcaret = EMPTY
-    //   caret = DASH
-    //   const history = oldCmds.filter((c) => c.cmd !== EMPTY).reverse()
-    //   if (prevCmd > -1) {
-    //     prevCmd -= 1
-    //   }
-    //   precaret = prevCmd === -1 ? EMPTY : history[prevCmd].cmd
-    //   if (prevCmd === -1) prevCmd = 0
-    //   break
-    // }
+    case 'ArrowUp': {
+      const history = OLD_COMMANDS.filter((c) => c.cmd !== EMPTY).reverse()
+      if (HISTORY_INDEX < history.length - 1) {
+        HISTORY_INDEX += 1
+      }
+      return {
+        ...STATE,
+        HISTORY_INDEX,
+        COMMAND_LINE: history.length ? stringToLine(history[HISTORY_INDEX].cmd, 0) : EMPTY_LINE,
+      }
+    }
+    case 'ArrowDown': {
+      const history = OLD_COMMANDS.filter((c) => c.cmd !== EMPTY).reverse()
+      if (HISTORY_INDEX > -1) {
+        HISTORY_INDEX -= 1
+      }
+      return {
+        ...STATE,
+        HISTORY_INDEX,
+        COMMAND_LINE:
+          HISTORY_INDEX === -1 ? EMPTY_LINE : stringToLine(history[HISTORY_INDEX].cmd, 0),
+      }
+    }
     case 'ArrowLeft': {
-      COMMAND_LINE = shiftLeft({ LINE: COMMAND_LINE })
-      return { ...STATE, COMMAND_LINE }
+      return { ...STATE, COMMAND_LINE: shiftLeft({ LINE: COMMAND_LINE }) }
     }
     case 'ArrowRight': {
-      COMMAND_LINE = shiftRight({ LINE: COMMAND_LINE })
-      return { ...STATE, COMMAND_LINE }
+      return { ...STATE, COMMAND_LINE: shiftRight({ LINE: COMMAND_LINE }) }
     }
     case 'Backspace': {
       PRECARET = PRECARET.slice(0, PRECARET.length - 1)
@@ -103,12 +100,10 @@ export const standardUp: KeyMapping = ({ e: { key }, STATE }) => {
 
   return {
     ...STATE,
-    OLD_COMMANDS,
     COMMAND_LINE: {
       ...COMMAND_LINE,
       PRECARET,
     },
-    PWD,
   }
 }
 

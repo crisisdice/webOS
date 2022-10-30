@@ -18,7 +18,7 @@ export type Stat = {
   obj: Directory | string
 }
 
-export type Commands = { cmd: string; wd: string; stdout: string; usr: string }[]
+export type Command = { cmd: string; wd: string; stdout: string; usr: string }
 
 export type KeyMapping = ({ e, STATE }: { e: { key: string }; STATE: State }) => State
 
@@ -43,7 +43,8 @@ export type AppState = {
 }
 
 export type ShellState = AppState & {
-  OLD_COMMANDS: Commands
+  HISTORY_INDEX: number
+  OLD_COMMANDS: Command[]
   USER: string
   PWD: string
 }

@@ -11,6 +11,7 @@ exports[`<LEFT 3><RIGHT 3> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "FULL_SCREEN": false,
+  "HISTORY_INDEX": -1,
   "NAME": "sh",
   "OLD_COMMANDS": [],
   "PWD": "/home/guest",
@@ -23,6 +24,43 @@ exports[`<LEFT 3><RIGHT 3> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".his
 
 exports[`<LEFT 3><RIGHT 3> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
 
+exports[`echo<ENTER>ls<ENTER>ArrowUpArrowUpArrowDown 1`] = `
+{
+  "COMMAND_LINE": {
+    "CARET": "l",
+    "CARET_ACTIVE": true,
+    "POSTCARET": "s",
+    "PRECARET": "",
+  },
+  "CONTROL_DOWN": false,
+  "DOWN_MAPPING": [Function],
+  "FULL_SCREEN": false,
+  "HISTORY_INDEX": 0,
+  "NAME": "sh",
+  "OLD_COMMANDS": [
+    {
+      "cmd": "echo",
+      "stdout": "",
+      "usr": "guest",
+      "wd": "/home/guest",
+    },
+    {
+      "cmd": "ls",
+      "stdout": ".bashrc .history",
+      "usr": "guest",
+      "wd": "/home/guest",
+    },
+  ],
+  "PWD": "/home/guest",
+  "UP_MAPPING": [Function],
+  "USER": "guest",
+}
+`;
+
+exports[`echo<ENTER>ls<ENTER>ArrowUpArrowUpArrowDown 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":""},"root":{}}}"`;
+
+exports[`echo<ENTER>ls<ENTER>ArrowUpArrowUpArrowDown 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
+
 exports[`g<LEFT 1> 1`] = `
 {
   "COMMAND_LINE": {
@@ -34,6 +72,7 @@ exports[`g<LEFT 1> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "FULL_SCREEN": false,
+  "HISTORY_INDEX": -1,
   "NAME": "sh",
   "OLD_COMMANDS": [],
   "PWD": "/home/guest",
@@ -57,6 +96,7 @@ exports[`hello<LEFT 5><RIGHT 6> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "FULL_SCREEN": false,
+  "HISTORY_INDEX": -1,
   "NAME": "sh",
   "OLD_COMMANDS": [],
   "PWD": "/home/guest",

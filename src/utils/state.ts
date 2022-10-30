@@ -26,6 +26,7 @@ export const INITAL_STATE: Readonly<ShellState> = Object.freeze({
   NAME: 'sh',
   UP_MAPPING: standardUp,
   DOWN_MAPPING: standardDown,
+  HISTORY_INDEX: -1,
 })
 
 // TODO let init handle user and pwd
