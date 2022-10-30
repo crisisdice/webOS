@@ -18,7 +18,8 @@
   import Caret from './Caret.svelte'
 
   import type { AppState, VimAppState } from '../types'
-  import { lineToString, VI_MODE } from '../lib'
+  import { VI_MODE } from '../lib'
+  import { lineToString } from '../utils'
 
   export let STATE: AppState & Partial<VimAppState>
 </script>

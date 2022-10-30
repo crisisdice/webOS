@@ -1,5 +1,6 @@
+/* kernel */
 export * from './fs'
-export * from './utils'
 
+/* binaries */
 export * from './vi'
 export * from './sh'

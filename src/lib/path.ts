@@ -1,6 +1,3 @@
-import type { Line } from '../types'
-import { DASH } from '../utils'
-
 export const separate = (args: string): { name: string; path: string } => {
   if (args.indexOf('/') === -1) return { path: '.', name: args }
   const tokens = args.split('/')
@@ -8,6 +5,4 @@ export const separate = (args: string): { name: string; path: string } => {
   return { name: tokens.at(-1), path }
 }
 
-export const lineToString = ({ PRECARET, CARET, POSTCARET }: Line) => {
-  return `${PRECARET}${CARET === DASH ? '' : CARET}${POSTCARET}`
-}
+export const absoluteTokens = (path: string) => path.split('/').filter((t) => !!t)

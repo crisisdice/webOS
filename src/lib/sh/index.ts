@@ -1,5 +1,5 @@
 import { getEnv, setEnv, setFs, write } from '../fs'
-import { separate } from '../utils'
+import { separate } from '../path'
 import { echo, cd, ls, cat, rm, touch } from '../bin'
 import { EMPTY, PWD, HOME } from '../../utils'
 

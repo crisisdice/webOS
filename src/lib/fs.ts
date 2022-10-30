@@ -1,13 +1,12 @@
 import type { ENV as IENV, Directory, Stat } from '../types'
 import { FS, ENV } from '../utils'
+import { absoluteTokens } from './path'
 
 function get<T>(lsKey: 'ENV' | 'FS'): T | null {
   const ls = localStorage.getItem(lsKey)
   if (!ls) return null
   return JSON.parse(ls) as T
 }
-
-const absoluteTokens = (path: string) => path.split('/').filter((t) => !!t)
 
 function parsePath(path: string): string[] {
   if (path === '') throw new Error('no path')
@@ -53,10 +52,6 @@ function traverse(tokens: string[], fs: Directory) {
   return tmp
 }
 
-export function setFs(fs: Directory): void {
-  localStorage.setItem(FS, JSON.stringify(fs))
-}
-
 export function getEnv(key: keyof IENV): string {
   return get<IENV>(ENV)[key] ?? ''
 }
@@ -64,6 +59,10 @@ export function getEnv(key: keyof IENV): string {
 export function setEnv(key: string, value: string): void {
   const env = get<IENV>(ENV) ?? {}
   localStorage.setItem(ENV, JSON.stringify({ ...env, [key]: value }))
+}
+
+export function setFs(fs: Directory): void {
+  localStorage.setItem(FS, JSON.stringify(fs))
 }
 
 export function write({

@@ -1,6 +1,6 @@
 import type { KeyMapping, VimAppState } from '../types'
-import { lineToString, VI_MODE } from '../lib'
-import { DASH, ARROW_KEYS, EMPTY, EMPTY_LINE, INITAL_STATE } from '../utils'
+import { VI_MODE } from '../lib'
+import { lineToString, DASH, ARROW_KEYS, EMPTY, EMPTY_LINE, INITAL_STATE } from '../utils'
 import { shiftLeft, shiftRight } from './shift'
 
 // TODO unit tests

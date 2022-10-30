@@ -1,4 +1,4 @@
-import type { ShellState } from '../types'
+import type { ShellState, Line } from '../types'
 import { standardUp, standardDown } from '../mappings'
 import { DASH, EMPTY, PWD, HOME } from './constants'
 import { setEnv, setFs } from '../lib'
@@ -38,4 +38,8 @@ export const init = () => {
     },
   })
   console.log('initalized')
+}
+
+export const lineToString = ({ PRECARET, CARET, POSTCARET }: Line) => {
+  return `${PRECARET}${CARET === DASH ? '' : CARET}${POSTCARET}`
 }

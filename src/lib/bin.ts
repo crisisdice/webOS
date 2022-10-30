@@ -1,5 +1,5 @@
 import { setEnv, stat, write } from './fs'
-import { separate } from './utils'
+import { separate } from './path'
 
 export const echo = (args: string) => {
   return args.replaceAll('"', '')
