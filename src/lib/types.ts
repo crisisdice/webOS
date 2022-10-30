@@ -18,7 +18,7 @@ export type Stat = {
 
 export type Commands = { cmd: string; wd: string; stdout: string; usr: string }[]
 
-export type KeyMapping = ({ e, STATE }: { e: KeyboardEvent; STATE: State }) => State
+export type KeyMapping = ({ e, STATE }: { e: { key: string }; STATE: State }) => State
 
 export type VimAppState = AppState & {
   MODE: VI_MODE
@@ -44,8 +44,6 @@ export type ShellState = AppState & {
   USER: string
   PWD: string
 }
-
-// TODO sh as App state?
 
 export type State = VimAppState | AppState | ShellState
 
