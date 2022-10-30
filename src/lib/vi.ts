@@ -1,6 +1,6 @@
-import type {ShellState, State, VimAppState} from "../../types"
-import { fileToBuffer, lineToString, EMPTY_LINE, APPS } from '../../utils'
-import { viUp } from '../../mappings'
+import type { ShellState, State, VimAppState } from '../types'
+import { fileToBuffer, lineToString, EMPTY_LINE, APPS } from '../utils'
+import { viUp } from '../mappings'
 
 export enum VI_MODE {
   VISUAL,
@@ -8,7 +8,15 @@ export enum VI_MODE {
   COMMAND,
 }
 
-export const startVi = ({ STATE, args, wd }: { STATE: State, args: string[], wd: string }): VimAppState => {
+export const startVi = ({
+  STATE,
+  args,
+  wd,
+}: {
+  STATE: State
+  args: string[]
+  wd: string
+}): VimAppState => {
   const { OLD_COMMANDS, COMMAND_LINE, USER } = STATE as ShellState
 
   return {
@@ -22,4 +30,3 @@ export const startVi = ({ STATE, args, wd }: { STATE: State, args: string[], wd:
     COORDS: { x: 0, y: 0 },
   }
 }
-
