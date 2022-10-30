@@ -1,5 +1,5 @@
-import type { State } from '../lib/types'
-import { INITAL_STATE } from '../state'
+import type { State } from '../types'
+import { INITAL_STATE } from '../utils'
 import { ENTER, LEFT, RIGHT } from './constants'
 
 function keySeq(sequence: string[], STATE: State = { ...INITAL_STATE }): State {

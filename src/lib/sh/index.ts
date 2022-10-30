@@ -1,7 +1,7 @@
-import { getEnv, setEnv, setFs, write } from './fs'
-import { separate } from './utils'
-import { EMPTY, PWD, HOME } from './constants'
-import { echo, cd, ls, cat, rm, touch } from './bin'
+import { getEnv, setEnv, setFs, write } from '../fs'
+import { separate } from '../utils'
+import { echo, cd, ls, cat, rm, touch } from '../bin'
+import { EMPTY, PWD, HOME } from '../../utils'
 
 // TODO let init handle user and pwd
 // TODO whoami and login

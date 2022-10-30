@@ -1,4 +1,4 @@
-import { VI_MODE } from './vi/state'
+import { VI_MODE } from '../lib'
 
 export type ENV = {
   PWD: string

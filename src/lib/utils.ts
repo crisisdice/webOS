@@ -1,5 +1,5 @@
-import type { Line } from './types'
-import { DASH } from './constants'
+import type { Line } from '../types'
+import { DASH } from '../utils'
 
 export const separate = (args: string): { name: string; path: string } => {
   if (args.indexOf('/') === -1) return { path: '.', name: args }
@@ -7,9 +7,6 @@ export const separate = (args: string): { name: string; path: string } => {
   const path = tokens.slice(0, tokens.length - 1).join('/')
   return { name: tokens.at(-1), path }
 }
-
-export const refocus = (e: Event) =>
-  window.setTimeout(() => (e.target as HTMLInputElement).focus(), 0)
 
 export const lineToString = ({ PRECARET, CARET, POSTCARET }: Line) => {
   return `${PRECARET}${CARET === DASH ? '' : CARET}${POSTCARET}`

@@ -3,7 +3,7 @@
 
 <script lang="ts">
   import Prompt from './Prompt.svelte'
-  import type { Commands } from 'src/lib/types'
+  import type { Commands } from '../types'
 
   export let OLD_COMMANDS: Commands
 </script>

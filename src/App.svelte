@@ -1,13 +1,9 @@
 <script lang="ts">
-
   import Sh from './components/Sh.svelte'
   import Vi from './components/Vi.svelte'
 
-  import { init } from './lib/sh'
-  import { refocus } from './lib/utils'
-  import type { State } from './lib/types'
-
-  import { INITAL_STATE } from './state'
+  import type { State } from './types'
+  import { refocus, init, INITAL_STATE } from './utils'
 
   window.onload = () => {
     init()
@@ -22,10 +18,10 @@
   const down = (e: KeyboardEvent) => {
     STATE = STATE.DOWN_MAPPING({ e, STATE })
   }
-
 </script>
 
 <div>
+  <!-- TODO find way to destructure state -->
   {#if STATE.NAME === 'sh'}
     <Sh {STATE} />
   {:else if STATE.NAME === 'vi'}

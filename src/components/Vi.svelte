@@ -15,10 +15,10 @@
 </style>
 
 <script lang="ts">
-  import type { AppState, VimAppState } from 'src/lib/types'
-  import { lineToString } from '../lib/utils'
-  import { VI_MODE } from '../lib/vi/state'
   import Caret from './Caret.svelte'
+
+  import type { AppState, VimAppState } from '../types'
+  import { lineToString, VI_MODE } from '../lib'
 
   export let STATE: AppState & Partial<VimAppState>
 </script>

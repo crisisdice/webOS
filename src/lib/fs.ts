@@ -1,5 +1,5 @@
-import { FS, ENV } from './constants'
-import type { ENV as IENV, Directory, Stat } from './types'
+import type { ENV as IENV, Directory, Stat } from '../types'
+import { FS, ENV } from '../utils'
 
 function get<T>(lsKey: 'ENV' | 'FS'): T | null {
   const ls = localStorage.getItem(lsKey)

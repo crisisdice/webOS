@@ -1,9 +1,7 @@
-import type { KeyMapping, VimAppState } from '../lib/types'
-import { VI_MODE } from '../lib/vi/state'
-import { DASH, ARROW_KEYS, EMPTY } from '../lib/constants'
+import type { KeyMapping, VimAppState } from '../types'
+import { lineToString, VI_MODE } from '../lib'
+import { DASH, ARROW_KEYS, EMPTY, EMPTY_LINE, INITAL_STATE } from '../utils'
 import { shiftLeft, shiftRight } from './shift'
-import { EMPTY_LINE, INITAL_STATE } from '../state'
-import { lineToString } from '../lib/utils'
 
 // TODO unit tests
 // TODO fix up/down shift bugs

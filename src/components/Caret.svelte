@@ -24,7 +24,7 @@
 </style>
 
 <script lang="ts">
-  import type { Line } from '../lib/types'
+  import type { Line } from '../types'
   export let COMMAND_LINE: Line
 </script>
 

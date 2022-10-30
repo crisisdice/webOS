@@ -6,7 +6,7 @@
   import History from './History.svelte'
   import Caret from './Caret.svelte'
 
-  import type { AppState, ShellState } from 'src/lib/types'
+  import type { AppState, ShellState } from '../types'
   export let STATE: AppState & Partial<ShellState>
 </script>
 

@@ -1,11 +1,8 @@
+import type { KeyMapping, ShellState, VimAppState } from '../types'
 import { viUp } from './index'
-import { DASH } from '../lib/constants'
-import { getEnv } from '../lib/fs'
-import { evaluate } from '../lib/sh'
-import type { KeyMapping, ShellState, VimAppState } from '../lib/types'
-import { VI_MODE } from '../lib/vi/state'
+import { DASH, EMPTY_LINE } from '../utils'
+import { getEnv, evaluate, VI_MODE } from '../lib'
 import { shiftLeft, shiftRight } from './shift'
-import { EMPTY_LINE } from '../state'
 
 export const standardUp: KeyMapping = ({ e: { key }, STATE }) => {
   console.log({ key, mapping: 'sh', STATE })

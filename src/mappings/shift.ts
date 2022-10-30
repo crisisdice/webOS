@@ -1,5 +1,5 @@
-import type { Line } from '../lib/types'
-import { EMPTY, DASH } from '../lib/constants'
+import type { Line } from '../types'
+import { EMPTY, DASH } from '../utils'
 
 export const shiftLeft = ({
   LINE,
