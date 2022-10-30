@@ -8,11 +8,13 @@
 
   import type { AppState, ShellState } from '../types'
   export let STATE: AppState & Partial<ShellState>
+
+  let { OLD_COMMANDS, PWD, USER, COMMAND_LINE } = STATE
 </script>
 
 <div>
-  <History OLD_COMMANDS={STATE.OLD_COMMANDS} />
-  <Prompt PWD={STATE.PWD} USER={STATE.USER}>
-    <Caret COMMAND_LINE={STATE.COMMAND_LINE} />
+  <History {OLD_COMMANDS} />
+  <Prompt {PWD} {USER}>
+    <Caret {COMMAND_LINE} />
   </Prompt>
 </div>

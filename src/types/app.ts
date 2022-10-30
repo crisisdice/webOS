@@ -1,3 +1,4 @@
+import { APPS } from '../utils'
 import { VI_MODE } from '../lib'
 
 // TODO organize types
@@ -18,6 +19,7 @@ export type Stat = {
   obj: Directory | string
 }
 
+// TODO standardize command type
 export type Command = { cmd: string; wd: string; stdout: string; usr: string }
 
 export type KeyMapping = ({ e, STATE }: { e: { key: string }; STATE: State }) => State
@@ -35,7 +37,7 @@ export type VimAppState = AppState & {
 
 export type AppState = {
   CONTROL_DOWN: boolean
-  NAME: string
+  NAME: APPS
   UP_MAPPING: KeyMapping
   DOWN_MAPPING: KeyMapping
   COMMAND_LINE: Line

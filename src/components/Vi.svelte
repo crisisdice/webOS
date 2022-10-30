@@ -27,27 +27,32 @@
   import { lineToString } from '../utils'
 
   export let STATE: AppState & Partial<VimAppState>
+
+  let {
+    MODE,
+    COMMAND_LINE,
+    COORDS: { x, y },
+    BUFFER: { BUFFER_PRE, LINE, BUFFER_POST },
+  } = STATE
 </script>
 
 <div>
   <div class="buffer">
-    {#each STATE.BUFFER.BUFFER_PRE as line, index}
+    {#each BUFFER_PRE as line, index}
       <div class="line">{index + 1} {line}</div>
     {/each}
     <div class="line">
-      {STATE.BUFFER.BUFFER_PRE.length + 1}
-      {#if STATE.MODE === VI_MODE.COMMAND}{lineToString(STATE.BUFFER.LINE)}{:else}<Caret
-          COMMAND_LINE={STATE.BUFFER.LINE}
-        />{/if}
+      {BUFFER_PRE.length + 1}
+      {#if MODE === VI_MODE.COMMAND}{lineToString(LINE)}{:else}<Caret COMMAND_LINE={LINE} />{/if}
     </div>
-    {#each STATE.BUFFER.BUFFER_POST as line, index}
-      <div class="line">{STATE.BUFFER.BUFFER_PRE.length + 2 + index} {line}</div>
+    {#each BUFFER_POST as line, index}
+      <div class="line">{BUFFER_PRE.length + 2 + index} {line}</div>
     {/each}
   </div>
   <div class="footer">
-    {#if STATE.MODE === VI_MODE.COMMAND}
-      : <Caret COMMAND_LINE={STATE.COMMAND_LINE} />
+    {#if MODE === VI_MODE.COMMAND}
+      : <Caret {COMMAND_LINE} />
     {/if}
-    <span class="coords">{`${STATE.COORDS.y + 1},${STATE.COORDS.x + 1}`}</span>
+    <span class="coords">{`${y + 1},${x + 1}`}</span>
   </div>
 </div>

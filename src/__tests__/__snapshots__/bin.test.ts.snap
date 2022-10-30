@@ -11,7 +11,7 @@ exports[`cat "hello" > hello.txt<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "HISTORY_INDEX": -1,
-  "NAME": "sh",
+  "NAME": 0,
   "OLD_COMMANDS": [
     {
       "cmd": "cat "hello" > hello.txt",
@@ -41,7 +41,7 @@ exports[`cd ../root<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "HISTORY_INDEX": -1,
-  "NAME": "sh",
+  "NAME": 0,
   "OLD_COMMANDS": [
     {
       "cmd": "cd ../root",
@@ -71,7 +71,7 @@ exports[`cd /<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "HISTORY_INDEX": -1,
-  "NAME": "sh",
+  "NAME": 0,
   "OLD_COMMANDS": [
     {
       "cmd": "cd /",
@@ -101,7 +101,7 @@ exports[`cd ~<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "HISTORY_INDEX": -1,
-  "NAME": "sh",
+  "NAME": 0,
   "OLD_COMMANDS": [
     {
       "cmd": "cd ~",
@@ -131,7 +131,7 @@ exports[`echo "hello" > ../hello.txt<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "HISTORY_INDEX": -1,
-  "NAME": "sh",
+  "NAME": 0,
   "OLD_COMMANDS": [
     {
       "cmd": "echo "hello" > ../hello.txt",
@@ -161,7 +161,7 @@ exports[`echo "hello" > hello.txt<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "HISTORY_INDEX": -1,
-  "NAME": "sh",
+  "NAME": 0,
   "OLD_COMMANDS": [
     {
       "cmd": "echo "hello" > hello.txt",
@@ -191,7 +191,7 @@ exports[`echo hello<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "HISTORY_INDEX": -1,
-  "NAME": "sh",
+  "NAME": 0,
   "OLD_COMMANDS": [
     {
       "cmd": "echo hello",
@@ -221,7 +221,7 @@ exports[`ls /<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "HISTORY_INDEX": -1,
-  "NAME": "sh",
+  "NAME": 0,
   "OLD_COMMANDS": [
     {
       "cmd": "ls /",
@@ -251,7 +251,7 @@ exports[`ls<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "HISTORY_INDEX": -1,
-  "NAME": "sh",
+  "NAME": 0,
   "OLD_COMMANDS": [
     {
       "cmd": "ls",
@@ -281,7 +281,7 @@ exports[`rm ../root<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "HISTORY_INDEX": -1,
-  "NAME": "sh",
+  "NAME": 0,
   "OLD_COMMANDS": [
     {
       "cmd": "rm ../root",
@@ -311,7 +311,7 @@ exports[`rm .bashrc<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "HISTORY_INDEX": -1,
-  "NAME": "sh",
+  "NAME": 0,
   "OLD_COMMANDS": [
     {
       "cmd": "rm .bashrc",
@@ -341,7 +341,7 @@ exports[`touch hello.txt<ENTER> 1`] = `
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
   "HISTORY_INDEX": -1,
-  "NAME": "sh",
+  "NAME": 0,
   "OLD_COMMANDS": [
     {
       "cmd": "touch hello.txt",

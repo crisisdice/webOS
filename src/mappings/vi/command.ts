@@ -8,13 +8,12 @@ function bufferToFile({ BUFFER_PRE, LINE, BUFFER_POST }: VimAppState['BUFFER']):
 }
 
 function vimCommands(STATE: VimAppState): State {
-  const { COMMAND_LINE } = STATE
+  const { COMMAND_LINE, OLD_COMMANDS } = STATE
   const { cmd, args }= parseCmd(COMMAND_LINE)
   
   switch (cmd ?? '') {
     case 'q':
-      // TODO figure out process numbers to return pre vi state
-      return { ...INITAL_STATE }
+      return { ...INITAL_STATE, OLD_COMMANDS }
     case 'w':
       return writeFile({ args, STATE })
     default:

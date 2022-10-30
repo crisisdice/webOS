@@ -3,7 +3,7 @@
   import Vi from './components/Vi.svelte'
 
   import type { State } from './types'
-  import { refocus, init, INITAL_STATE } from './utils'
+  import { refocus, init, INITAL_STATE, APPS } from './utils'
 
   window.onload = () => {
     init()
@@ -23,14 +23,15 @@
 </script>
 
 <div>
-  <!-- TODO find way to destructure state -->
-  {#if STATE.NAME === 'sh'}
+  {#key STATE}
+  {#if STATE.NAME === APPS.SH}
     <Sh {STATE} />
-  {:else if STATE.NAME === 'vi'}
+  {:else if STATE.NAME === APPS.VI}
     <Vi {STATE} />
   {:else}
     <div>App not recognized</div>
   {/if}
+  {/key}
   <!-- svelte-ignore a11y-autofocus -->
   <input autofocus on:keydown={down} on:keyup={up} on:blur={refocus} />
 </div>

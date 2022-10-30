@@ -2,6 +2,7 @@ import type { ShellState, Line, VimAppState } from '../types'
 import { standardUp, standardDown } from '../mappings'
 import { DASH, EMPTY, PWD, HOME } from './constants'
 import { getEnv, setEnv, setFs, stat } from '../lib'
+import { APPS } from './apps'
 
 export const EMPTY_LINE = Object.freeze({
   PRECARET: EMPTY,
@@ -22,7 +23,7 @@ export const INITAL_STATE: Readonly<ShellState> = Object.freeze({
   USER: 'guest',
   PWD: '/home/guest',
   CONTROL_DOWN: false,
-  NAME: 'sh',
+  NAME: APPS.SH,
   UP_MAPPING: standardUp,
   DOWN_MAPPING: standardDown,
   HISTORY_INDEX: -1,
