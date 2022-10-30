@@ -45,7 +45,7 @@ function prettyTestName(sequence: string[]) {
 
     if (backCount > 0) {
       name += `<BACK ${backCount}>`
-      backCount= 0
+      backCount = 0
     }
 
     if (char === ENTER) {

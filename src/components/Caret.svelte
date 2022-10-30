@@ -26,6 +26,8 @@
 <script lang="ts">
   import type { Line } from '../types'
   export let COMMAND_LINE: Line
+
+  // TODO zero width caret
 </script>
 
 <span

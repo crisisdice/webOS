@@ -43,6 +43,7 @@ export const viUp: KeyMapping = ({ e: { key }, STATE }) => {
       if (x === 0) {
         if (y === 0) return STATE
         y -= 1
+        // TODO fix delete with trailing chars
         x = BUFFER.BUFFER_PRE.at(-1).length
         return {
           ...STATE,
