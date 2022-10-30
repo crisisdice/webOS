@@ -5,4 +5,6 @@
     "moduleResolution": "Node"
   },
   "include": ["vite.config.ts"]
+  // uncomment this to use node loader to test files
+  //"include": ["vite.config.ts", "src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "src/**/*.svelte"]
 }
