@@ -1,6 +1,6 @@
 import { run } from './helpers'
 import { ENTER } from './constants'
-import { init } from '../lib/sh'
+import { init } from '../utils'
 
 const tests = [
   [...'echo hello'.split(''), ENTER],

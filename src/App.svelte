@@ -7,12 +7,14 @@
 
   window.onload = () => {
     init()
+    console.log('INITIALIZED')
   }
 
   let STATE: State = { ...INITAL_STATE }
 
   const up = (e: KeyboardEvent) => {
     STATE = STATE.UP_MAPPING({ e, STATE })
+    console.log({ key: e.key, ...STATE })
   }
 
   const down = (e: KeyboardEvent) => {

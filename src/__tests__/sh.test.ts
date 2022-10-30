@@ -1,6 +1,6 @@
 import { run, fill } from './helpers'
 import { LEFT, RIGHT } from './constants'
-import { init } from '../lib/sh'
+import { init } from '../utils'
 
 const tests = [
   [...fill(3, LEFT), ...fill(3, RIGHT)],

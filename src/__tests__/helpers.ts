@@ -1,6 +1,6 @@
 import type { State } from '../types'
 import { INITAL_STATE } from '../utils'
-import { ENTER, LEFT, RIGHT } from './constants'
+import { BACK, ENTER, LEFT, RIGHT } from './constants'
 
 function keySeq(sequence: string[], STATE: State = { ...INITAL_STATE }): State {
   for (const key of sequence) {
@@ -14,6 +14,7 @@ export const fill = (n: number, key: string) => [...(Array(n) as unknown[])].map
 function prettyTestName(sequence: string[]) {
   let leftCount = 0
   let rightCount = 0
+  let backCount = 0
   let name = ''
 
   for (const char of sequence) {
@@ -37,6 +38,16 @@ function prettyTestName(sequence: string[]) {
       rightCount = 0
     }
 
+    if (char === BACK) {
+      backCount += 1
+      continue
+    }
+
+    if (backCount > 0) {
+      name += `<BACK ${backCount}>`
+      backCount= 0
+    }
+
     if (char === ENTER) {
       name += '<ENTER>'
       continue
@@ -50,6 +61,10 @@ function prettyTestName(sequence: string[]) {
   }
   if (rightCount > 0) {
     name += `<RIGHT ${rightCount}>`
+  }
+
+  if (backCount > 0) {
+    name += `<BACK ${backCount}>`
   }
 
   return name

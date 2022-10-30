@@ -37,9 +37,22 @@ export const init = () => {
       root: {},
     },
   })
-  console.log('initalized')
 }
 
 export const lineToString = ({ PRECARET, CARET, POSTCARET }: Line) => {
   return `${PRECARET}${CARET === DASH ? '' : CARET}${POSTCARET}`
+}
+
+export const stringToLine = (line: string, x: number): Line => {
+  const PRECARET = line.slice(0, x)
+  const CARET = x === line.length ? DASH : line[x]
+  const CARET_ACTIVE = CARET !== DASH
+  const POSTCARET = CARET_ACTIVE ? line.slice(x + 1) : EMPTY
+
+  return {
+    PRECARET,
+    CARET,
+    POSTCARET,
+    CARET_ACTIVE,
+  }
 }

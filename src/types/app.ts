@@ -1,5 +1,7 @@
 import { VI_MODE } from '../lib'
 
+// TODO organize types
+
 export type ENV = {
   PWD: string
   HOME: string

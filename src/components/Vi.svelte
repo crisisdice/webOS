@@ -8,6 +8,11 @@
   .buffer {
     display: block;
   }
+
+  .line {
+    white-space: pre;
+  }
+
   .coords {
     float: right;
     padding-right: 50px;
@@ -27,18 +32,16 @@
 <div>
   <div class="buffer">
     {#each STATE.BUFFER.BUFFER_PRE as line, index}
-      <div>{index + 1} {line}</div>
+      <div class="line">{index + 1} {line}</div>
     {/each}
-    <div>
+    <div class="line">
       {STATE.BUFFER.BUFFER_PRE.length + 1}
-      {#if STATE.MODE === VI_MODE.COMMAND}
-        {lineToString(STATE.BUFFER.LINE)}
-      {:else}
-        <Caret COMMAND_LINE={STATE.BUFFER.LINE} />
-      {/if}
+      {#if STATE.MODE === VI_MODE.COMMAND}{lineToString(STATE.BUFFER.LINE)}{:else}<Caret
+          COMMAND_LINE={STATE.BUFFER.LINE}
+        />{/if}
     </div>
     {#each STATE.BUFFER.BUFFER_POST as line, index}
-      <span> {STATE.BUFFER.BUFFER_PRE.length + 1 + index} {line}</span>
+      <div class="line">{STATE.BUFFER.BUFFER_PRE.length + 2 + index} {line}</div>
     {/each}
   </div>
   <div class="footer">

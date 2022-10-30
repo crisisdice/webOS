@@ -5,8 +5,6 @@ import { getEnv, evaluate, VI_MODE } from '../lib'
 import { shiftLeft, shiftRight } from './shift'
 
 export const standardUp: KeyMapping = ({ e: { key }, STATE }) => {
-  console.log({ key, mapping: 'sh', STATE })
-
   const { USER } = STATE as ShellState
 
   let { CONTROL_DOWN, OLD_COMMANDS, COMMAND_LINE, PWD } = STATE as ShellState
@@ -61,7 +59,7 @@ export const standardUp: KeyMapping = ({ e: { key }, STATE }) => {
       COMMAND_LINE = EMPTY_LINE
       return { ...STATE, OLD_COMMANDS, COMMAND_LINE, PWD }
     }
-    // TODO
+    // TODO history mode
     // case 'ArrowUp': {
     //   postcaret = EMPTY
     //   caret = DASH

@@ -1,25 +1,7 @@
-import { getEnv, setEnv, setFs, write } from '../fs'
+import { getEnv, write } from '../fs'
 import { separate } from '../path'
 import { echo, cd, ls, cat, rm, touch } from '../bin'
-import { EMPTY, PWD, HOME } from '../../utils'
-
-// TODO let init handle user and pwd
-// TODO whoami and login
-export const init = () => {
-  setEnv(PWD, '/home/guest')
-  setEnv(HOME, '/home/guest')
-
-  setFs({
-    home: {
-      guest: {
-        '.bashrc': '#!/usr/sh',
-        '.history': '',
-      },
-      root: {},
-    },
-  })
-  console.log('initalized')
-}
+import { EMPTY } from '../../utils'
 
 export const evaluate = (input: string) => {
   if (input === EMPTY) return
