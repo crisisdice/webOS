@@ -1,17 +1,20 @@
 import type { KeyMapping, ViState } from '../../types'
-import { VI_MODE, write, separate, parseCmd } from '../../lib'
+import { write, separate } from '../../lib'
 import { EMPTY_LINE, INITAL_STATE, lineToString } from '../../utils'
 import { del, shiftLeft, shiftRight } from '../shift'
+import { VI_MODE } from './constants'
+
+// TODO own vi command parser
+import { parseCmd } from '../sh/evaluate'
 
 function bufferToFile({ BUFFER_PRE, LINE, BUFFER_POST }: ViState['BUFFER']): string {
-  return [ ...BUFFER_PRE, lineToString(LINE), ...BUFFER_POST ].join('\n')
+  return [...BUFFER_PRE, lineToString(LINE), ...BUFFER_POST].join('\n')
 }
 
 function vimCommands(STATE: ViState) {
   const { COMMAND_LINE, OLD_COMMANDS } = STATE
-  // TODO own vi command parser
-  const { cmd, args }= parseCmd(COMMAND_LINE)
-  
+  const { cmd, args } = parseCmd(COMMAND_LINE)
+
   switch (cmd ?? '') {
     case 'q':
       return { ...INITAL_STATE, OLD_COMMANDS }
@@ -22,7 +25,7 @@ function vimCommands(STATE: ViState) {
   }
 }
 
-function writeFile({ args, STATE }: { args: string[], STATE: ViState }): ViState {
+function writeFile({ args, STATE }: { args: string[]; STATE: ViState }): ViState {
   const { FILE_NAME, BUFFER } = STATE
   write({ ...separate(FILE_NAME ?? args[0] ?? 'temp'), obj: bufferToFile(BUFFER) })
   return { ...STATE, COMMAND_LINE: EMPTY_LINE, MODE: VI_MODE.VISUAL }

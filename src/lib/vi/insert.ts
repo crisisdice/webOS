@@ -1,21 +1,15 @@
 import type { KeyMapping, ViState } from '../../types'
-import { VI_MODE } from '../../lib'
-import { ARROW_KEYS, EMPTY } from '../../utils'
+import { VI_MODE } from './constants'
+import { EMPTY } from '../../utils'
 import { del, shiftUp, shiftDown } from '../shift'
-import { processCommandMode } from './command'
-import { processVisualMode } from './visual'
 
-export const viUp: KeyMapping = ({ e: { key }, STATE }) => {
+export const processInsertMode: KeyMapping = ({ e: { key }, STATE }) => {
   const {
     MODE,
     COORDS,
     BUFFER,
     BUFFER: { LINE, BUFFER_POST },
   } = STATE as ViState
-
-  if (MODE === VI_MODE.COMMAND) return processCommandMode({ e: { key }, STATE })
-  if (MODE === VI_MODE.VISUAL || ARROW_KEYS.includes(key))
-    return processVisualMode({ e: { key }, STATE })
 
   let { x, y } = COORDS
   let { PRECARET, CARET, POSTCARET, EOL } = LINE
@@ -24,15 +18,19 @@ export const viUp: KeyMapping = ({ e: { key }, STATE }) => {
     case '`': {
       console.log({ MODE: 'VISUAL' })
 
-
       CARET = x === 0 ? POSTCARET?.[0] ?? PRECARET.at(-1) ?? null : PRECARET.at(-1) ?? null
       PRECARET = x === 0 ? PRECARET : PRECARET.slice(0, PRECARET.length - 1)
       POSTCARET = x === 0 ? POSTCARET.slice(1) : POSTCARET
       EOL = CARET === null && POSTCARET === EMPTY
 
       x = x === 0 ? x : x - 1
- 
-      return { ...STATE, COORDS: { x, y }, BUFFER: {...BUFFER, LINE: { CARET, PRECARET, POSTCARET, EOL, CARET_WIDTH: 1 } }, MODE: VI_MODE.VISUAL }
+
+      return {
+        ...STATE,
+        COORDS: { x, y },
+        BUFFER: { ...BUFFER, LINE: { CARET, PRECARET, POSTCARET, EOL, CARET_WIDTH: 1 } },
+        MODE: VI_MODE.VISUAL,
+      }
     }
     case 'Shift':
     case 'Alt':

@@ -1,7 +1,7 @@
 import type { KeyMapping, ViState } from '../../types'
-import { VI_MODE } from '../../lib'
+import { VI_MODE } from './constants'
 import { getLengths, shiftUp, shiftDown, shiftLeft, shiftRight } from '../shift'
-import {EMPTY} from '../../utils'
+import { EMPTY } from '../../utils'
 
 export const processVisualMode: KeyMapping = ({ e: { key }, STATE }) => {
   const {
@@ -24,10 +24,15 @@ export const processVisualMode: KeyMapping = ({ e: { key }, STATE }) => {
 
       PRECARET = `${PRECARET}${CARET ?? EMPTY}`
       CARET = null
-      
+
       x += 1
 
-      return { ...STATE, COORDS: { x, y}, BUFFER: { ...BUFFER, LINE: { ...LINE, PRECARET, CARET, CARET_WIDTH: 0 } }, MODE: VI_MODE.INSERT }
+      return {
+        ...STATE,
+        COORDS: { x, y },
+        BUFFER: { ...BUFFER, LINE: { ...LINE, PRECARET, CARET, CARET_WIDTH: 0 } },
+        MODE: VI_MODE.INSERT,
+      }
     }
     case 'i': {
       console.log({ MODE: 'INSERT' })
@@ -35,7 +40,11 @@ export const processVisualMode: KeyMapping = ({ e: { key }, STATE }) => {
       POSTCARET = `${CARET ?? EMPTY}${POSTCARET}`
       CARET = null
 
-      return { ...STATE, BUFFER: { ...BUFFER, LINE: { ...LINE, CARET, POSTCARET, CARET_WIDTH: 0 } }, MODE: VI_MODE.INSERT }
+      return {
+        ...STATE,
+        BUFFER: { ...BUFFER, LINE: { ...LINE, CARET, POSTCARET, CARET_WIDTH: 0 } },
+        MODE: VI_MODE.INSERT,
+      }
     }
     case 'k':
     case 'ArrowUp': {
@@ -69,4 +78,3 @@ export const processVisualMode: KeyMapping = ({ e: { key }, STATE }) => {
       return STATE
   }
 }
-

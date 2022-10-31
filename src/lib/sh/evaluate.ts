@@ -1,9 +1,9 @@
-import type { ShellState, ViState, Line } from '../types'
-import { getEnv, write } from './fs'
-import { separate } from './path'
-import { echo, cd, ls, cat, rm, touch } from './bin'
-import { EMPTY, EMPTY_LINE, lineToString } from '../utils'
-import { startVi } from './vi'
+import type { ShellState, ViState, Line } from '../../types'
+import { getEnv, write } from '../fs'
+import { separate } from '../path'
+import { echo, cd, ls, cat, rm, touch } from '../bin'
+import { EMPTY, EMPTY_LINE, lineToString } from '../../utils'
+import { startVi } from '../vi'
 
 const cmds: Record<string, (args: string[]) => string> = {
   echo,

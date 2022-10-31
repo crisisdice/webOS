@@ -1,5 +1,5 @@
 import type { ShellState } from '../types'
-import { standardUp, standardDown } from '../mappings'
+import { shellUp, shellDown } from '../lib'
 
 export const EMPTY = ''
 
@@ -39,7 +39,7 @@ export const INITAL_STATE: Readonly<ShellState> = Object.freeze({
   PWD: '/home/guest',
   CONTROL_DOWN: false,
   NAME: APPS.SH,
-  UP_MAPPING: standardUp,
-  DOWN_MAPPING: standardDown,
+  UP_MAPPING: shellUp,
+  DOWN_MAPPING: shellDown,
   HISTORY_INDEX: -1,
 })

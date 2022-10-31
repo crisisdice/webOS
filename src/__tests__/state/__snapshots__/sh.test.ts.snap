@@ -27,16 +27,11 @@ exports[`<LEFT 3><RIGHT 3> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
 exports[`echo<ENTER>ls<ENTER>ArrowUpArrowUpArrowDown 1`] = `
 {
   "COMMAND_LINE": {
-    "COMMAND_LINE": {
-      "CARET": null,
-      "CARET_WIDTH": 1,
-      "EOL": true,
-      "POSTCARET": "",
-      "PRECARET": "ls",
-    },
-    "PWD": "/home/guest",
-    "STDOUT": ".bashrc .history",
-    "USER": "guest",
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
+    "POSTCARET": "",
+    "PRECARET": "ls",
   },
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],

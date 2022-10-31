@@ -25,13 +25,13 @@
 
 <div>
   {#key STATE}
-  {#if STATE.NAME === APPS.SH}
-    <Sh {STATE} />
-  {:else if STATE.NAME === APPS.VI}
-    <Vi {STATE} />
-  {:else}
-    <div>App not recognized</div>
-  {/if}
+    {#if STATE.NAME === APPS.SH}
+      <Sh {STATE} />
+    {:else if STATE.NAME === APPS.VI}
+      <Vi {STATE} />
+    {:else}
+      <div>App not recognized</div>
+    {/if}
   {/key}
   <!-- svelte-ignore a11y-autofocus -->
   <input autofocus on:keydown={down} on:keyup={up} on:blur={refocus} />
