@@ -7,7 +7,7 @@ exports[`vi<ENTER>ihello 1`] = `
     "BUFFER_PRE": [],
     "LINE": {
       "CARET": null,
-      "CARET_WIDTH": 1,
+      "CARET_WIDTH": 0,
       "EOL": true,
       "POSTCARET": "",
       "PRECARET": "hello",
@@ -153,7 +153,7 @@ exports[`vi<ENTER>ihello<LEFT 6><RIGHT 6> 1`] = `
     "BUFFER_PRE": [],
     "LINE": {
       "CARET": null,
-      "CARET_WIDTH": 1,
+      "CARET_WIDTH": 0,
       "EOL": true,
       "POSTCARET": "",
       "PRECARET": "hello",
@@ -200,11 +200,11 @@ exports[`vi<ENTER>ihello\` 1`] = `
     "BUFFER_POST": [],
     "BUFFER_PRE": [],
     "LINE": {
-      "CARET": null,
+      "CARET": "o",
       "CARET_WIDTH": 1,
-      "EOL": true,
+      "EOL": false,
       "POSTCARET": "",
-      "PRECARET": "hello",
+      "PRECARET": "hell",
     },
   },
   "COMMAND_LINE": {
@@ -216,7 +216,7 @@ exports[`vi<ENTER>ihello\` 1`] = `
   },
   "CONTROL_DOWN": false,
   "COORDS": {
-    "x": 5,
+    "x": 4,
     "y": 0,
   },
   "DOWN_MAPPING": [Function],
@@ -248,11 +248,11 @@ exports[`vi<ENTER>ihello\`:cmd 1`] = `
     "BUFFER_POST": [],
     "BUFFER_PRE": [],
     "LINE": {
-      "CARET": null,
+      "CARET": "o",
       "CARET_WIDTH": 1,
-      "EOL": true,
+      "EOL": false,
       "POSTCARET": "",
-      "PRECARET": "hello",
+      "PRECARET": "hell",
     },
   },
   "COMMAND_LINE": {
@@ -264,7 +264,7 @@ exports[`vi<ENTER>ihello\`:cmd 1`] = `
   },
   "CONTROL_DOWN": false,
   "COORDS": {
-    "x": 5,
+    "x": 4,
     "y": 0,
   },
   "DOWN_MAPPING": [Function],
@@ -296,11 +296,11 @@ exports[`vi<ENTER>ihello\`:cmd<LEFT 6><RIGHT 6> 1`] = `
     "BUFFER_POST": [],
     "BUFFER_PRE": [],
     "LINE": {
-      "CARET": null,
+      "CARET": "o",
       "CARET_WIDTH": 1,
-      "EOL": true,
+      "EOL": false,
       "POSTCARET": "",
-      "PRECARET": "hello",
+      "PRECARET": "hell",
     },
   },
   "COMMAND_LINE": {
@@ -312,7 +312,7 @@ exports[`vi<ENTER>ihello\`:cmd<LEFT 6><RIGHT 6> 1`] = `
   },
   "CONTROL_DOWN": false,
   "COORDS": {
-    "x": 5,
+    "x": 4,
     "y": 0,
   },
   "DOWN_MAPPING": [Function],

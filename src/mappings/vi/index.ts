@@ -8,8 +8,8 @@ import { processVisualMode } from './visual'
 export const viUp: KeyMapping = ({ e: { key }, STATE }) => {
   const {
     MODE,
-    BUFFER,
     COORDS,
+    BUFFER,
     BUFFER: { LINE, BUFFER_POST },
   } = STATE as VimAppState
 
@@ -18,17 +18,27 @@ export const viUp: KeyMapping = ({ e: { key }, STATE }) => {
     return processVisualMode({ e: { key }, STATE })
 
   let { x, y } = COORDS
-  let { PRECARET } = LINE
+  let { PRECARET, CARET, POSTCARET, EOL } = LINE
 
   switch (key) {
     case '`': {
       console.log({ MODE: 'VISUAL' })
-      return { ...STATE, MODE: VI_MODE.VISUAL }
+
+
+      CARET = x === 0 ? POSTCARET?.[0] ?? PRECARET.at(-1) ?? null : PRECARET.at(-1) ?? null
+      PRECARET = x === 0 ? PRECARET : PRECARET.slice(0, PRECARET.length - 1)
+      POSTCARET = x === 0 ? POSTCARET.slice(1) : POSTCARET
+      EOL = CARET === null && POSTCARET === EMPTY
+
+      x = x === 0 ? x : x - 1
+ 
+      return { ...STATE, COORDS: { x, y }, BUFFER: {...BUFFER, LINE: { CARET, PRECARET, POSTCARET, EOL, CARET_WIDTH: 1 } }, MODE: VI_MODE.VISUAL }
     }
     case 'Shift':
     case 'Alt':
     case 'Control':
     case 'Tab':
+    case 'Meta':
       break
     case 'Enter':
       y += 1

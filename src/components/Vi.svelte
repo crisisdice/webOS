@@ -11,6 +11,8 @@
 
   .line {
     white-space: pre;
+    padding-top: 2px;
+    padding-bottom: 2px;
   }
 
   .coords {
