@@ -1,4 +1,4 @@
-import type { ShellState, Line, VimAppState } from '../types'
+import type { ShellState, Line, ViState } from '../types'
 import { standardUp, standardDown } from '../mappings'
 import { EMPTY, PWD, HOME } from './constants'
 import { getEnv, setEnv, setFs, stat } from '../lib'
@@ -77,7 +77,7 @@ export function parseCmd(input: Line) {
 }
 
 export function fileToBuffer(fileName: string | null): {
-  BUFFER: VimAppState['BUFFER']
+  BUFFER: ViState['BUFFER']
   FILE_NAME: string | null
 } {
   const { exists, obj, path, isDirectory } = stat('', fileName)

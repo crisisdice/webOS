@@ -1,4 +1,4 @@
-import type { Line, VimAppState } from '../types'
+import type { Line, ViState } from '../types'
 import { lineToString, stringToLine, EMPTY } from '../utils'
 
 export const shiftLeft = ({
@@ -39,11 +39,11 @@ export const shiftRight = ({
 
 export const shiftUp = ({
   BUFFER,
-  BUFFER: { BUFFER_PRE, BUFFER_POST, LINE },
+  BUFFER: { BUFFER_PRE, BUFFER_POST, LINE, LINE: { CARET_WIDTH } },
   COORDS: { x, y },
 }: {
-  BUFFER: VimAppState['BUFFER'] & { LINE: null | Line }
-  COORDS: VimAppState['COORDS']
+  BUFFER: ViState['BUFFER'] & { LINE: null | Line }
+  COORDS: ViState['COORDS']
 }) => {
   if (BUFFER_PRE.length === 0) return BUFFER
 
@@ -51,7 +51,7 @@ export const shiftUp = ({
 
   const newLine = BUFFER_PRE.at(-1)
   x = x > newLine.length ? newLine.length : x
-  LINE = stringToLine(newLine, x)
+  LINE = stringToLine(newLine, x, CARET_WIDTH)
   BUFFER_PRE = BUFFER_PRE.slice(0, BUFFER_PRE.length - 1)
 
   return { BUFFER: { BUFFER_PRE, BUFFER_POST, LINE }, COORDS: { x, y } }
@@ -59,18 +59,18 @@ export const shiftUp = ({
 
 export const shiftDown = ({
   BUFFER,
-  BUFFER: { BUFFER_PRE, BUFFER_POST, LINE },
+  BUFFER: { BUFFER_PRE, BUFFER_POST, LINE, LINE: { CARET_WIDTH } },
   COORDS: { x, y },
 }: {
-  BUFFER: VimAppState['BUFFER']
-  COORDS: VimAppState['COORDS']
+  BUFFER: ViState['BUFFER']
+  COORDS: ViState['COORDS']
 }) => {
   if (BUFFER_POST.length === 0) return BUFFER
 
   BUFFER_PRE = [...BUFFER_PRE, lineToString(LINE)]
   const newLine = BUFFER_POST[0]
   x = x > newLine.length ? newLine.length : x
-  LINE = stringToLine(newLine, x)
+  LINE = stringToLine(newLine, x, CARET_WIDTH)
   BUFFER_POST = BUFFER_POST.slice(1)
 
   return { BUFFER: { BUFFER_PRE, BUFFER_POST, LINE }, COORDS: { x, y } }
@@ -80,7 +80,7 @@ const getLineLength = ({ LINE: { PRECARET, CARET, POSTCARET } }: { LINE: Line })
   return PRECARET.length + POSTCARET.length + (CARET === null ? 0 : 1)
 }
 
-export const getLengths = ({ BUFFER }: VimAppState) => {
+export const getLengths = ({ BUFFER }: ViState) => {
   const { BUFFER_PRE, LINE, BUFFER_POST } = BUFFER
   const BUFFER_LENGTH = BUFFER_PRE.length + BUFFER_POST.length + 1
   const LINE_LENGTH = getLineLength({ LINE })

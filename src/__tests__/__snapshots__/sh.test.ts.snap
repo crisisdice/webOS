@@ -27,11 +27,16 @@ exports[`<LEFT 3><RIGHT 3> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
 exports[`echo<ENTER>ls<ENTER>ArrowUpArrowUpArrowDown 1`] = `
 {
   "COMMAND_LINE": {
-    "CARET": "l",
-    "CARET_WIDTH": 1,
-    "EOL": false,
-    "POSTCARET": "s",
-    "PRECARET": "",
+    "COMMAND_LINE": {
+      "CARET": null,
+      "CARET_WIDTH": 1,
+      "EOL": true,
+      "POSTCARET": "",
+      "PRECARET": "ls",
+    },
+    "PWD": "/home/guest",
+    "STDOUT": ".bashrc .history",
+    "USER": "guest",
   },
   "CONTROL_DOWN": false,
   "DOWN_MAPPING": [Function],
@@ -39,16 +44,28 @@ exports[`echo<ENTER>ls<ENTER>ArrowUpArrowUpArrowDown 1`] = `
   "NAME": 0,
   "OLD_COMMANDS": [
     {
-      "cmd": "echo",
-      "stdout": "",
-      "usr": "guest",
-      "wd": "/home/guest",
+      "COMMAND_LINE": {
+        "CARET": null,
+        "CARET_WIDTH": 1,
+        "EOL": true,
+        "POSTCARET": "",
+        "PRECARET": "echo",
+      },
+      "PWD": "/home/guest",
+      "STDOUT": "",
+      "USER": "guest",
     },
     {
-      "cmd": "ls",
-      "stdout": ".bashrc .history",
-      "usr": "guest",
-      "wd": "/home/guest",
+      "COMMAND_LINE": {
+        "CARET": null,
+        "CARET_WIDTH": 1,
+        "EOL": true,
+        "POSTCARET": "",
+        "PRECARET": "ls",
+      },
+      "PWD": "/home/guest",
+      "STDOUT": ".bashrc .history",
+      "USER": "guest",
     },
   ],
   "PWD": "/home/guest",

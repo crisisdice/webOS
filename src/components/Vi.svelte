@@ -24,11 +24,11 @@
 <script lang="ts">
   import Caret from './Caret.svelte'
 
-  import type { AppState, VimAppState } from '../types'
+  import type { ViState } from '../types'
   import { VI_MODE } from '../lib'
   import { lineToString } from '../utils'
 
-  export let STATE: AppState & Partial<VimAppState>
+  export let STATE: ViState
 
   let {
     MODE,

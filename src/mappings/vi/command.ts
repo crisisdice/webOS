@@ -1,13 +1,13 @@
-import type { KeyMapping, State, VimAppState } from '../../types'
+import type { KeyMapping, ViState } from '../../types'
 import { VI_MODE, write, separate } from '../../lib'
 import { EMPTY_LINE, INITAL_STATE, lineToString, parseCmd } from '../../utils'
 import { del, shiftLeft, shiftRight } from '../shift'
 
-function bufferToFile({ BUFFER_PRE, LINE, BUFFER_POST }: VimAppState['BUFFER']): string {
+function bufferToFile({ BUFFER_PRE, LINE, BUFFER_POST }: ViState['BUFFER']): string {
   return [ ...BUFFER_PRE, lineToString(LINE), ...BUFFER_POST ].join('\n')
 }
 
-function vimCommands(STATE: VimAppState): State {
+function vimCommands(STATE: ViState) {
   const { COMMAND_LINE, OLD_COMMANDS } = STATE
   const { cmd, args }= parseCmd(COMMAND_LINE)
   
@@ -21,14 +21,14 @@ function vimCommands(STATE: VimAppState): State {
   }
 }
 
-function writeFile({ args, STATE }: { args: string[], STATE: VimAppState }): State {
+function writeFile({ args, STATE }: { args: string[], STATE: ViState }): ViState {
   const { FILE_NAME, BUFFER } = STATE
   write({ ...separate(FILE_NAME ?? args[0] ?? 'temp'), obj: bufferToFile(BUFFER) })
   return { ...STATE, COMMAND_LINE: EMPTY_LINE, MODE: VI_MODE.VISUAL }
 }
 
 export const processCommandMode: KeyMapping = ({ e: { key }, STATE }) => {
-  const { COMMAND_LINE } = STATE as VimAppState
+  const { COMMAND_LINE } = STATE as ViState
   let { PRECARET } = COMMAND_LINE
 
   switch (key) {
@@ -37,7 +37,7 @@ export const processCommandMode: KeyMapping = ({ e: { key }, STATE }) => {
       return { ...STATE, COMMAND_LINE: { ...EMPTY_LINE }, MODE: VI_MODE.VISUAL }
     }
     case 'Enter':
-      return vimCommands(STATE as VimAppState)
+      return vimCommands(STATE as ViState)
     case 'ArrowLeft':
       return { ...STATE, COMMAND_LINE: shiftLeft({ LINE: COMMAND_LINE }) }
     case 'ArrowRight':

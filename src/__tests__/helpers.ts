@@ -1,8 +1,11 @@
-import type { State } from '../types'
+import type { ShellState, ViState } from '../types'
 import { INITAL_STATE } from '../utils'
 import { BACK, ENTER, LEFT, RIGHT } from './constants'
 
-function keySeq(sequence: string[], STATE: State = { ...INITAL_STATE }): State {
+function keySeq(
+  sequence: string[],
+  STATE: ShellState | ViState = { ...INITAL_STATE },
+): ShellState | ViState {
   for (const key of sequence) {
     STATE = STATE.UP_MAPPING({ e: { key }, STATE })
   }

@@ -1,4 +1,4 @@
-import type { KeyMapping, VimAppState } from '../../types'
+import type { KeyMapping, ViState } from '../../types'
 import { VI_MODE } from '../../lib'
 import { ARROW_KEYS, EMPTY } from '../../utils'
 import { del, shiftUp, shiftDown } from '../shift'
@@ -11,7 +11,7 @@ export const viUp: KeyMapping = ({ e: { key }, STATE }) => {
     COORDS,
     BUFFER,
     BUFFER: { LINE, BUFFER_POST },
-  } = STATE as VimAppState
+  } = STATE as ViState
 
   if (MODE === VI_MODE.COMMAND) return processCommandMode({ e: { key }, STATE })
   if (MODE === VI_MODE.VISUAL || ARROW_KEYS.includes(key))

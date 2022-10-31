@@ -1,4 +1,4 @@
-import type { KeyMapping, VimAppState } from '../../types'
+import type { KeyMapping, ViState } from '../../types'
 import { VI_MODE } from '../../lib'
 import { getLengths, shiftUp, shiftDown, shiftLeft, shiftRight } from '../shift'
 import {EMPTY} from '../../utils'
@@ -8,8 +8,8 @@ export const processVisualMode: KeyMapping = ({ e: { key }, STATE }) => {
     BUFFER,
     COORDS,
     BUFFER: { LINE },
-  } = STATE as VimAppState
-  const { LINE_LENGTH, BUFFER_LENGTH } = getLengths(STATE as VimAppState)
+  } = STATE as ViState
+  const { LINE_LENGTH, BUFFER_LENGTH } = getLengths(STATE as ViState)
   let { x, y } = COORDS
 
   let { PRECARET, CARET, POSTCARET } = LINE

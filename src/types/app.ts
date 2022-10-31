@@ -1,8 +1,7 @@
 import { APPS } from '../utils'
 import { VI_MODE } from '../lib'
 
-// TODO organize types
-
+/* system */
 export type ENV = {
   PWD: string
   HOME: string
@@ -19,23 +18,23 @@ export type Stat = {
   obj: Directory | string
 }
 
-// TODO standardize command type
-export type Command = { cmd: string; wd: string; stdout: string; usr: string }
-
-export type KeyMapping = ({ e, STATE }: { e: { key: string }; STATE: State }) => State
-
-export type VimAppState = AppState & {
-  MODE: VI_MODE
-  BUFFER: {
-    BUFFER_PRE: string[]
-    LINE: Line
-    BUFFER_POST: string[]
-  }
-  COORDS: { x: number; y: number }
-  FILE_NAME: string | null
+export type Line = {
+  PRECARET: string
+  CARET: string | null
+  POSTCARET: string
+  EOL: boolean
+  CARET_WIDTH: number
 }
 
-export type AppState = {
+/* input */
+export type KeyMapping = ({ e, STATE }: { e: { key: string }; STATE: State }) => State
+
+export type Command = { COMMAND_LINE: Line; USER: string; PWD: string; STDOUT: string }
+
+export type State = ShellState | ViState
+
+/* apps */
+export type BaseState = {
   CONTROL_DOWN: boolean
   NAME: APPS
   UP_MAPPING: KeyMapping
@@ -44,18 +43,19 @@ export type AppState = {
   OLD_COMMANDS: Command[]
 }
 
-export type ShellState = AppState & {
+export type ShellState = BaseState & {
   HISTORY_INDEX: number
   USER: string
   PWD: string
 }
 
-export type State = VimAppState | AppState | ShellState
-
-export type Line = {
-  PRECARET: string
-  CARET: string | null
-  POSTCARET: string
-  EOL: boolean
-  CARET_WIDTH: number
+export type ViState = BaseState & {
+  MODE: VI_MODE
+  BUFFER: {
+    BUFFER_PRE: string[]
+    LINE: Line
+    BUFFER_POST: string[]
+  }
+  COORDS: { x: number; y: number }
+  FILE_NAME: string | null
 }
