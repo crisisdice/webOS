@@ -1,14 +1,15 @@
 import type { ShellState, Line, VimAppState } from '../types'
 import { standardUp, standardDown } from '../mappings'
-import { DASH, EMPTY, PWD, HOME } from './constants'
+import { EMPTY, PWD, HOME } from './constants'
 import { getEnv, setEnv, setFs, stat } from '../lib'
 import { APPS } from './apps'
 
 export const EMPTY_LINE = Object.freeze({
   PRECARET: EMPTY,
-  CARET: DASH,
+  CARET: null,
   POSTCARET: EMPTY,
-  CARET_ACTIVE: false,
+  EOL: true,
+  CARET_WIDTH: 1,
 })
 
 export const EMPTY_BUFFER = Object.freeze({
@@ -47,20 +48,21 @@ export const init = () => {
 }
 
 export const lineToString = ({ PRECARET, CARET, POSTCARET }: Line) => {
-  return `${PRECARET}${CARET === DASH ? '' : CARET}${POSTCARET}`
+  return `${PRECARET}${CARET === null ? '' : CARET}${POSTCARET}`
 }
 
-export const stringToLine = (line: string, x: number): Line => {
+export const stringToLine = (line: string, x: number, CARET_WIDTH = 1): Line => {
   const PRECARET = line.slice(0, x)
-  const CARET = x === line.length ? DASH : line[x]
-  const CARET_ACTIVE = CARET !== DASH
-  const POSTCARET = CARET_ACTIVE ? line.slice(x + 1) : EMPTY
+  const EOL = x === line.length
+  const CARET = EOL || CARET_WIDTH === 0 ? null : line[x]
+  const POSTCARET = EOL ? EMPTY : line.slice(x + 1)
 
   return {
     PRECARET,
     CARET,
     POSTCARET,
-    CARET_ACTIVE,
+    EOL,
+    CARET_WIDTH,
   }
 }
 

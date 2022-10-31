@@ -3,8 +3,9 @@
 exports[`cat "hello" > hello.txt<ENTER> 1`] = `
 {
   "COMMAND_LINE": {
-    "CARET": "_",
-    "CARET_ACTIVE": false,
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
     "POSTCARET": "",
     "PRECARET": "",
   },
@@ -33,8 +34,9 @@ exports[`cat "hello" > hello.txt<ENTER> 3`] = `"{"PWD":"/home/guest","HOME":"/ho
 exports[`cd ../root<ENTER> 1`] = `
 {
   "COMMAND_LINE": {
-    "CARET": "_",
-    "CARET_ACTIVE": false,
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
     "POSTCARET": "",
     "PRECARET": "",
   },
@@ -63,8 +65,9 @@ exports[`cd ../root<ENTER> 3`] = `"{"PWD":"/home/root","HOME":"/home/guest"}"`;
 exports[`cd /<ENTER> 1`] = `
 {
   "COMMAND_LINE": {
-    "CARET": "_",
-    "CARET_ACTIVE": false,
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
     "POSTCARET": "",
     "PRECARET": "",
   },
@@ -93,8 +96,9 @@ exports[`cd /<ENTER> 3`] = `"{"PWD":"/","HOME":"/home/guest"}"`;
 exports[`cd ~<ENTER> 1`] = `
 {
   "COMMAND_LINE": {
-    "CARET": "_",
-    "CARET_ACTIVE": false,
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
     "POSTCARET": "",
     "PRECARET": "",
   },
@@ -123,8 +127,9 @@ exports[`cd ~<ENTER> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
 exports[`echo "hello" > ../hello.txt<ENTER> 1`] = `
 {
   "COMMAND_LINE": {
-    "CARET": "_",
-    "CARET_ACTIVE": false,
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
     "POSTCARET": "",
     "PRECARET": "",
   },
@@ -153,8 +158,9 @@ exports[`echo "hello" > ../hello.txt<ENTER> 3`] = `"{"PWD":"/home/guest","HOME":
 exports[`echo "hello" > hello.txt<ENTER> 1`] = `
 {
   "COMMAND_LINE": {
-    "CARET": "_",
-    "CARET_ACTIVE": false,
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
     "POSTCARET": "",
     "PRECARET": "",
   },
@@ -183,8 +189,9 @@ exports[`echo "hello" > hello.txt<ENTER> 3`] = `"{"PWD":"/home/guest","HOME":"/h
 exports[`echo hello<ENTER> 1`] = `
 {
   "COMMAND_LINE": {
-    "CARET": "_",
-    "CARET_ACTIVE": false,
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
     "POSTCARET": "",
     "PRECARET": "",
   },
@@ -213,8 +220,9 @@ exports[`echo hello<ENTER> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
 exports[`ls /<ENTER> 1`] = `
 {
   "COMMAND_LINE": {
-    "CARET": "_",
-    "CARET_ACTIVE": false,
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
     "POSTCARET": "",
     "PRECARET": "",
   },
@@ -243,8 +251,9 @@ exports[`ls /<ENTER> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
 exports[`ls<ENTER> 1`] = `
 {
   "COMMAND_LINE": {
-    "CARET": "_",
-    "CARET_ACTIVE": false,
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
     "POSTCARET": "",
     "PRECARET": "",
   },
@@ -273,8 +282,9 @@ exports[`ls<ENTER> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
 exports[`rm ../root<ENTER> 1`] = `
 {
   "COMMAND_LINE": {
-    "CARET": "_",
-    "CARET_ACTIVE": false,
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
     "POSTCARET": "",
     "PRECARET": "",
   },
@@ -303,8 +313,9 @@ exports[`rm ../root<ENTER> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
 exports[`rm .bashrc<ENTER> 1`] = `
 {
   "COMMAND_LINE": {
-    "CARET": "_",
-    "CARET_ACTIVE": false,
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
     "POSTCARET": "",
     "PRECARET": "",
   },
@@ -333,8 +344,9 @@ exports[`rm .bashrc<ENTER> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
 exports[`touch hello.txt<ENTER> 1`] = `
 {
   "COMMAND_LINE": {
-    "CARET": "_",
-    "CARET_ACTIVE": false,
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
     "POSTCARET": "",
     "PRECARET": "",
   },

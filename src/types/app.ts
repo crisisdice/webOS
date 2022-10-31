@@ -54,7 +54,8 @@ export type State = VimAppState | AppState | ShellState
 
 export type Line = {
   PRECARET: string
-  CARET: string
+  CARET: string | null
   POSTCARET: string
-  CARET_ACTIVE: boolean
+  EOL: boolean
+  CARET_WIDTH: number
 }

@@ -1,36 +1,40 @@
 import type { Line, VimAppState } from '../types'
-import { lineToString, stringToLine, DASH, EMPTY } from '../utils'
+import { lineToString, stringToLine, EMPTY } from '../utils'
 
 export const shiftLeft = ({
   LINE,
-  LINE: { PRECARET, CARET, POSTCARET, CARET_ACTIVE },
+  LINE: { PRECARET, CARET, POSTCARET, EOL, CARET_WIDTH },
 }: {
   LINE: Line
 }) => {
   if (PRECARET === EMPTY) return LINE
 
-  POSTCARET = CARET === DASH ? EMPTY : `${CARET}${POSTCARET}`
-  CARET = PRECARET.at(-1)
-  PRECARET = PRECARET.slice(0, PRECARET.length - 1)
-  CARET_ACTIVE = true
+  const char = PRECARET.at(-1)
 
-  return { PRECARET, CARET, POSTCARET, CARET_ACTIVE }
+  POSTCARET = `${CARET_WIDTH === 1 ? CARET ?? EMPTY : char}${POSTCARET}`
+  CARET = CARET_WIDTH === 1 ? char : null
+  PRECARET = PRECARET.slice(0, PRECARET.length - 1)
+  EOL = false
+
+  return { PRECARET, CARET, POSTCARET, EOL, CARET_WIDTH }
 }
 
 export const shiftRight = ({
   LINE,
-  LINE: { PRECARET, CARET, POSTCARET, CARET_ACTIVE },
+  LINE: { PRECARET, CARET, POSTCARET, EOL, CARET_WIDTH },
 }: {
   LINE: Line
 }) => {
-  if (CARET === DASH) return LINE
+  if (EOL) return LINE
 
-  PRECARET = `${PRECARET}${CARET}`
-  CARET = POSTCARET === EMPTY ? DASH : POSTCARET[0]
+  const char = POSTCARET[0]
+
+  PRECARET = `${PRECARET}${CARET_WIDTH === 1 ? CARET : char}`
+  CARET = POSTCARET === EMPTY || CARET_WIDTH === 0 ? null : char
   POSTCARET = POSTCARET.slice(1, POSTCARET.length)
-  CARET_ACTIVE = !(POSTCARET === EMPTY && CARET === DASH)
+  EOL = POSTCARET === EMPTY && (CARET_WIDTH === 0 || CARET === null)
 
-  return { PRECARET, CARET, POSTCARET, CARET_ACTIVE }
+  return { PRECARET, CARET, POSTCARET, EOL, CARET_WIDTH }
 }
 
 export const shiftUp = ({
@@ -72,12 +76,14 @@ export const shiftDown = ({
   return { BUFFER: { BUFFER_PRE, BUFFER_POST, LINE }, COORDS: { x, y } }
 }
 
+const getLineLength = ({ LINE: { PRECARET, CARET, POSTCARET } }: { LINE: Line }) => {
+  return PRECARET.length + POSTCARET.length + (CARET === null ? 0 : 1)
+}
+
 export const getLengths = ({ BUFFER }: VimAppState) => {
   const { BUFFER_PRE, LINE, BUFFER_POST } = BUFFER
-  const { PRECARET, CARET, POSTCARET } = LINE
-
-  const LINE_LENGTH = PRECARET.length + POSTCARET.length + (CARET === DASH ? 0 : 1)
   const BUFFER_LENGTH = BUFFER_PRE.length + BUFFER_POST.length + 1
+  const LINE_LENGTH = getLineLength({ LINE })
 
   return { LINE_LENGTH, BUFFER_LENGTH }
 }

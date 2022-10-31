@@ -25,14 +25,20 @@
 
 <script lang="ts">
   import type { Line } from '../types'
+
   export let COMMAND_LINE: Line
 
-  let { PRECARET, CARET_ACTIVE, CARET, POSTCARET } = COMMAND_LINE
+  let { PRECARET, EOL, CARET, POSTCARET, CARET_WIDTH } = COMMAND_LINE
 
-  // TODO zero width caret
+  const renderCaret = () => {
+    if (CARET_WIDTH === 0) return '|'
+    if (EOL) return '_'
+    return CARET
+  }
 </script>
 
+<!-- TODO highlighting text -->
 <span
-  >{PRECARET}<span class={CARET_ACTIVE ? 'caret-full' : 'caret-empty'}>{CARET}</span
+  >{PRECARET}<span class={EOL ? 'caret-empty' : 'caret-full'}>{renderCaret()}</span
   >{POSTCARET}</span
 >

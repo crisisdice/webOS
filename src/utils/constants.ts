@@ -8,6 +8,4 @@ export const PWD = 'PWD'
 
 export const HOME = 'HOME'
 
-export const DASH = '_'
-
 export const ARROW_KEYS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']
