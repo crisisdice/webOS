@@ -6,10 +6,10 @@
   import History from './History.svelte'
   import Caret from './Caret.svelte'
 
-  import type { ShellState } from '../types'
-  export let STATE: ShellState
+  import type { ShellState, State } from '../types'
+  export let STATE: State
 
-  let { OLD_COMMANDS, PWD, USER, COMMAND_LINE } = STATE
+  let { OLD_COMMANDS, PWD, USER, COMMAND_LINE } = STATE as ShellState
 </script>
 
 <div>

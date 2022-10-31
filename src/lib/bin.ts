@@ -2,6 +2,8 @@ import { EMPTY } from '../utils'
 import { setEnv, stat, write } from './fs'
 import { separate } from './path'
 
+// TODO whoami, login, mv
+
 export const echo = (args: string[]) => {
   return args.join(' ').replaceAll('"', '')
 }

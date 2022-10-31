@@ -3,7 +3,8 @@
   import Vi from './components/Vi.svelte'
 
   import type { State } from './types'
-  import { refocus, init, INITAL_STATE, APPS } from './utils'
+  import { refocus, INITAL_STATE, APPS } from './utils'
+  import { init } from './lib'
 
   window.onload = () => {
     init()

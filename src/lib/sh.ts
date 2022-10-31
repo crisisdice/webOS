@@ -1,8 +1,8 @@
-import type { ShellState, ViState } from '../types'
+import type { ShellState, ViState, Line } from '../types'
 import { getEnv, write } from './fs'
 import { separate } from './path'
 import { echo, cd, ls, cat, rm, touch } from './bin'
-import { EMPTY, EMPTY_LINE, parseCmd } from '../utils'
+import { EMPTY, EMPTY_LINE, lineToString } from '../utils'
 import { startVi } from './vi'
 
 const cmds: Record<string, (args: string[]) => string> = {
@@ -52,6 +52,15 @@ const runFullScreen = ({
 }
 
 const FULL_SCREEN_APPS = ['vi']
+
+export function parseCmd(input: Line) {
+  // TODO escapes, quoting, flags, expansions, pipes
+  const commandTokens = lineToString(input).split(' ')
+  const cmd = commandTokens?.[0] ?? ''
+  const args = commandTokens.slice(1)
+
+  return { cmd, args }
+}
 
 export const evaluate = ({
   STATE,

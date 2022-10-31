@@ -24,18 +24,18 @@
 <script lang="ts">
   import Caret from './Caret.svelte'
 
-  import type { ViState } from '../types'
+  import type { State, ViState } from '../types'
   import { VI_MODE } from '../lib'
   import { lineToString } from '../utils'
 
-  export let STATE: ViState
+  export let STATE: State
 
   let {
     MODE,
     COMMAND_LINE,
     COORDS: { x, y },
     BUFFER: { BUFFER_PRE, LINE, BUFFER_POST },
-  } = STATE
+  } = STATE as ViState
 </script>
 
 <div>

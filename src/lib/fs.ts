@@ -1,5 +1,5 @@
 import type { ENV as IENV, Directory, Stat } from '../types'
-import { FS, ENV } from '../utils'
+import { FS, ENV, PWD, HOME } from '../utils'
 import { absoluteTokens } from './path'
 
 function get<T>(lsKey: 'ENV' | 'FS'): T | null {
@@ -97,4 +97,19 @@ export function stat(pathString: string, name?: string): Stat {
   } catch (e) {
     return { exists: false, path: '-', isDirectory: false, obj: '-' }
   }
+}
+
+export function init() {
+  setEnv(PWD, '/home/guest')
+  setEnv(HOME, '/home/guest')
+
+  setFs({
+    home: {
+      guest: {
+        '.bashrc': '#!/usr/sh',
+        '.history': '',
+      },
+      root: {},
+    },
+  })
 }

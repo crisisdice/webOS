@@ -1,6 +1,6 @@
 import { run, fill } from '../helpers'
 import { BACK, DOWN, ENTER, LEFT, RIGHT, UP } from '../constants'
-import { init } from '../../utils'
+import { init } from '../../lib'
 
 const ENTER_VI = [...'vi'.split(''), ENTER]
 

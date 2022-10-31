@@ -1,6 +1,6 @@
 import type { KeyMapping, ViState } from '../../types'
-import { VI_MODE, write, separate } from '../../lib'
-import { EMPTY_LINE, INITAL_STATE, lineToString, parseCmd } from '../../utils'
+import { VI_MODE, write, separate, parseCmd } from '../../lib'
+import { EMPTY_LINE, INITAL_STATE, lineToString } from '../../utils'
 import { del, shiftLeft, shiftRight } from '../shift'
 
 function bufferToFile({ BUFFER_PRE, LINE, BUFFER_POST }: ViState['BUFFER']): string {
@@ -9,6 +9,7 @@ function bufferToFile({ BUFFER_PRE, LINE, BUFFER_POST }: ViState['BUFFER']): str
 
 function vimCommands(STATE: ViState) {
   const { COMMAND_LINE, OLD_COMMANDS } = STATE
+  // TODO own vi command parser
   const { cmd, args }= parseCmd(COMMAND_LINE)
   
   switch (cmd ?? '') {
