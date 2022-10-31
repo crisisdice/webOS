@@ -39,7 +39,12 @@ export const shiftRight = ({
 
 export const shiftUp = ({
   BUFFER,
-  BUFFER: { BUFFER_PRE, BUFFER_POST, LINE, LINE: { CARET_WIDTH } },
+  BUFFER: {
+    BUFFER_PRE,
+    BUFFER_POST,
+    LINE,
+    LINE: { CARET_WIDTH },
+  },
   COORDS: { x, y },
 }: {
   BUFFER: ViState['BUFFER'] & { LINE: null | Line }
@@ -59,7 +64,12 @@ export const shiftUp = ({
 
 export const shiftDown = ({
   BUFFER,
-  BUFFER: { BUFFER_PRE, BUFFER_POST, LINE, LINE: { CARET_WIDTH } },
+  BUFFER: {
+    BUFFER_PRE,
+    BUFFER_POST,
+    LINE,
+    LINE: { CARET_WIDTH },
+  },
   COORDS: { x, y },
 }: {
   BUFFER: ViState['BUFFER']

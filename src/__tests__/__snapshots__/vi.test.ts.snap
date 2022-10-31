@@ -63,7 +63,7 @@ exports[`vi<ENTER>ihello<ENTER>hello worldArrowUp 1`] = `
     "BUFFER_PRE": [],
     "LINE": {
       "CARET": null,
-      "CARET_WIDTH": 1,
+      "CARET_WIDTH": 0,
       "EOL": true,
       "POSTCARET": "",
       "PRECARET": "hello",

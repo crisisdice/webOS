@@ -16,7 +16,6 @@ const cmds: Record<string, (args: string[]) => string> = {
 }
 
 const run = (cmd: string, args: string[]) => {
-
   if (cmd === EMPTY) return
   if (!cmds[cmd]) return `sh: command not found: ${cmd}`
   if (cmd === 'pwd') return `${getEnv('PWD')}/`
