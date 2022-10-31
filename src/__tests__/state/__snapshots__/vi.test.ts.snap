@@ -110,60 +110,6 @@ exports[`vi<ENTER>ihello<ENTER>hello worldArrowUp 2`] = `"{"home":{"guest":{".ba
 
 exports[`vi<ENTER>ihello<ENTER>hello worldArrowUp 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
 
-exports[`vi<ENTER>ihello<ENTER>hello worldArrowUpArrowDown<BACK 12> 1`] = `
-{
-  "BUFFER": {
-    "BUFFER_POST": [],
-    "BUFFER_PRE": [],
-    "LINE": {
-      "CARET": null,
-      "CARET_WIDTH": 1,
-      "EOL": true,
-      "POSTCARET": "",
-      "PRECARET": "",
-    },
-  },
-  "COMMAND_LINE": {
-    "CARET": null,
-    "CARET_WIDTH": 1,
-    "EOL": true,
-    "POSTCARET": "",
-    "PRECARET": "",
-  },
-  "CONTROL_DOWN": false,
-  "COORDS": {
-    "x": 0,
-    "y": 0,
-  },
-  "DOWN_MAPPING": [Function],
-  "FILE_NAME": null,
-  "HISTORY_INDEX": -1,
-  "MODE": 1,
-  "NAME": 1,
-  "OLD_COMMANDS": [
-    {
-      "COMMAND_LINE": {
-        "CARET": null,
-        "CARET_WIDTH": 1,
-        "EOL": true,
-        "POSTCARET": "",
-        "PRECARET": "vi",
-      },
-      "PWD": "/home/guest",
-      "STDOUT": "",
-      "USER": "guest",
-    },
-  ],
-  "PWD": "/home/guest",
-  "UP_MAPPING": [Function],
-  "USER": "guest",
-}
-`;
-
-exports[`vi<ENTER>ihello<ENTER>hello worldArrowUpArrowDown<BACK 12> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":""},"root":{}}}"`;
-
-exports[`vi<ENTER>ihello<ENTER>hello worldArrowUpArrowDown<BACK 12> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
-
 exports[`vi<ENTER>ihello<LEFT 6><RIGHT 6> 1`] = `
 {
   "BUFFER": {

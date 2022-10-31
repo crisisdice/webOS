@@ -1,6 +1,6 @@
-import { run, fill } from './helpers'
-import { DOWN, ENTER, LEFT, RIGHT, UP } from './constants'
-import { init } from '../utils'
+import { run, fill } from '../helpers'
+import { DOWN, ENTER, LEFT, RIGHT, UP } from '../constants'
+import { init } from '../../utils'
 
 const tests = [
   [...fill(3, LEFT), ...fill(3, RIGHT)],
