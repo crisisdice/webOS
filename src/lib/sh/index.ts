@@ -38,13 +38,13 @@ export const shellUp: KeyMapping = ({
     case 'ArrowRight': {
       return { ...STATE, COMMAND_LINE: shiftRight({ LINE: COMMAND_LINE }) }
     }
+    case 'Shift':
+    case 'Tab':
+      break
     case 'Backspace': {
       PRECARET = PRECARET.slice(0, PRECARET.length - 1)
       break
     }
-    case 'Shift':
-    case 'Tab':
-      break
     default: {
       PRECARET += key
     }
