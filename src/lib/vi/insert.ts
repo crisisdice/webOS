@@ -7,27 +7,36 @@ export const processInsertMode: KeyMapping = ({ e: { key }, STATE }) => {
   const {
     MODE,
     COORDS,
+    COORDS: { y },
     BUFFER,
     BUFFER: { BUFFER_PRE, LINE, BUFFER_POST },
   } = STATE as ViState
 
-  let { x, y } = COORDS
+  let { x } = COORDS
   let { PRECARET, CARET, POSTCARET, EOL } = LINE
 
   switch (key) {
     case '`': {
       console.log({ MODE: 'VISUAL' })
 
-      CARET = x === 0 ? POSTCARET?.[0] ?? PRECARET.at(-1) ?? null : PRECARET.at(-1) ?? null
-      PRECARET = x === 0 ? PRECARET : PRECARET.slice(0, PRECARET.length - 1)
-      POSTCARET = x === 0 ? POSTCARET.slice(1) : POSTCARET
-      EOL = CARET === null && POSTCARET === EMPTY
+      if (x === 0) {
+        CARET = POSTCARET?.[0] ?? null
+        POSTCARET = POSTCARET.slice(1)
+        EOL = CARET === null && POSTCARET === EMPTY
+        return {
+          ...STATE,
+          BUFFER: { ...BUFFER, LINE: { CARET, PRECARET, POSTCARET, EOL, CARET_WIDTH: 1 } },
+          MODE: VI_MODE.VISUAL,
+        }
+      }
 
-      x = x === 0 ? x : x - 1
+      CARET = PRECARET.at(-1) ?? null
+      PRECARET = PRECARET.slice(0, PRECARET.length - 1)
+      EOL = CARET === null && POSTCARET === EMPTY
 
       return {
         ...STATE,
-        COORDS: { x, y },
+        COORDS: { x: x - 1, y },
         BUFFER: { ...BUFFER, LINE: { CARET, PRECARET, POSTCARET, EOL, CARET_WIDTH: 1 } },
         MODE: VI_MODE.VISUAL,
       }
@@ -39,8 +48,6 @@ export const processInsertMode: KeyMapping = ({ e: { key }, STATE }) => {
     case 'Meta':
       break
     case 'Enter':
-      x = 0
-      y += 1
       return {
         ...STATE,
         ...shiftDown({
@@ -49,15 +56,13 @@ export const processInsertMode: KeyMapping = ({ e: { key }, STATE }) => {
             LINE: { ...LINE, PRECARET, CARET: null, POSTCARET: EMPTY },
             BUFFER_POST: [POSTCARET, ...BUFFER_POST],
           },
-          COORDS: { x, y },
+          COORDS: { x: 0, y: y + 1 },
         }),
       }
     case 'Backspace': {
       if (x === 0) {
         if (y === 0) return STATE
-        y -= 1
-        const previousLine = BUFFER.BUFFER_PRE.at(-1)
-        x = previousLine.length
+        const previousLine = BUFFER_PRE.at(-1)
         return {
           ...STATE,
           ...shiftUp({
@@ -69,7 +74,7 @@ export const processInsertMode: KeyMapping = ({ e: { key }, STATE }) => {
               ],
               LINE: { ...LINE, POSTCARET: EMPTY },
             },
-            COORDS: { x, y },
+            COORDS: { x: previousLine.length, y: y - 1 },
             DELETE: true,
           }),
         }

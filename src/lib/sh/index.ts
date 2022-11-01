@@ -1,7 +1,7 @@
 import type { KeyMapping, ShellState } from '../../types'
 import { EMPTY_LINE } from '../../utils'
 import { evaluate } from './evaluate'
-import { shiftLeft, shiftRight } from '../shift'
+import { del, shiftLeft, shiftRight } from '../shift'
 import { historyDown, historyUp } from './history'
 
 export const shellUp: KeyMapping = ({
@@ -42,7 +42,7 @@ export const shellUp: KeyMapping = ({
     case 'Tab':
       break
     case 'Backspace': {
-      PRECARET = PRECARET.slice(0, PRECARET.length - 1)
+      PRECARET = del(PRECARET)
       break
     }
     default: {
