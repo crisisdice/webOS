@@ -3,7 +3,7 @@
   import Vi from './components/Vi.svelte'
 
   import type { State } from './types'
-  import { refocus, INITAL_STATE, APPS } from './utils'
+  import { refocus, APPS } from './utils'
   import { init } from './lib'
 
   window.onload = () => {
@@ -11,7 +11,7 @@
     console.log('INITIALIZED')
   }
 
-  let STATE: State = { ...INITAL_STATE }
+  export let STATE: State
 
   const up = (e: KeyboardEvent) => {
     STATE = STATE.UP_MAPPING({ e, STATE })

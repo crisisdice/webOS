@@ -1,4 +1,4 @@
-import { runAll } from '../state'
+import { runAll } from '../ui'
 import { vi } from '../cases'
 
 runAll(vi)

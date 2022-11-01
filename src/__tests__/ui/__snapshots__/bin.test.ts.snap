@@ -1,0 +1,73 @@
+// Vitest Snapshot v1
+
+exports[`cat "hello" > hello.txt<ENTER> 1`] = `
+"<body><div><div><div><div><div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ cat \\"hello\\" &gt; hello.txt</span></div> <div></div></div> <div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ <span><span class=\\"caret-empty svelte-136ugrd\\">_</span></span></span></div></div> <input autofocus=\\"\\"></div></div></body>"
+`;
+
+exports[`cd ../root<ENTER> 1`] = `
+"<body><div><div><div><div><div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ cd ../root</span></div> <div></div></div> <div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">/home/root/</span>
+    $ <span><span class=\\"caret-empty svelte-136ugrd\\">_</span></span></span></div></div> <input autofocus=\\"\\"></div></div></body>"
+`;
+
+exports[`cd /<ENTER> 1`] = `
+"<body><div><div><div><div><div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ cd /</span></div> <div></div></div> <div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">//</span>
+    $ <span><span class=\\"caret-empty svelte-136ugrd\\">_</span></span></span></div></div> <input autofocus=\\"\\"></div></div></body>"
+`;
+
+exports[`cd ~<ENTER> 1`] = `
+"<body><div><div><div><div><div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ cd ~</span></div> <div></div></div> <div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ <span><span class=\\"caret-empty svelte-136ugrd\\">_</span></span></span></div></div> <input autofocus=\\"\\"></div></div></body>"
+`;
+
+exports[`echo "hello" > ../hello.txt<ENTER> 1`] = `
+"<body><div><div><div><div><div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ echo \\"hello\\" &gt; ../hello.txt</span></div> <div></div></div> <div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ <span><span class=\\"caret-empty svelte-136ugrd\\">_</span></span></span></div></div> <input autofocus=\\"\\"></div></div></body>"
+`;
+
+exports[`echo "hello" > hello.txt<ENTER> 1`] = `
+"<body><div><div><div><div><div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ echo \\"hello\\" &gt; hello.txt</span></div> <div></div></div> <div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ <span><span class=\\"caret-empty svelte-136ugrd\\">_</span></span></span></div></div> <input autofocus=\\"\\"></div></div></body>"
+`;
+
+exports[`echo hello<ENTER> 1`] = `
+"<body><div><div><div><div><div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ echo hello</span></div> <div>hello</div></div> <div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ <span><span class=\\"caret-empty svelte-136ugrd\\">_</span></span></span></div></div> <input autofocus=\\"\\"></div></div></body>"
+`;
+
+exports[`ls /<ENTER> 1`] = `
+"<body><div><div><div><div><div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ ls /</span></div> <div>home</div></div> <div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ <span><span class=\\"caret-empty svelte-136ugrd\\">_</span></span></span></div></div> <input autofocus=\\"\\"></div></div></body>"
+`;
+
+exports[`ls<ENTER> 1`] = `
+"<body><div><div><div><div><div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ ls</span></div> <div>.bashrc .history</div></div> <div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ <span><span class=\\"caret-empty svelte-136ugrd\\">_</span></span></span></div></div> <input autofocus=\\"\\"></div></div></body>"
+`;
+
+exports[`rm ../root<ENTER> 1`] = `
+"<body><div><div><div><div><div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ rm ../root</span></div> <div></div></div> <div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ <span><span class=\\"caret-empty svelte-136ugrd\\">_</span></span></span></div></div> <input autofocus=\\"\\"></div></div></body>"
+`;
+
+exports[`rm .bashrc<ENTER> 1`] = `
+"<body><div><div><div><div><div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ rm .bashrc</span></div> <div></div></div> <div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ <span><span class=\\"caret-empty svelte-136ugrd\\">_</span></span></span></div></div> <input autofocus=\\"\\"></div></div></body>"
+`;
+
+exports[`touch hello.txt<ENTER> 1`] = `
+"<body><div><div><div><div><div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ touch hello.txt</span></div> <div></div></div> <div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ <span><span class=\\"caret-empty svelte-136ugrd\\">_</span></span></span></div></div> <input autofocus=\\"\\"></div></div></body>"
+`;

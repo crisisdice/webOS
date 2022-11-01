@@ -1,0 +1,13 @@
+// Vitest Snapshot v1
+
+exports[`vi<ENTER>ihello 1`] = `"<body><div><div><div><div class=\\"buffer svelte-1cykpto\\"> <div class=\\"line svelte-1cykpto\\">1 <span>hello<span class=\\"caret-line svelte-136ugrd\\">ㅤ</span></span></div> </div> <div class=\\"footer svelte-1cykpto\\"> <span class=\\"coords svelte-1cykpto\\">1,6</span></div></div> <input autofocus=\\"\\"></div></div></body>"`;
+
+exports[`vi<ENTER>ihello<ENTER>hello worldArrowUp 1`] = `"<body><div><div><div><div class=\\"buffer svelte-1cykpto\\"> <div class=\\"line svelte-1cykpto\\">1 <span>hello<span class=\\"caret-line svelte-136ugrd\\">ㅤ</span></span></div> <div class=\\"line svelte-1cykpto\\">2 hello world</div></div> <div class=\\"footer svelte-1cykpto\\"> <span class=\\"coords svelte-1cykpto\\">1,6</span></div></div> <input autofocus=\\"\\"></div></div></body>"`;
+
+exports[`vi<ENTER>ihello<LEFT 6><RIGHT 6> 1`] = `"<body><div><div><div><div class=\\"buffer svelte-1cykpto\\"> <div class=\\"line svelte-1cykpto\\">1 <span>hello<span class=\\"caret-line svelte-136ugrd\\">ㅤ</span></span></div> </div> <div class=\\"footer svelte-1cykpto\\"> <span class=\\"coords svelte-1cykpto\\">1,6</span></div></div> <input autofocus=\\"\\"></div></div></body>"`;
+
+exports[`vi<ENTER>ihello\` 1`] = `"<body><div><div><div><div class=\\"buffer svelte-1cykpto\\"> <div class=\\"line svelte-1cykpto\\">1 <span>hell<span class=\\"caret-full svelte-136ugrd\\">o</span></span></div> </div> <div class=\\"footer svelte-1cykpto\\"> <span class=\\"coords svelte-1cykpto\\">1,5</span></div></div> <input autofocus=\\"\\"></div></div></body>"`;
+
+exports[`vi<ENTER>ihello\`:cmd 1`] = `"<body><div><div><div><div class=\\"buffer svelte-1cykpto\\"> <div class=\\"line svelte-1cykpto\\">1 hello</div> </div> <div class=\\"footer svelte-1cykpto\\">: <span>cmd<span class=\\"caret-empty svelte-136ugrd\\">_</span></span> <span class=\\"coords svelte-1cykpto\\">1,5</span></div></div> <input autofocus=\\"\\"></div></div></body>"`;
+
+exports[`vi<ENTER>ihello\`:cmd<LEFT 6><RIGHT 6> 1`] = `"<body><div><div><div><div class=\\"buffer svelte-1cykpto\\"> <div class=\\"line svelte-1cykpto\\">1 hello</div> </div> <div class=\\"footer svelte-1cykpto\\">: <span>cmd<span class=\\"caret-empty svelte-136ugrd\\">_</span></span> <span class=\\"coords svelte-1cykpto\\">1,6</span></div></div> <input autofocus=\\"\\"></div></div></body>"`;

@@ -2,7 +2,7 @@ import type { ShellState, ViState } from '../types'
 import { INITAL_STATE } from '../utils'
 import { BACK, ENTER, LEFT, RIGHT } from './constants'
 
-function keySeq(
+export function keySeq(
   sequence: string[],
   STATE: ShellState | ViState = { ...INITAL_STATE },
 ): ShellState | ViState {
@@ -14,7 +14,7 @@ function keySeq(
 
 export const fill = (n: number, key: string) => [...(Array(n) as unknown[])].map(() => key)
 
-function prettyTestName(sequence: string[]) {
+export function prettyTestName(sequence: string[]) {
   let leftCount = 0
   let rightCount = 0
   let backCount = 0
@@ -71,20 +71,4 @@ function prettyTestName(sequence: string[]) {
   }
 
   return name
-}
-
-function fs() {
-  return localStorage.getItem('FS')
-}
-
-function env() {
-  return localStorage.getItem('ENV')
-}
-
-export const run = (sequence: string[]) => {
-  test(prettyTestName(sequence), () => {
-    expect(keySeq(sequence)).toMatchSnapshot()
-    expect(fs()).toMatchSnapshot()
-    expect(env()).toMatchSnapshot()
-  })
 }

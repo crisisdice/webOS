@@ -10,7 +10,7 @@ module.exports = {
     sourceType: 'module',
     tsconfigRootDir: __dirname,
     project: ['./tsconfig.json'],
-    extraFileExtensions: ['.svelte']
+    extraFileExtensions: ['.svelte', '.ts']
    },
   env: {
     es6: true,
