@@ -1,13 +1,12 @@
-import { FS, ENV } from './constants'
-import type { ENV as IENV, Directory, Stat } from './types'
+import type { ENV as IENV, Directory, Stat } from '../types'
+import { FS, ENV, PWD, HOME } from '../utils'
+import { absoluteTokens } from './path'
 
 function get<T>(lsKey: 'ENV' | 'FS'): T | null {
   const ls = localStorage.getItem(lsKey)
   if (!ls) return null
   return JSON.parse(ls) as T
 }
-
-const absoluteTokens = (path: string) => path.split('/').filter((t) => !!t)
 
 function parsePath(path: string): string[] {
   if (path === '') throw new Error('no path')
@@ -53,10 +52,6 @@ function traverse(tokens: string[], fs: Directory) {
   return tmp
 }
 
-export function setFs(fs: Directory): void {
-  localStorage.setItem(FS, JSON.stringify(fs))
-}
-
 export function getEnv(key: keyof IENV): string {
   return get<IENV>(ENV)[key] ?? ''
 }
@@ -64,6 +59,10 @@ export function getEnv(key: keyof IENV): string {
 export function setEnv(key: string, value: string): void {
   const env = get<IENV>(ENV) ?? {}
   localStorage.setItem(ENV, JSON.stringify({ ...env, [key]: value }))
+}
+
+export function setFs(fs: Directory): void {
+  localStorage.setItem(FS, JSON.stringify(fs))
 }
 
 export function write({
@@ -87,14 +86,30 @@ export function write({
   setFs(fs)
 }
 
-export function stat(args: string): Stat {
+export function stat(pathString: string, name?: string): Stat {
   try {
     const fs = get<Directory>(FS)
-    const tokens = parsePath(args === '' ? getEnv('PWD') : args)
+    const tokens = [...parsePath(pathString === '' ? getEnv('PWD') : pathString)]
+    if (name) tokens.push(name)
     const path = '/' + tokens.join('/')
     const obj = traverse(tokens, fs)
     return { exists: true, path, isDirectory: typeof obj !== 'string', obj }
   } catch (e) {
     return { exists: false, path: '-', isDirectory: false, obj: '-' }
   }
+}
+
+export function init() {
+  setEnv(PWD, '/home/guest')
+  setEnv(HOME, '/home/guest')
+
+  setFs({
+    home: {
+      guest: {
+        '.bashrc': '#!/usr/sh',
+        '.history': '',
+      },
+      root: {},
+    },
+  })
 }

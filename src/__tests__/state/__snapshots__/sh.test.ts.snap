@@ -1,0 +1,266 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LEFT 3><RIGHT 3> 1`] = `
+{
+  "COMMAND_LINE": {
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
+    "POSTCARET": "",
+    "PRECARET": "",
+  },
+  "CONTROL_DOWN": false,
+  "DOWN_MAPPING": [Function],
+  "HISTORY_INDEX": -1,
+  "NAME": 0,
+  "OLD_COMMANDS": [],
+  "PWD": "/home/guest",
+  "UP_MAPPING": [Function],
+  "USER": "guest",
+}
+`;
+
+exports[`<LEFT 3><RIGHT 3> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":""},"root":{}}}"`;
+
+exports[`<LEFT 3><RIGHT 3> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
+
+exports[`echo<ENTER>ls<ENTER>ArrowUpArrowUpArrowDown 1`] = `
+{
+  "COMMAND_LINE": {
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
+    "POSTCARET": "",
+    "PRECARET": "ls",
+  },
+  "CONTROL_DOWN": false,
+  "DOWN_MAPPING": [Function],
+  "HISTORY_INDEX": 0,
+  "NAME": 0,
+  "OLD_COMMANDS": [
+    {
+      "COMMAND_LINE": {
+        "CARET": null,
+        "CARET_WIDTH": 1,
+        "EOL": true,
+        "POSTCARET": "",
+        "PRECARET": "echo",
+      },
+      "PWD": "/home/guest",
+      "STDOUT": "",
+      "USER": "guest",
+    },
+    {
+      "COMMAND_LINE": {
+        "CARET": null,
+        "CARET_WIDTH": 1,
+        "EOL": true,
+        "POSTCARET": "",
+        "PRECARET": "ls",
+      },
+      "PWD": "/home/guest",
+      "STDOUT": ".bashrc .history",
+      "USER": "guest",
+    },
+  ],
+  "PWD": "/home/guest",
+  "UP_MAPPING": [Function],
+  "USER": "guest",
+}
+`;
+
+exports[`echo<ENTER>ls<ENTER>ArrowUpArrowUpArrowDown 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":""},"root":{}}}"`;
+
+exports[`echo<ENTER>ls<ENTER>ArrowUpArrowUpArrowDown 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
+
+exports[`g<LEFT 1> 1`] = `
+{
+  "COMMAND_LINE": {
+    "CARET": "g",
+    "CARET_WIDTH": 1,
+    "EOL": false,
+    "POSTCARET": "",
+    "PRECARET": "",
+  },
+  "CONTROL_DOWN": false,
+  "DOWN_MAPPING": [Function],
+  "HISTORY_INDEX": -1,
+  "NAME": 0,
+  "OLD_COMMANDS": [],
+  "PWD": "/home/guest",
+  "UP_MAPPING": [Function],
+  "USER": "guest",
+}
+`;
+
+exports[`g<LEFT 1> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":""},"root":{}}}"`;
+
+exports[`g<LEFT 1> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
+
+exports[`hello<LEFT 1><RIGHT 2> 1`] = `
+{
+  "COMMAND_LINE": {
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
+    "POSTCARET": "",
+    "PRECARET": "hello",
+  },
+  "CONTROL_DOWN": false,
+  "DOWN_MAPPING": [Function],
+  "HISTORY_INDEX": -1,
+  "NAME": 0,
+  "OLD_COMMANDS": [],
+  "PWD": "/home/guest",
+  "UP_MAPPING": [Function],
+  "USER": "guest",
+}
+`;
+
+exports[`hello<LEFT 1><RIGHT 2> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":""},"root":{}}}"`;
+
+exports[`hello<LEFT 1><RIGHT 2> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
+
+exports[`hello<LEFT 2><RIGHT 1> 1`] = `
+{
+  "COMMAND_LINE": {
+    "CARET": "o",
+    "CARET_WIDTH": 1,
+    "EOL": false,
+    "POSTCARET": "",
+    "PRECARET": "hell",
+  },
+  "CONTROL_DOWN": false,
+  "DOWN_MAPPING": [Function],
+  "HISTORY_INDEX": -1,
+  "NAME": 0,
+  "OLD_COMMANDS": [],
+  "PWD": "/home/guest",
+  "UP_MAPPING": [Function],
+  "USER": "guest",
+}
+`;
+
+exports[`hello<LEFT 2><RIGHT 1> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":""},"root":{}}}"`;
+
+exports[`hello<LEFT 2><RIGHT 1> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
+
+exports[`hello<LEFT 3><RIGHT 3> 1`] = `
+{
+  "COMMAND_LINE": {
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
+    "POSTCARET": "",
+    "PRECARET": "hello",
+  },
+  "CONTROL_DOWN": false,
+  "DOWN_MAPPING": [Function],
+  "HISTORY_INDEX": -1,
+  "NAME": 0,
+  "OLD_COMMANDS": [],
+  "PWD": "/home/guest",
+  "UP_MAPPING": [Function],
+  "USER": "guest",
+}
+`;
+
+exports[`hello<LEFT 3><RIGHT 3> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":""},"root":{}}}"`;
+
+exports[`hello<LEFT 3><RIGHT 3> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
+
+exports[`hello<LEFT 5><RIGHT 6> 1`] = `
+{
+  "COMMAND_LINE": {
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
+    "POSTCARET": "",
+    "PRECARET": "hello",
+  },
+  "CONTROL_DOWN": false,
+  "DOWN_MAPPING": [Function],
+  "HISTORY_INDEX": -1,
+  "NAME": 0,
+  "OLD_COMMANDS": [],
+  "PWD": "/home/guest",
+  "UP_MAPPING": [Function],
+  "USER": "guest",
+}
+`;
+
+exports[`hello<LEFT 5><RIGHT 6> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":""},"root":{}}}"`;
+
+exports[`hello<LEFT 5><RIGHT 6> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
+
+exports[`hello<LEFT 5><RIGHT 7> 1`] = `
+{
+  "COMMAND_LINE": {
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
+    "POSTCARET": "",
+    "PRECARET": "hello",
+  },
+  "CONTROL_DOWN": false,
+  "DOWN_MAPPING": [Function],
+  "HISTORY_INDEX": -1,
+  "NAME": 0,
+  "OLD_COMMANDS": [],
+  "PWD": "/home/guest",
+  "UP_MAPPING": [Function],
+  "USER": "guest",
+}
+`;
+
+exports[`hello<LEFT 5><RIGHT 7> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":""},"root":{}}}"`;
+
+exports[`hello<LEFT 5><RIGHT 7> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
+
+exports[`hello<LEFT 6><RIGHT 4> 1`] = `
+{
+  "COMMAND_LINE": {
+    "CARET": "o",
+    "CARET_WIDTH": 1,
+    "EOL": false,
+    "POSTCARET": "",
+    "PRECARET": "hell",
+  },
+  "CONTROL_DOWN": false,
+  "DOWN_MAPPING": [Function],
+  "HISTORY_INDEX": -1,
+  "NAME": 0,
+  "OLD_COMMANDS": [],
+  "PWD": "/home/guest",
+  "UP_MAPPING": [Function],
+  "USER": "guest",
+}
+`;
+
+exports[`hello<LEFT 6><RIGHT 4> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":""},"root":{}}}"`;
+
+exports[`hello<LEFT 6><RIGHT 4> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
+
+exports[`hello<LEFT 7><RIGHT 7> 1`] = `
+{
+  "COMMAND_LINE": {
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
+    "POSTCARET": "",
+    "PRECARET": "hello",
+  },
+  "CONTROL_DOWN": false,
+  "DOWN_MAPPING": [Function],
+  "HISTORY_INDEX": -1,
+  "NAME": 0,
+  "OLD_COMMANDS": [],
+  "PWD": "/home/guest",
+  "UP_MAPPING": [Function],
+  "USER": "guest",
+}
+`;
+
+exports[`hello<LEFT 7><RIGHT 7> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":""},"root":{}}}"`;
+
+exports[`hello<LEFT 7><RIGHT 7> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;

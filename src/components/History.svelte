@@ -1,16 +1,23 @@
 <style>
+  .stdout {
+    white-space: pre;
+  }
 </style>
 
 <script lang="ts">
   import Prompt from './Prompt.svelte'
-  import type { Commands } from 'src/lib/types'
+  import type { Command } from '../types'
 
-  export let oldCmds: Commands
+  import { lineToString } from '../utils'
+
+  export let OLD_COMMANDS: Command[]
+
+  const parse = (stdout: string) => stdout.split('\n')
 </script>
 
 <div>
-  {#each oldCmds as oldCmd}
-    <Prompt pwd={oldCmd.wd} usr={oldCmd.usr}>{oldCmd.cmd}</Prompt>
-    {#if oldCmd.stdout}<span>{oldCmd.stdout}</span>{/if}
+  {#each OLD_COMMANDS as { PWD, USER, COMMAND_LINE, STDOUT }}
+    <Prompt {PWD} {USER}>{lineToString(COMMAND_LINE)}</Prompt>
+    {#each parse(STDOUT) as stdout}<div class="stdout">{stdout}</div>{/each}
   {/each}
 </div>
