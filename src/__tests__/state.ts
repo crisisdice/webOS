@@ -1,4 +1,4 @@
-import {INITAL_STATE} from '../utils'
+import { INITAL_STATE } from '../utils'
 import { init } from '../lib'
 import { keySeq, prettyTestName } from './helpers'
 

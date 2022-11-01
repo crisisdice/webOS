@@ -4,6 +4,7 @@ import { fileToBuffer, EMPTY_LINE, APPS, ARROW_KEYS } from '../../utils'
 import { processCommandMode } from './command'
 import { processVisualMode } from './visual'
 import { processInsertMode } from './insert'
+import { pager } from './pager'
 
 export const startVi = ({ STATE, args }: { STATE: ShellState; args: string[] }): ViState => {
   return {
@@ -26,13 +27,13 @@ export const viUp: KeyMapping = ({
   e: KeyboardEvent
   STATE: ViState
 }) => {
-  if (ARROW_KEYS.includes(key)) return processVisualMode({ e: { key }, STATE })
-
   switch (MODE) {
     case VI_MODE.COMMAND:
       return processCommandMode({ e, STATE })
     case VI_MODE.INSERT:
-      return processInsertMode({ e, STATE })
+      return ARROW_KEYS.includes(key)
+        ? pager({ e: { key }, STATE })
+        : processInsertMode({ e, STATE })
     case VI_MODE.VISUAL:
       return processVisualMode({ e, STATE })
     default:

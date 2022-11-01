@@ -1,18 +1,18 @@
 import type { KeyMapping, ViState } from '../../types'
 import { VI_MODE } from './constants'
-import { getLengths, shiftUp, shiftDown, shiftLeft, shiftRight } from '../shift'
 import { EMPTY } from '../../utils'
+import { pager } from './pager'
 
 export const processVisualMode: KeyMapping = ({ e: { key }, STATE }) => {
   const {
     BUFFER,
     COORDS,
+    COORDS: { y },
     BUFFER: { LINE },
   } = STATE as ViState
-  const { LINE_LENGTH, BUFFER_LENGTH } = getLengths(STATE as ViState)
-  let { x, y } = COORDS
 
-  let { PRECARET, CARET, POSTCARET } = LINE
+  let { x } = COORDS
+  const { PRECARET, CARET, POSTCARET } = LINE
 
   switch (key) {
     case ':': {
@@ -21,60 +21,34 @@ export const processVisualMode: KeyMapping = ({ e: { key }, STATE }) => {
     }
     case 'a': {
       console.log({ MODE: 'INSERT' })
-
-      PRECARET = `${PRECARET}${CARET ?? EMPTY}`
-      CARET = null
-
       x += 1
-
       return {
         ...STATE,
         COORDS: { x, y },
-        BUFFER: { ...BUFFER, LINE: { ...LINE, PRECARET, CARET, CARET_WIDTH: 0 } },
+        BUFFER: {
+          ...BUFFER,
+          LINE: { ...LINE, PRECARET: `${PRECARET}${CARET ?? EMPTY}`, CARET: null, CARET_WIDTH: 0 },
+        },
         MODE: VI_MODE.INSERT,
       }
     }
     case 'i': {
       console.log({ MODE: 'INSERT' })
-
-      POSTCARET = `${CARET ?? EMPTY}${POSTCARET}`
-      CARET = null
-
       return {
         ...STATE,
-        BUFFER: { ...BUFFER, LINE: { ...LINE, CARET, POSTCARET, CARET_WIDTH: 0 } },
+        BUFFER: {
+          ...BUFFER,
+          LINE: {
+            ...LINE,
+            CARET: null,
+            POSTCARET: `${CARET ?? EMPTY}${POSTCARET}`,
+            CARET_WIDTH: 0,
+          },
+        },
         MODE: VI_MODE.INSERT,
       }
     }
-    case 'k':
-    case 'ArrowUp': {
-      if (y !== 0) {
-        y -= 1
-      }
-      return { ...STATE, ...shiftUp({ BUFFER, COORDS: { x, y } }) }
-    }
-    case 'j':
-    case 'ArrowDown': {
-      if (y !== BUFFER_LENGTH) {
-        y += 1
-      }
-      return { ...STATE, ...shiftDown({ BUFFER, COORDS: { x, y } }) }
-    }
-    case 'h':
-    case 'ArrowLeft': {
-      if (x !== 0) {
-        x -= 1
-      }
-      return { ...STATE, BUFFER: { ...BUFFER, LINE: shiftLeft({ LINE }) }, COORDS: { x, y } }
-    }
-    case 'l':
-    case 'ArrowRight': {
-      if (x !== LINE_LENGTH) {
-        x += 1
-      }
-      return { ...STATE, BUFFER: { ...BUFFER, LINE: shiftRight({ LINE }) }, COORDS: { x, y } }
-    }
     default:
-      return STATE
+      return pager({ e: { key }, STATE })
   }
 }
