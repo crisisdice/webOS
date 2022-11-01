@@ -1,4 +1,7 @@
 <style>
+  .stdout {
+    white-space: pre;
+  }
 </style>
 
 <script lang="ts">
@@ -15,6 +18,6 @@
 <div>
   {#each OLD_COMMANDS as { PWD, USER, COMMAND_LINE, STDOUT }}
     <Prompt {PWD} {USER}>{lineToString(COMMAND_LINE)}</Prompt>
-    {#each parse(STDOUT) as stdout}<div>{stdout}</div>{/each}
+    {#each parse(STDOUT) as stdout}<div class="stdout">{stdout}</div>{/each}
   {/each}
 </div>

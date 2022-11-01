@@ -49,4 +49,17 @@ export const vi = [
     ...fill(12, BACK),
   ],
   [...ENTER_VI, 'i', ...'hello world'.split(''), ...fill(5, LEFT), ENTER],
+  [
+    ...ENTER_VI,
+    'i',
+    ...'hello world'.split(''),
+    '`',
+    ':',
+    ...'w out'.split(''),
+    ENTER,
+    '`',
+    ':',
+    'q',
+    ENTER,
+  ],
 ]

@@ -110,6 +110,43 @@ exports[`vi<ENTER>ihello world<LEFT 5><ENTER> 2`] = `"{"home":{"guest":{".bashrc
 
 exports[`vi<ENTER>ihello world<LEFT 5><ENTER> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
 
+exports[`vi<ENTER>ihello world\`:w out<ENTER>\`:q<ENTER> 1`] = `
+{
+  "COMMAND_LINE": {
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
+    "POSTCARET": "",
+    "PRECARET": "",
+  },
+  "CONTROL_DOWN": false,
+  "DOWN_MAPPING": [Function],
+  "HISTORY_INDEX": -1,
+  "NAME": 0,
+  "OLD_COMMANDS": [
+    {
+      "COMMAND_LINE": {
+        "CARET": null,
+        "CARET_WIDTH": 1,
+        "EOL": true,
+        "POSTCARET": "",
+        "PRECARET": "vi",
+      },
+      "PWD": "/home/guest",
+      "STDOUT": "",
+      "USER": "guest",
+    },
+  ],
+  "PWD": "/home/guest",
+  "UP_MAPPING": [Function],
+  "USER": "guest",
+}
+`;
+
+exports[`vi<ENTER>ihello world\`:w out<ENTER>\`:q<ENTER> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":"","out":"hello world"},"root":{}}}"`;
+
+exports[`vi<ENTER>ihello world\`:w out<ENTER>\`:q<ENTER> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
+
 exports[`vi<ENTER>ihello<ENTER>hello worldArrowUp 1`] = `
 {
   "BUFFER": {
