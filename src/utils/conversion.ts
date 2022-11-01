@@ -2,11 +2,11 @@ import type { Line, ViState } from '../types'
 import { EMPTY, PWD, EMPTY_BUFFER } from './constants'
 import { getEnv, stat } from '../lib'
 
-export const lineToString = ({ PRECARET, CARET, POSTCARET }: Line) => {
+export function lineToString({ PRECARET, CARET, POSTCARET }: Line): string {
   return `${PRECARET}${CARET === null ? '' : CARET}${POSTCARET}`
 }
 
-export const stringToLine = (line: string, x: number, CARET_WIDTH = 1): Line => {
+export function stringToLine(line: string, x: number, CARET_WIDTH = 1): Line {
   const PRECARET = line.slice(0, x)
   const EOL = x === line.length
   const CARET = EOL || CARET_WIDTH === 0 ? null : line[x]
@@ -41,4 +41,8 @@ export function fileToBuffer(fileName: string | null): {
   const BUFFER_POST = file.slice(1)
 
   return { BUFFER: { BUFFER_PRE, BUFFER_POST, LINE }, FILE_NAME: path }
+}
+
+export function bufferToFile({ BUFFER_PRE, LINE, BUFFER_POST }: ViState['BUFFER']): string {
+  return [...BUFFER_PRE, lineToString(LINE), ...BUFFER_POST].join('\n')
 }
