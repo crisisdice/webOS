@@ -8,7 +8,7 @@ export const processInsertMode: KeyMapping = ({ e: { key }, STATE }) => {
     MODE,
     COORDS,
     BUFFER,
-    BUFFER: { LINE, BUFFER_POST },
+    BUFFER: { BUFFER_PRE, LINE, BUFFER_POST },
   } = STATE as ViState
 
   let { x, y } = COORDS
@@ -39,11 +39,16 @@ export const processInsertMode: KeyMapping = ({ e: { key }, STATE }) => {
     case 'Meta':
       break
     case 'Enter':
+      x = 0
       y += 1
       return {
         ...STATE,
         ...shiftDown({
-          BUFFER: { ...BUFFER, BUFFER_POST: [EMPTY, ...BUFFER_POST] },
+          BUFFER: {
+            ...BUFFER,
+            LINE: { ...LINE, PRECARET, CARET: null, POSTCARET: EMPTY },
+            BUFFER_POST: [POSTCARET, ...BUFFER_POST],
+          },
           COORDS: { x, y },
         }),
       }
@@ -51,12 +56,19 @@ export const processInsertMode: KeyMapping = ({ e: { key }, STATE }) => {
       if (x === 0) {
         if (y === 0) return STATE
         y -= 1
-        // TODO fix delete with trailing chars
-        x = BUFFER.BUFFER_PRE.at(-1).length
+        const previousLine = BUFFER.BUFFER_PRE.at(-1)
+        x = previousLine.length
         return {
           ...STATE,
           ...shiftUp({
-            BUFFER: { ...BUFFER, LINE: null },
+            BUFFER: {
+              ...BUFFER,
+              BUFFER_PRE: [
+                ...BUFFER_PRE.slice(0, BUFFER_PRE.length - 1),
+                `${previousLine}${POSTCARET}`,
+              ],
+              LINE: { ...LINE, POSTCARET: EMPTY },
+            },
             COORDS: { x, y },
           }),
         }

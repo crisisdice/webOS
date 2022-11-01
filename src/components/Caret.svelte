@@ -52,7 +52,6 @@
   }
 </script>
 
-<!-- TODO highlighting text -->
 <span
   >{PRECARET}<span class={caretClass()}>{CARET_WIDTH === 0 ? '\u3164' : CARET ?? '_'}</span
   >{POSTCARET}</span

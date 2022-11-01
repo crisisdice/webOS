@@ -43,7 +43,7 @@ export const shiftUp = ({
     BUFFER_PRE,
     BUFFER_POST,
     LINE,
-    LINE: { CARET_WIDTH },
+    LINE: { PRECARET, CARET, POSTCARET, CARET_WIDTH },
   },
   COORDS: { x, y },
 }: {
@@ -52,8 +52,10 @@ export const shiftUp = ({
 }) => {
   if (BUFFER_PRE.length === 0) return BUFFER
 
-  BUFFER_POST = LINE === null ? BUFFER_POST : [lineToString(LINE), ...BUFFER_POST]
-
+  BUFFER_POST =
+    PRECARET === EMPTY && CARET === null && POSTCARET === EMPTY
+      ? BUFFER_POST
+      : [lineToString(LINE), ...BUFFER_POST]
   const newLine = BUFFER_PRE.at(-1)
   x = x > newLine.length ? newLine.length : x
   LINE = stringToLine(newLine, x, CARET_WIDTH)

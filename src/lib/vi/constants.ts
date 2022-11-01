@@ -2,4 +2,6 @@ export enum VI_MODE {
   VISUAL,
   INSERT,
   COMMAND,
+  VISUAL_BLOCK,
+  VISUAL_LINE,
 }

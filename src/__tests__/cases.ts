@@ -1,4 +1,4 @@
-import { DOWN, ENTER, LEFT, RIGHT, UP } from './constants'
+import { BACK, DOWN, ENTER, LEFT, RIGHT, UP } from './constants'
 import { fill } from './helpers'
 
 export const bin = [
@@ -38,15 +38,15 @@ export const vi = [
   [...ENTER_VI, 'i', ...'hello'.split(''), '`', ':', ...'cmd'],
   [...ENTER_VI, 'i', ...'hello'.split(''), '`', ':', ...'cmd', ...fill(6, LEFT), ...fill(6, RIGHT)],
   [...ENTER_VI, 'i', ...'hello'.split(''), ENTER, ...'hello world'.split(''), UP],
-  // TODO fix backspace
-  // [
-  //   ...ENTER_VI,
-  //   'i',
-  //   ...'hello'.split(''),
-  //   ENTER,
-  //   ...'hello world'.split(''),
-  //   UP,
-  //   DOWN,
-  //   ...fill(12, BACK),
-  // ],
+  [
+    ...ENTER_VI,
+    'i',
+    ...'hello'.split(''),
+    ENTER,
+    ...'hello world'.split(''),
+    UP,
+    DOWN,
+    ...fill(12, BACK),
+  ],
+  [...ENTER_VI, 'i', ...'hello world'.split(''), ...fill(5, LEFT), ENTER],
 ]

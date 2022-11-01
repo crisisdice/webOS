@@ -10,7 +10,7 @@ export const stringToLine = (line: string, x: number, CARET_WIDTH = 1): Line => 
   const PRECARET = line.slice(0, x)
   const EOL = x === line.length
   const CARET = EOL || CARET_WIDTH === 0 ? null : line[x]
-  const POSTCARET = EOL ? EMPTY : line.slice(x + 1)
+  const POSTCARET = EOL ? EMPTY : line.slice(x + CARET_WIDTH)
 
   return {
     PRECARET,

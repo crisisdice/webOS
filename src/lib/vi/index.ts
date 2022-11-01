@@ -36,6 +36,9 @@ export const viUp: KeyMapping = ({
         : processInsertMode({ e, STATE })
     case VI_MODE.VISUAL:
       return processVisualMode({ e, STATE })
+    // TODO highlighting
+    case VI_MODE.VISUAL_BLOCK:
+    case VI_MODE.VISUAL_LINE:
     default:
       return STATE
   }
