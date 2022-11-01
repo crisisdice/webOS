@@ -70,6 +70,7 @@ export const processInsertMode: KeyMapping = ({ e: { key }, STATE }) => {
               LINE: { ...LINE, POSTCARET: EMPTY },
             },
             COORDS: { x, y },
+            DELETE: true,
           }),
         }
       }

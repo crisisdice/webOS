@@ -16,7 +16,7 @@ export const pager: KeyMapping = ({ e: { key }, STATE }) => {
       if (y !== 0) {
         y -= 1
       }
-      return { ...STATE, ...shiftUp({ BUFFER, COORDS: { x, y } }) }
+      return { ...STATE, ...shiftUp({ BUFFER, COORDS: { x, y }, DELETE: false }) }
     }
     case 'j':
     case 'ArrowDown': {

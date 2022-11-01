@@ -62,4 +62,8 @@ export const vi = [
     'q',
     ENTER,
   ],
+  [...ENTER_VI, 'i', ...fill(5, ENTER), ...fill(3, UP)],
+  [...ENTER_VI, 'i', ...fill(5, ENTER), ...fill(5, UP)],
+  [...ENTER_VI, 'i', ...fill(5, ENTER), ...fill(3, BACK)],
+  [...ENTER_VI, 'i', ...fill(5, ENTER), ...fill(5, BACK)],
 ]

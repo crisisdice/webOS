@@ -43,19 +43,18 @@ export const shiftUp = ({
     BUFFER_PRE,
     BUFFER_POST,
     LINE,
-    LINE: { PRECARET, CARET, POSTCARET, CARET_WIDTH },
+    LINE: { CARET_WIDTH },
   },
   COORDS: { x, y },
+  DELETE = false,
 }: {
-  BUFFER: ViState['BUFFER'] & { LINE: null | Line }
+  BUFFER: ViState['BUFFER']
   COORDS: ViState['COORDS']
+  DELETE: boolean
 }) => {
   if (BUFFER_PRE.length === 0) return BUFFER
 
-  BUFFER_POST =
-    PRECARET === EMPTY && CARET === null && POSTCARET === EMPTY
-      ? BUFFER_POST
-      : [lineToString(LINE), ...BUFFER_POST]
+  BUFFER_POST = DELETE ? BUFFER_POST : [lineToString(LINE), ...BUFFER_POST]
   const newLine = BUFFER_PRE.at(-1)
   x = x > newLine.length ? newLine.length : x
   LINE = stringToLine(newLine, x, CARET_WIDTH)
