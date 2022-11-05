@@ -10,7 +10,7 @@ export const echo = (args: string[]) => {
 
 export const ls = (args: string[]) => {
   const dir = args?.[0] ?? EMPTY
-  // TODO multiple dirs
+  // TODO ls: handle multiple dirs
   const { exists, isDirectory, obj } = stat(dir)
   if (!exists) return `ls: cannot access '${dir}': No such file or directory`
   return isDirectory ? Object.keys(obj).join(' ') : dir.split('/').at(-1)
@@ -18,7 +18,7 @@ export const ls = (args: string[]) => {
 
 export const cat = (args: string[]): string => {
   const file = args?.[0] ?? EMPTY
-  // TODO multiple files
+  // TODO cat: handle multiple files
   const { exists, isDirectory, obj } = stat(file)
   if (!exists) return `cat: cannot access '${file}': No such file or directory`
   return isDirectory ? `cat: ${file}: Is a directory` : (obj as string)

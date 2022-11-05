@@ -62,6 +62,7 @@ export function setEnv(key: string, value: string): void {
 }
 
 export function setFs(fs: Directory): void {
+  // TODO save with dir name as key and contents as value
   localStorage.setItem(FS, JSON.stringify(fs))
 }
 
