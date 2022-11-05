@@ -12,11 +12,23 @@ exports[`vi<ENTER>ihello 1`] = `"<body><div><div><div><div class=\\"buffer svelt
 
 exports[`vi<ENTER>ihello world<LEFT 5><ENTER> 1`] = `"<body><div><div><div><div class=\\"buffer svelte-be8r7x\\"><div class=\\"line svelte-be8r7x\\">1 hello </div> <div class=\\"line svelte-be8r7x\\">2 <span><span class=\\"caret-line svelte-136ugrd\\">ㅤ</span>world</span></div> </div>  <div class=\\"footer svelte-be8r7x\\"> <span class=\\"coords svelte-be8r7x\\">2,1</span></div></div> <input autofocus=\\"\\"></div></div></body>"`;
 
+exports[`vi<ENTER>ihello world\`:q!<ENTER> 1`] = `
+"<body><div><div><div><div><div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ vi</span></div> <div class=\\"stdout svelte-1frjlh6\\"></div></div> <div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
+    $ <span><span class=\\"caret-empty svelte-136ugrd\\">_</span></span></span></div></div> <input autofocus=\\"\\"></div></div></body>"
+`;
+
+exports[`vi<ENTER>ihello world\`:q<ENTER> 1`] = `"<body><div><div><div><div class=\\"buffer svelte-be8r7x\\"> <div class=\\"line svelte-be8r7x\\">1 hello world</div> </div> <div class=\\"message svelte-be8r7x\\">No write since last change</div> <div class=\\"footer svelte-be8r7x\\">: <span><span class=\\"caret-empty svelte-136ugrd\\">_</span></span> <span class=\\"coords svelte-be8r7x\\">1,11</span></div></div> <input autofocus=\\"\\"></div></div></body>"`;
+
 exports[`vi<ENTER>ihello world\`:w out<ENTER>\`:q<ENTER> 1`] = `
 "<body><div><div><div><div><div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
     $ vi</span></div> <div class=\\"stdout svelte-1frjlh6\\"></div></div> <div class=\\"prompt svelte-1ykk7yx\\"><span><span class=\\"usr svelte-1ykk7yx\\">guest@127.0.0.1</span>:<span class=\\"pwd svelte-1ykk7yx\\">~/</span>
     $ <span><span class=\\"caret-empty svelte-136ugrd\\">_</span></span></span></div></div> <input autofocus=\\"\\"></div></div></body>"
 `;
+
+exports[`vi<ENTER>ihello world\`:w<ENTER> 1`] = `"<body><div><div><div><div class=\\"buffer svelte-be8r7x\\"> <div class=\\"line svelte-be8r7x\\">1 <span>hello worl<span class=\\"caret-full svelte-136ugrd\\">d</span></span></div> </div> <div class=\\"message svelte-be8r7x\\">No file name</div> <div class=\\"footer svelte-be8r7x\\"> <span class=\\"coords svelte-be8r7x\\">1,11</span></div></div> <input autofocus=\\"\\"></div></div></body>"`;
+
+exports[`vi<ENTER>ihello world\`:wq<ENTER> 1`] = `"<body><div><div><div><div class=\\"buffer svelte-be8r7x\\"> <div class=\\"line svelte-be8r7x\\">1 hello world</div> </div> <div class=\\"message svelte-be8r7x\\">No write since last change</div> <div class=\\"footer svelte-be8r7x\\">: <span><span class=\\"caret-empty svelte-136ugrd\\">_</span></span> <span class=\\"coords svelte-be8r7x\\">1,11</span></div></div> <input autofocus=\\"\\"></div></div></body>"`;
 
 exports[`vi<ENTER>ihello<ENTER>hello worldArrowUp 1`] = `"<body><div><div><div><div class=\\"buffer svelte-be8r7x\\"> <div class=\\"line svelte-be8r7x\\">1 <span>hello<span class=\\"caret-line svelte-136ugrd\\">ㅤ</span></span></div> <div class=\\"line svelte-be8r7x\\">2 hello world</div></div>  <div class=\\"footer svelte-be8r7x\\"> <span class=\\"coords svelte-be8r7x\\">1,6</span></div></div> <input autofocus=\\"\\"></div></div></body>"`;
 

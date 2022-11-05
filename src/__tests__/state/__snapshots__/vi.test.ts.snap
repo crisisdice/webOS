@@ -354,6 +354,99 @@ exports[`vi<ENTER>ihello world<LEFT 5><ENTER> 2`] = `"{"home":{"guest":{".bashrc
 
 exports[`vi<ENTER>ihello world<LEFT 5><ENTER> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
 
+exports[`vi<ENTER>ihello world\`:q!<ENTER> 1`] = `
+{
+  "COMMAND_LINE": {
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
+    "POSTCARET": "",
+    "PRECARET": "",
+  },
+  "CONTROL_DOWN": false,
+  "DOWN_MAPPING": [Function],
+  "HISTORY_INDEX": -1,
+  "NAME": 0,
+  "OLD_COMMANDS": [
+    {
+      "COMMAND_LINE": {
+        "CARET": null,
+        "CARET_WIDTH": 1,
+        "EOL": true,
+        "POSTCARET": "",
+        "PRECARET": "vi",
+      },
+      "PWD": "/home/guest",
+      "STDOUT": "",
+      "USER": "guest",
+    },
+  ],
+  "PWD": "/home/guest",
+  "UP_MAPPING": [Function],
+  "USER": "guest",
+}
+`;
+
+exports[`vi<ENTER>ihello world\`:q!<ENTER> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":""},"root":{}}}"`;
+
+exports[`vi<ENTER>ihello world\`:q!<ENTER> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
+
+exports[`vi<ENTER>ihello world\`:q<ENTER> 1`] = `
+{
+  "BUFFER": {
+    "BUFFER_POST": [],
+    "BUFFER_PRE": [],
+    "LINE": {
+      "CARET": "d",
+      "CARET_WIDTH": 1,
+      "EOL": false,
+      "POSTCARET": "",
+      "PRECARET": "hello worl",
+    },
+  },
+  "COMMAND_LINE": {
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
+    "POSTCARET": "",
+    "PRECARET": "",
+  },
+  "CONTROL_DOWN": false,
+  "COORDS": {
+    "x": 10,
+    "y": 0,
+  },
+  "DOWN_MAPPING": [Function],
+  "FILE_NAME": null,
+  "HISTORY_INDEX": -1,
+  "MESSAGE": "No write since last change",
+  "MODE": 2,
+  "NAME": 1,
+  "OLD_COMMANDS": [
+    {
+      "COMMAND_LINE": {
+        "CARET": null,
+        "CARET_WIDTH": 1,
+        "EOL": true,
+        "POSTCARET": "",
+        "PRECARET": "vi",
+      },
+      "PWD": "/home/guest",
+      "STDOUT": "",
+      "USER": "guest",
+    },
+  ],
+  "PWD": "/home/guest",
+  "REGISTERS": {},
+  "UP_MAPPING": [Function],
+  "USER": "guest",
+}
+`;
+
+exports[`vi<ENTER>ihello world\`:q<ENTER> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":""},"root":{}}}"`;
+
+exports[`vi<ENTER>ihello world\`:q<ENTER> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
+
 exports[`vi<ENTER>ihello world\`:w out<ENTER>\`:q<ENTER> 1`] = `
 {
   "COMMAND_LINE": {
@@ -390,6 +483,118 @@ exports[`vi<ENTER>ihello world\`:w out<ENTER>\`:q<ENTER> 1`] = `
 exports[`vi<ENTER>ihello world\`:w out<ENTER>\`:q<ENTER> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":"","out":"hello world"},"root":{}}}"`;
 
 exports[`vi<ENTER>ihello world\`:w out<ENTER>\`:q<ENTER> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
+
+exports[`vi<ENTER>ihello world\`:w<ENTER> 1`] = `
+{
+  "BUFFER": {
+    "BUFFER_POST": [],
+    "BUFFER_PRE": [],
+    "LINE": {
+      "CARET": "d",
+      "CARET_WIDTH": 1,
+      "EOL": false,
+      "POSTCARET": "",
+      "PRECARET": "hello worl",
+    },
+  },
+  "COMMAND_LINE": {
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
+    "POSTCARET": "",
+    "PRECARET": "",
+  },
+  "CONTROL_DOWN": false,
+  "COORDS": {
+    "x": 10,
+    "y": 0,
+  },
+  "DOWN_MAPPING": [Function],
+  "FILE_NAME": null,
+  "HISTORY_INDEX": -1,
+  "MESSAGE": "No file name",
+  "MODE": 0,
+  "NAME": 1,
+  "OLD_COMMANDS": [
+    {
+      "COMMAND_LINE": {
+        "CARET": null,
+        "CARET_WIDTH": 1,
+        "EOL": true,
+        "POSTCARET": "",
+        "PRECARET": "vi",
+      },
+      "PWD": "/home/guest",
+      "STDOUT": "",
+      "USER": "guest",
+    },
+  ],
+  "PWD": "/home/guest",
+  "REGISTERS": {},
+  "UP_MAPPING": [Function],
+  "USER": "guest",
+}
+`;
+
+exports[`vi<ENTER>ihello world\`:w<ENTER> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":""},"root":{}}}"`;
+
+exports[`vi<ENTER>ihello world\`:w<ENTER> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
+
+exports[`vi<ENTER>ihello world\`:wq<ENTER> 1`] = `
+{
+  "BUFFER": {
+    "BUFFER_POST": [],
+    "BUFFER_PRE": [],
+    "LINE": {
+      "CARET": "d",
+      "CARET_WIDTH": 1,
+      "EOL": false,
+      "POSTCARET": "",
+      "PRECARET": "hello worl",
+    },
+  },
+  "COMMAND_LINE": {
+    "CARET": null,
+    "CARET_WIDTH": 1,
+    "EOL": true,
+    "POSTCARET": "",
+    "PRECARET": "",
+  },
+  "CONTROL_DOWN": false,
+  "COORDS": {
+    "x": 10,
+    "y": 0,
+  },
+  "DOWN_MAPPING": [Function],
+  "FILE_NAME": null,
+  "HISTORY_INDEX": -1,
+  "MESSAGE": "No write since last change",
+  "MODE": 2,
+  "NAME": 1,
+  "OLD_COMMANDS": [
+    {
+      "COMMAND_LINE": {
+        "CARET": null,
+        "CARET_WIDTH": 1,
+        "EOL": true,
+        "POSTCARET": "",
+        "PRECARET": "vi",
+      },
+      "PWD": "/home/guest",
+      "STDOUT": "",
+      "USER": "guest",
+    },
+  ],
+  "PWD": "/home/guest",
+  "REGISTERS": {},
+  "UP_MAPPING": [Function],
+  "USER": "guest",
+}
+`;
+
+exports[`vi<ENTER>ihello world\`:wq<ENTER> 2`] = `"{"home":{"guest":{".bashrc":"#!/usr/sh",".history":""},"root":{}}}"`;
+
+exports[`vi<ENTER>ihello world\`:wq<ENTER> 3`] = `"{"PWD":"/home/guest","HOME":"/home/guest"}"`;
 
 exports[`vi<ENTER>ihello<ENTER>hello worldArrowUp 1`] = `
 {
