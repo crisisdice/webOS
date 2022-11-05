@@ -15,6 +15,8 @@ export const startVi = ({ STATE, args }: { STATE: ShellState; args: string[] }):
     MODE: VI_MODE.VISUAL,
     COMMAND_LINE: { ...EMPTY_LINE },
     COORDS: { x: 0, y: 0 },
+    MESSAGE: null,
+    REGISTERS: {},
   }
 }
 
@@ -27,6 +29,7 @@ export const viUp: KeyMapping = ({
   e: KeyboardEvent
   STATE: ViState
 }) => {
+  STATE = { ...STATE, MESSAGE: null }
   switch (MODE) {
     case VI_MODE.COMMAND:
       return processCommandMode({ e, STATE })
