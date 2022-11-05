@@ -30,6 +30,7 @@ export const sh = [
 ]
 
 const ENTER_VI = [...'vi'.split(''), ENTER]
+const ENTER_VI_FILE = (file: string) => [...'vi '.split(''), ...file.split(''), ENTER]
 
 export const vi = [
   [...ENTER_VI, 'i', ...'hello'.split('')],
@@ -70,4 +71,8 @@ export const vi = [
   [...ENTER_VI, 'i', ...'hello world'.split(''), '`', ':', ...'wq'.split(''), ENTER],
   [...ENTER_VI, 'i', ...'hello world'.split(''), '`', ':', 'q', ENTER],
   [...ENTER_VI, 'i', ...'hello world'.split(''), '`', ':', 'q', '!', ENTER],
+  [...ENTER_VI_FILE('test'), 'i', ...'hello world'.split(''), '`', ':', 'w', ENTER],
+  [...ENTER_VI_FILE('test'), 'i', ...'hello world'.split(''), '`', ':', ...'wq'.split(''), ENTER],
+  [...ENTER_VI_FILE('test'), 'i', ...'hello world'.split(''), '`', ':', 'q', ENTER],
+  [...ENTER_VI_FILE('test'), 'i', ...'hello world'.split(''), '`', ':', 'q', '!', ENTER],
 ]
