@@ -5,6 +5,14 @@
     width: 100%;
   }
 
+  .message {
+    position: fixed;
+    bottom: 28px;
+    width: 100%;
+    background-color: red;
+    color: white;
+  }
+
   .buffer {
     display: block;
   }
@@ -33,6 +41,7 @@
   let {
     MODE,
     COMMAND_LINE,
+    MESSAGE,
     COORDS: { x, y },
     BUFFER: { BUFFER_PRE, LINE, BUFFER_POST },
   } = STATE as ViState
@@ -51,6 +60,9 @@
       <div class="line">{BUFFER_PRE.length + 2 + index} {line}</div>
     {/each}
   </div>
+  {#if !!MESSAGE}
+    <div class="message">{MESSAGE}</div>
+  {/if}
   <div class="footer">
     {#if MODE === VI_MODE.COMMAND}
       : <Caret {COMMAND_LINE} />
