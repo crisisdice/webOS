@@ -58,6 +58,6 @@ export type ViState = BaseState & {
   }
   COORDS: { x: number; y: number }
   FILE_NAME: string | null
-  REGISTERS: Record<string, string>
+  REGISTERS: Record<string, { contents: string; isLine: boolean }>
   MESSAGE: string | null
 }
