@@ -19,6 +19,25 @@ export const processVisualMode: KeyMapping = ({ e: { key }, STATE }) => {
       console.log({ MODE: 'COMMAND' })
       return { ...STATE, MODE: VI_MODE.COMMAND }
     }
+    // TODO case '[0-9]':
+    case 'A': { // TODO
+      return STATE
+    }
+    case 'D': { // TODO
+      return STATE
+    }
+    case 'd': { // TODO
+      return STATE
+    }
+    case 'y': { // TODO
+      return STATE
+    }
+    case 'p': { // TODO
+      return STATE
+    }
+    case 'u': { // TODO
+      return STATE
+    }
     case 'a': {
       console.log({ MODE: 'INSERT' })
       x += 1
