@@ -31,6 +31,7 @@ exports[`vi<ENTER>i<ENTER><ENTER><ENTER><ENTER><ENTER><BACK 3> 1`] = `
   "DOWN_MAPPING": [Function],
   "FILE_NAME": null,
   "HISTORY_INDEX": -1,
+  "MESSAGE": null,
   "MODE": 1,
   "NAME": 1,
   "OLD_COMMANDS": [
@@ -48,6 +49,7 @@ exports[`vi<ENTER>i<ENTER><ENTER><ENTER><ENTER><ENTER><BACK 3> 1`] = `
     },
   ],
   "PWD": "/home/guest",
+  "REGISTERS": {},
   "UP_MAPPING": [Function],
   "USER": "guest",
 }
@@ -85,6 +87,7 @@ exports[`vi<ENTER>i<ENTER><ENTER><ENTER><ENTER><ENTER><BACK 5> 1`] = `
   "DOWN_MAPPING": [Function],
   "FILE_NAME": null,
   "HISTORY_INDEX": -1,
+  "MESSAGE": null,
   "MODE": 1,
   "NAME": 1,
   "OLD_COMMANDS": [
@@ -102,6 +105,7 @@ exports[`vi<ENTER>i<ENTER><ENTER><ENTER><ENTER><ENTER><BACK 5> 1`] = `
     },
   ],
   "PWD": "/home/guest",
+  "REGISTERS": {},
   "UP_MAPPING": [Function],
   "USER": "guest",
 }
@@ -146,6 +150,7 @@ exports[`vi<ENTER>i<ENTER><ENTER><ENTER><ENTER><ENTER>ArrowUpArrowUpArrowUp 1`] 
   "DOWN_MAPPING": [Function],
   "FILE_NAME": null,
   "HISTORY_INDEX": -1,
+  "MESSAGE": null,
   "MODE": 1,
   "NAME": 1,
   "OLD_COMMANDS": [
@@ -163,6 +168,7 @@ exports[`vi<ENTER>i<ENTER><ENTER><ENTER><ENTER><ENTER>ArrowUpArrowUpArrowUp 1`] 
     },
   ],
   "PWD": "/home/guest",
+  "REGISTERS": {},
   "UP_MAPPING": [Function],
   "USER": "guest",
 }
@@ -206,6 +212,7 @@ exports[`vi<ENTER>i<ENTER><ENTER><ENTER><ENTER><ENTER>ArrowUpArrowUpArrowUpArrow
   "DOWN_MAPPING": [Function],
   "FILE_NAME": null,
   "HISTORY_INDEX": -1,
+  "MESSAGE": null,
   "MODE": 1,
   "NAME": 1,
   "OLD_COMMANDS": [
@@ -223,6 +230,7 @@ exports[`vi<ENTER>i<ENTER><ENTER><ENTER><ENTER><ENTER>ArrowUpArrowUpArrowUpArrow
     },
   ],
   "PWD": "/home/guest",
+  "REGISTERS": {},
   "UP_MAPPING": [Function],
   "USER": "guest",
 }
@@ -260,6 +268,7 @@ exports[`vi<ENTER>ihello 1`] = `
   "DOWN_MAPPING": [Function],
   "FILE_NAME": null,
   "HISTORY_INDEX": -1,
+  "MESSAGE": null,
   "MODE": 1,
   "NAME": 1,
   "OLD_COMMANDS": [
@@ -277,6 +286,7 @@ exports[`vi<ENTER>ihello 1`] = `
     },
   ],
   "PWD": "/home/guest",
+  "REGISTERS": {},
   "UP_MAPPING": [Function],
   "USER": "guest",
 }
@@ -316,6 +326,7 @@ exports[`vi<ENTER>ihello world<LEFT 5><ENTER> 1`] = `
   "DOWN_MAPPING": [Function],
   "FILE_NAME": null,
   "HISTORY_INDEX": -1,
+  "MESSAGE": null,
   "MODE": 1,
   "NAME": 1,
   "OLD_COMMANDS": [
@@ -333,6 +344,7 @@ exports[`vi<ENTER>ihello world<LEFT 5><ENTER> 1`] = `
     },
   ],
   "PWD": "/home/guest",
+  "REGISTERS": {},
   "UP_MAPPING": [Function],
   "USER": "guest",
 }
@@ -409,6 +421,7 @@ exports[`vi<ENTER>ihello<ENTER>hello worldArrowUp 1`] = `
   "DOWN_MAPPING": [Function],
   "FILE_NAME": null,
   "HISTORY_INDEX": -1,
+  "MESSAGE": null,
   "MODE": 1,
   "NAME": 1,
   "OLD_COMMANDS": [
@@ -426,6 +439,7 @@ exports[`vi<ENTER>ihello<ENTER>hello worldArrowUp 1`] = `
     },
   ],
   "PWD": "/home/guest",
+  "REGISTERS": {},
   "UP_MAPPING": [Function],
   "USER": "guest",
 }
@@ -463,6 +477,7 @@ exports[`vi<ENTER>ihello<ENTER>hello worldArrowUpArrowDown<BACK 12> 1`] = `
   "DOWN_MAPPING": [Function],
   "FILE_NAME": null,
   "HISTORY_INDEX": -1,
+  "MESSAGE": null,
   "MODE": 1,
   "NAME": 1,
   "OLD_COMMANDS": [
@@ -480,6 +495,7 @@ exports[`vi<ENTER>ihello<ENTER>hello worldArrowUpArrowDown<BACK 12> 1`] = `
     },
   ],
   "PWD": "/home/guest",
+  "REGISTERS": {},
   "UP_MAPPING": [Function],
   "USER": "guest",
 }
@@ -517,6 +533,7 @@ exports[`vi<ENTER>ihello<LEFT 6><RIGHT 6> 1`] = `
   "DOWN_MAPPING": [Function],
   "FILE_NAME": null,
   "HISTORY_INDEX": -1,
+  "MESSAGE": null,
   "MODE": 1,
   "NAME": 1,
   "OLD_COMMANDS": [
@@ -534,6 +551,7 @@ exports[`vi<ENTER>ihello<LEFT 6><RIGHT 6> 1`] = `
     },
   ],
   "PWD": "/home/guest",
+  "REGISTERS": {},
   "UP_MAPPING": [Function],
   "USER": "guest",
 }
@@ -571,6 +589,7 @@ exports[`vi<ENTER>ihello\` 1`] = `
   "DOWN_MAPPING": [Function],
   "FILE_NAME": null,
   "HISTORY_INDEX": -1,
+  "MESSAGE": null,
   "MODE": 0,
   "NAME": 1,
   "OLD_COMMANDS": [
@@ -588,6 +607,7 @@ exports[`vi<ENTER>ihello\` 1`] = `
     },
   ],
   "PWD": "/home/guest",
+  "REGISTERS": {},
   "UP_MAPPING": [Function],
   "USER": "guest",
 }
@@ -625,6 +645,7 @@ exports[`vi<ENTER>ihello\`:cmd 1`] = `
   "DOWN_MAPPING": [Function],
   "FILE_NAME": null,
   "HISTORY_INDEX": -1,
+  "MESSAGE": null,
   "MODE": 2,
   "NAME": 1,
   "OLD_COMMANDS": [
@@ -642,6 +663,7 @@ exports[`vi<ENTER>ihello\`:cmd 1`] = `
     },
   ],
   "PWD": "/home/guest",
+  "REGISTERS": {},
   "UP_MAPPING": [Function],
   "USER": "guest",
 }
@@ -679,6 +701,7 @@ exports[`vi<ENTER>ihello\`:cmd<LEFT 6><RIGHT 6> 1`] = `
   "DOWN_MAPPING": [Function],
   "FILE_NAME": null,
   "HISTORY_INDEX": -1,
+  "MESSAGE": null,
   "MODE": 2,
   "NAME": 1,
   "OLD_COMMANDS": [
@@ -696,6 +719,7 @@ exports[`vi<ENTER>ihello\`:cmd<LEFT 6><RIGHT 6> 1`] = `
     },
   ],
   "PWD": "/home/guest",
+  "REGISTERS": {},
   "UP_MAPPING": [Function],
   "USER": "guest",
 }
